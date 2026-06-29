@@ -25,6 +25,8 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+  site: 'https://maru0122.github.io', // ★この行を追加
+  base: '/astrowind',                 // ★この行を追加
 
   integrations: [
     sitemap(),
