@@ -1,0 +1,148 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+
+const metadata = {
+  title: '初めての方へ — e-Shikumi-Labo',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Welcome"
+    title="ようこそ、e-Shikumi-Labo へ"
+    actions={[{ text: '仕組み化実験室を見る', href: '/blog', variant: 'primary' }]}
+  >
+    <Fragment slot="subtitle">
+      代表の <strong>シン</strong> です。<br />
+      e-Shikumi-Laboは、<strong>GoogleスプレッドシートとGAS（Google Apps Script）及び、Google Chrome拡張機能を活用した “仕組み化” の研究・開発・支援</strong> を行う個人ラボです。
+    </Fragment>
+  </Hero>
+
+  <div class="max-w-3xl mx-auto px-4">
+
+    <div class="py-12 md:py-16">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+        すべての始まりは、30年前のExcelマクロ（VBA）
+      </h2>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        私がプログラミングに触れたのは、大学での卒業研究で <strong>Excelマクロ（VBA）</strong> を使ったのが始まりでした。
+      </p>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        それ以来、30年以上にわたって仕事やプライベートの中でExcelを使い続け、データ整理や自動化を通じて「仕組みを作る面白さ」に惹かれてきました。
+      </p>
+      <p class="text-lg text-muted leading-relaxed">
+        現在も企業では、<strong>業務整理（仕組み化）とExcel VBAを中心とした効率化ツールの開発</strong> に携わっています。現場の課題を理解し、手作業を自動化する――その積み重ねが、私の「仕組み化」の原点となっています。
+      </p>
+    </div>
+
+    <div class="py-12 md:py-16 border-t border-gray-100">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+        eBay輸出への挑戦と、山積みの手作業に圧倒された日々
+      </h2>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        そんな中、個人の挑戦として <strong>eBay輸出</strong> を始めたことが、新しい方向性を見出すきっかけになりました。
+      </p>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        最初はすべて手作業。リサーチ、出品、価格調整、在庫確認……作業の多さに圧倒されましたが、同時にExcelを使った効率化の可能性を感じました。
+      </p>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        そこで、これまでの業務整理やプロセス改善の経験、およびExcel VBAで培った自動化の知識を活かして、自分なりの効率化ツールを作り始めました。
+      </p>
+      <p class="text-lg text-muted leading-relaxed">
+        この取り組みがやがて形になり、「同じように困っている人にも役立つ」と感じて、ツールとして提供するようになりました。
+      </p>
+    </div>
+
+    <div class="py-6">
+      <Features3
+        title="Excelからスプレッドシート＋GASへ"
+        subtitle="経験を重ねる中で、私は「Excelだけで完結する仕組み」に限界を感じるようになりました。それらの課題をクリアしたのがGoogleスプレッドシートです。"
+        columns={3}
+        items={[
+          {
+            title: 'Excelでの課題',
+            description: '・複数人での同時編集が難しい<br />・共有や履歴管理の手間が煩雑<br />・マクロ実行にはPCの起動や手動操作が必要',
+            icon: 'tabler:alert-triangle',
+          },
+          {
+            title: 'Googleスプレッドシート',
+            description: '・複数デバイスでの同時閲覧・編集がスムーズ<br />・リンク一つで共有、履歴も自動保存<br />・専用アプリ不要、ブラウザだけで動作',
+            icon: 'tabler:check',
+          },
+          {
+            title: 'GoogleAppsScript（GAS）',
+            description: '・環境構築やインストールの手間が不要<br />・PCを閉じていても指定時間に自動実行<br />・外部APIやGoogleサービスと柔軟に連携',
+            icon: 'tabler:rocket',
+          },
+        ]}
+      />
+    </div>
+
+    <div class="py-12 md:py-16 border-t border-gray-100">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+        APIもスクレイピングも実践して直面した「自動化の限界」
+      </h2>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        eBay輸出に挑戦してからは、膨大なリサーチ、出品、在庫チェックを効率化するため、本格的なデータ収集の仕組み作りに没頭。公式APIの活用から、一般的なWebスクレイピング、Seleniumによるブラウザの自動操作まで、主要な技術は一通り実践してきました。
+      </p>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        しかし、サイト側の度重なる仕様変更や運用の難しさなど、あらゆる技術を試す中で<strong>「ツールを作って終わりの自動化」における限界</strong>にも数多く直面しました。
+      </p>
+      <p class="text-lg text-muted leading-relaxed">
+        その苦い経験と試行錯誤の末にたどり着いた結論が、単に使い捨てのツールを提供するのではなく、<strong>使う人自身が「ツールを維持管理し続ける能力」を身につけてもらうこと</strong>こそが、本当の仕組み化であるということです。
+      </p>
+    </div>  
+
+    <div class="py-12 md:py-16 border-t border-gray-100">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+        AIを使いこなせば、ツールを「自分で修正できる」ようになる
+      </h2>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        近年のAIの登場によって、プログラムのコードは誰でも簡単に作れるようになりました。しかし、仕様変更が絶えない<strong>まるで『生き物』のようなWebサイト</strong>を相手にする場合、AIに丸投げして作ったツールは、サイトの形が少し変わっただけで動かなくなってしまいます。
+      </p>
+      <p class="text-lg text-muted leading-relaxed">
+        ここで本当に必要なのは、AIにすべてを任せることではなく、「AIへうまく依頼するコツ」を掴むことです。エラーが出たときやサイトの仕様が変わったときに、どうAIに指示を出せばいいかが分かれば、専門知識が深くなくても、自分でツールを修正できるようになります。AIはあなたの代わりに動く主役ではなく、あなたが自分の手で仕組みを直し、維持し続けるための最強のパートナーになってくれます。
+      </p>
+    </div>
+
+    <div class="py-6">
+      <Features2
+        title="e-Shikumi-Labo が目指すこと"
+        subtitle="単にツールを作って渡す場所ではありません。あなた自身が『仕組みの原理』を理解し、自分でツールをコントロールできるようになることを目指します。"
+        items={[
+          {
+            title: '完成されたツールの「納品」はしない',
+            description: 'ツールをそのまま受け取ると、仕様変更が起きたときに自分で直せなくなります。だからこそ、納品ではなく「自分で作って直せる力」を身につける支援に徹します。',
+            icon: 'tabler:package-off',
+          },
+          {
+            title: 'AIへうまく指示を出す「依頼のコツ」',
+            description: 'エラーが出たときにどうAIに指示を出せばいいか。そのコツさえ掴めば、深い専門知識がなくても、AIを相棒にして自分でツールを修正できるようになります。',
+            icon: 'tabler:message-code',
+          },
+          {
+            title: '「入力・処理・出力」の分解思考',
+            description: 'どんな業務も「入力・処理・出力」に分解して考える。このシンプルな『仕組み化思考』を伝えることで、ツールに振り回されない自立した運用を可能にします。',
+            icon: 'tabler:git-fork',
+          },
+        ]}
+      />
+    </div>
+
+    <div class="text-center py-16 border-t border-gray-200 mt-12">
+      <h3 class="text-2xl font-bold mb-4">最後に</h3>
+      <p class="text-lg text-muted mb-8 leading-relaxed">
+        ここでお伝えしているノウハウや考え方は、すべて私自身が現場の泥臭い試行錯誤の中で培ってきたものです。<br />
+        もしあなたが、単に作業を自動化するだけでなく、「業務の流れを根本から整理し、自分で直せる仕組みを作りたい」と感じているなら、考えるきっかけや手がかりが見つかるはずです。
+      </p>
+      <p class="text-md">
+        このサイトを運営している私（シン）の詳細なプロフィールや活動実績については、<br />
+        <a href="/company" class="text-primary hover:underline font-bold text-lg">→ 会社概要・プロフィールページ</a> で詳しく紹介しています。
+      </p>
+    </div>
+
+  </div>
+</Layout>

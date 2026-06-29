@@ -1,79 +1,42 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
-import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
 
 const metadata = {
-  title: 'Contact',
+  title: 'お問い合わせ — e-Shikumi-Labo',
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
+  <div class="py-12 sm:py-20">
+    <Hero
+      tagline="Contact"
+      title="お問い合わせ"
+      subtitle="e-Shikumi-Laboは、ツールの開発代行を行う場所ではありません。<br class='hidden sm:inline'/>「自分の業務をどう整理し、どうすれば自分で維持管理できる仕組みにできるか」を一緒に探求する場所です。<br class='hidden sm:inline'/>自立的な運用を目指すためのプロセス改善や、設計アイデアのご相談をお気軽にお寄せください。"
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Googleフォームを開く（外部サイト）',
+          href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+          target: '_blank', // ◀◀ 別タブで開く設定
+          icon: 'tabler:external-link',
+        },
+      ]}
+    />
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <div class="-mt-12 sm:-mt-20 relative z-10 max-w-2xl mx-auto px-6 py-8 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+        <p class="font-bold text-md mb-4 text-primary text-blue-600 dark:text-blue-400">
+        ▼ このようなご相談をお受けしています
+      </p>
+      <ul class="text-left max-w-md mx-auto text-sm space-y-3 text-gray-600 dark:text-gray-400 list-disc pl-5">
+        <li>手作業が多く混沌とした業務の「整理・フロー化」の割り出し</li>
+        <li>業務プロセスにおける自動化の「設計アイデア」の検討</li>
+        <li>GASやChrome拡張機能を活用し、ユーザー自身がツールを維持管理していくためのアプローチ</li>
+      </ul>
+      <p class="mt-5 text-xs text-rose-500 font-semibold">
+        ※プログラミングコードの作成・開発代行のみを目的としたご依頼はお受けしておりません。あらかじめご了承ください。
+      </p>
+    </div>
 
-  <ContactUs
-    id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
-    inputs={[
-      {
-        type: 'text',
-        name: 'name',
-        label: 'Name',
-      },
-      {
-        type: 'email',
-        name: 'email',
-        label: 'Email',
-      },
-    ]}
-    textarea={{
-      label: 'Message',
-    }}
-    disclaimer={{
-      label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
-    }}
-    description="Our support team typically responds within 24 business hours."
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="We are here to help!"
-    items={[
-      {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
-      },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
-      {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
-      },
-      {
-        title: 'Email',
-        description: 'contact@support.com',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
-        icon: 'tabler:map-pin',
-      },
-    ]}
-  />
+  </div>
 </Layout>

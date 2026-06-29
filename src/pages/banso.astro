@@ -1,0 +1,243 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Webデータ取得✕スプレッドシート自動化 | 実践伴走サポート',
+  description: '毎日の「手作業コピペ」をきれいな仕組みに変える。GASとChrome拡張機能を活用し、競合・市場リサーチを自動化するマンツーマン開発支援。',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'お申し込みフォームへ',
+        href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Webデータ取得 ✕ スプレッドシート<br />
+      自動化 実践伴走サポート
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      泥臭い「手作業コピペ」の業務を、<strong class="font-semibold">入力・処理・出力</strong>のフレームワークできれいに構造化。その上で確実な自動化を目指す実践型サポートです。<br>
+      目的は単なるコードの習得ではありません。<strong class="font-semibold">混沌とした業務の整理</strong>から、<strong class="font-semibold">AIを駆使したツール作成</strong>まで、あなたのビジネスに直結する仕組み化を一気通貫で伴走します。
+
+    </Fragment>
+  </Hero>
+
+<!-- Features Widget (サポートの目的) -->
+  <Features
+    id="objectives"
+    tagline="Objectives"
+    title="🧭 サポートの目的"
+    subtitle="混沌とした手作業をきれいに構造化し、AIと最新技術で仕組み化する3つの柱"
+    items={[
+      {
+        title: '1. 業務の構造化（入力・処理・出力）',
+        description: '毎日行う泥臭いコピペ業務を「入力・処理・出力」のフレームワークに分解。どこをどう自動化すべきか、混沌とした業務の全体像をきれいに整理・可視化します。',
+        icon: 'tabler:columns-3',
+      },
+      {
+        title: '2. ハイブリッド自動化（GAS ✕ Chrome拡張）',
+        description: 'APIが公開されていないサイトでも諦めません。GASによるデータ処理と、ブラウザ操作を自動化するChrome拡張機能を組み合わせ、あなたに最適なデータ取得システムを構築します。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: '3. AIを駆使した自走力の習得',
+        description: '単にツールのコードを丸暗記するプログラミング教室ではありません。GPTを優秀な開発アシスタントとして使いこなす方法を習得し、将来的なサイトの仕様変更にも自分で対応できる応用力を身につけます。',
+        icon: 'tabler:message-chatbot',
+      },
+    ]}
+  />
+
+<!-- Features2 Widget (対象となる方) -->
+  <Features2
+    id="target"
+    tagline="Target"
+    title="🎯 対象となる方"
+    subtitle="以下のような課題を持ち、業務の『仕組み化』に本気で挑戦したい方が対象です"
+    items={[
+      {
+        title: '毎日の不毛なコピペ業務に限界を感じている方',
+        description: '競合調査、価格監視、市場データの収集など、付加価値の低い「手作業ルーティン」から解放され、データ分析や戦略立案に時間を使いたい方。',
+        icon: 'tabler:clock',
+      },
+      {
+        title: 'GASの基礎はわかるが、システムの組み方に迷う方',
+        description: '変数やループなどの基本構文はなんとなく理解しているものの、自分の実業務を「入力・処理・出力」のシステムとして1から設計するのが難しいと感じている方。',
+        icon: 'tabler:braces',
+      },
+      {
+        title: '「APIがないから自動化できない」と諦めていた方',
+        description: '公式APIが提供されていないサイトから、Chrome拡張機能などを駆使して力技ではなく「きれいな仕組み」でデータを抽出したい方。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: 'AIを最強の開発パートナーにしたい方',
+        description: 'ChatGPT等を単なる質問ツールとしてではなく、業務の整理、コードの自動生成、エラーの自己解決までを一緒に行う「優秀な相棒」として使いこなしたい方。',
+        icon: 'tabler:message-chatbot',
+      },
+    ]}
+  />
+
+  <Content
+    isReversed
+    tagline="Examples"
+    title="📚 扱うテーマ例（競合・市場リサーチの自動化）"
+    items={[
+      { title: '競合ECサイトの商品価格・在庫状況を毎日自動巡回して記録', icon: 'tabler:check' },
+      { title: 'ポータルサイト（求人・不動産・クラウドソーシング等）の新着案件を自動収集', icon: 'tabler:check' },
+      { title: '特定キーワードを含むWebニュースや口コミ情報の定期抽出・ストック', icon: 'tabler:check' },
+      { title: '取得した生データの自動整形・スプレッドシートへのダッシュボード化', icon: 'tabler:check' },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1650&q=80',
+      alt: 'Marketing Data Automation Image',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">あなたのビジネスに直結する仕組み</h3>
+      既存のパッケージツールでは手が届かない「ニッチなサイト」や「独自の収集ルール」に合わせた仕組みをピンポイントで開発します。
+    </Fragment>
+  </Content>
+
+  <Steps
+    title="💻 進め方と流れ"
+    items={[
+      {
+        title: 'Step 1: やりたいことをフォームで送信',
+        description: '「自動で取得したいサイト」「スプレッドシートにどうまとめたいか」などを簡単にご記入の上、送信してください。',
+        icon: 'tabler:mail',
+      },
+      {
+        title: 'Step 2: 実現可能性を確認し、ご返信',
+        description: 'ターゲットサイトの構造を確認し、対応可能な場合は面談のご案内をお送りします。技術的・規約的に実装困難な場合はその旨をお伝えします。',
+        icon: 'tabler:check',
+      },
+      {
+        title: 'Step 3: 初回面談（30分）',
+        description: '現在のスキルや開発環境を確認しながら、GASで行うかChrome拡張機能を併用するかなど、最適なアプローチを一緒に整理します。※無料面談は行っておりません。',
+        icon: 'tabler:video',
+      },
+      {
+        title: 'Step 4: 伴走セッション（実践サポート）',
+        description: 'オンライン（Zoom／Google Meet）で、GPTを活用しながらコードを一緒に構築・修正・テストします。継続期間の制限はなく、必要な仕組みが完成した時点で終了できる柔軟な形式です。希望者にはセッション録画も提供します。',
+        icon: 'tabler:user-check',
+      },
+    ]}
+  />
+
+  <Pricing
+    title="💬 サポート形式と料金まとめ"
+    subtitle="オンライン（マンツーマン形式）での明朗な料金プランです"
+    prices={[
+      {
+        title: '初回面談',
+        price: 5000,
+        period: '30分',
+        items: [
+          { description: 'スキル・開発環境の確認' },
+          { description: 'ターゲットサイトの構造調査' },
+          { description: '自動化アプローチ（GAS/拡張機能）の提案' },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: '申し込む',
+          href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+        },
+      },
+      {
+        title: '通常セッション',
+        price: 9800,
+        period: '1回 / 60分',
+        items: [
+          { description: 'マンツーマン実践サポート' },
+          { description: 'GPTを併用したコード構築・テスト' },
+          { description: '成果物（コード・シート）の共有' },
+          { description: 'セッション録画の提供（希望者）' },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: '申し込む',
+          href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+        },
+        hasRibbon: true,
+        ribbonTitle: '人気',
+      },
+      {
+        title: 'パッケージ',
+        price: 49800,
+        period: '6回セット',
+        items: [
+          { description: '通常セッション × 6回分' },
+          { description: 'じっくり腰を据えてシステム化したい方向け' },
+          { description: '通常より約9,000円お得' },
+          { description: '有効期限なし・柔軟なスケジュール' },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: '申し込む',
+          href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+        },
+      },
+    ]}
+  />
+
+  <FAQs
+    title="🌱 よくある質問"
+    subtitle="受講にあたって気になる点をご確認ください"
+    tagline="FAQs"
+    items={[
+      {
+        title: 'APIが用意されていないサイトですが、自動化できますか？',
+        description: 'はい、可能です。本サポートではAPIがないサイトに対しても、GASによるWebスクレイピングや、Chrome拡張機能を活用してブラウザ操作を自動化するアプローチを組み合わせて実装を進めます。',
+      },
+      {
+        title: 'GASの知識はどの程度必要ですか？',
+        description: '「変数」「if文による条件分岐」「for文による繰り返し」などの基本構文がなんとなく分かれば問題ありません。複雑な処理やエラーハンドリングは、GPTを賢く使いながら一緒に構築していきます。',
+      },
+      {
+        title: '途中で自動化したいサイト（テーマ）を変えてもいいですか？',
+        description: '柔軟に対応可能です。まずは難易度の低いサイトからデータ取得をスタートし、慣れてきた段階で別のサイトの自動化や、データの高度な整形・ダッシュボード化へ拡張していく形でも問題ありません。',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'お申し込みフォームへ',
+        href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      📩 お申し込み・お問い合わせ
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      以下のフォームから「自動化したい内容やターゲットサイト」をお送りください。<br />内容を確認し、実現可能な場合に折り返しご案内を返信いたします。
+    </Fragment>
+  </CallToAction>
+
+  <div class="text-center text-xs text-muted py-8 dark:text-slate-400">
+    最終更新日：2026年6月版 / 決済方法：銀行振込またはPayPal
+  </div>
+</Layout>

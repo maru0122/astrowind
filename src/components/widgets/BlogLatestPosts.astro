@@ -30,7 +30,14 @@ const {
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
 
-const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
+//const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
+// columnが除外されても表示件数が減らないよう、10倍の件数を予備として取得
+const allLatestPosts = APP_BLOG.isEnabled ? await findLatestPosts({ count: count * 10 }) : [];
+
+// columnを除外した上で、本来の指定件数（count）だけを切り出す
+const posts = allLatestPosts
+  .filter((post) => post.category?.slug !== 'column')
+  .slice(0, count);
 ---
 
 {

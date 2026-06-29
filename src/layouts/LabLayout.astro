@@ -1,0 +1,45 @@
+---
+import Layout from '~/layouts/Layout.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const metadata = {
+	title: `${title} | e-shikumi-labo // Lab`,
+	description: description,
+};
+---
+
+<Layout metadata={metadata}>
+	<div class="bg-slate-950 text-slate-100 min-h-screen antialiased font-sans">
+		
+		<header class="border-b border-slate-900 bg-slate-900/40 backdrop-blur sticky top-0 z-40">
+			<div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+				<a href="/lab" class="text-lg font-mono font-bold tracking-wider text-teal-400 hover:text-teal-300 transition">
+					e-shikumi-labo // Lab_
+				</a>
+				<a href="/" class="text-xs text-slate-400 hover:text-slate-200 transition">
+					← 思想の表玄関（メイン）へ戻る
+				</a>
+			</div>
+		</header>
+		
+		<main class="max-w-3xl mx-auto px-4 py-8 md:py-16">
+			<article class="prose prose-invert max-w-none 
+				prose-headings:font-bold prose-headings:text-slate-100 
+				prose-teal prose-a:text-teal-400 prose-code:text-teal-300">
+				
+				<slot />
+				
+			</article>
+		</main>
+		
+		<footer class="border-t border-slate-900 py-8 text-center text-xs text-slate-600">
+			&copy; {new Date().getFullYear()} e-shikumi-labo // Lab
+		</footer>
+	</div>
+</Layout>

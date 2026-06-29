@@ -19,8 +19,21 @@ const { page, category } = Astro.props as Props;
 
 const currentPage = page.currentPage ?? 1;
 
+// ==========================================
+// 【追加】URLのスラッグと日本語表示名の対応表
+// ==========================================
+const categoryMap: Record<string, string> = {
+  'gas-spreadsheet': 'GAS・スプレッドシート',
+  'chrome-extension': 'Chrome拡張機能', // 他のカテゴリが増えたらここに追加
+  'column': 'コラム' // 他のカテゴリが増えたらここに追加
+};
+
+// 対応する日本語があれば使い、なければ元の文字をそのまま使う
+const displayTitle = categoryMap[category.title] || category.title;
+
 const metadata = {
-  title: `Category '${category.title}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  // 【修正】category.title だった部分を displayTitle に変更
+  title: `Category '${displayTitle}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {
     index: blogCategoryRobots?.index,
     follow: blogCategoryRobots?.follow,
@@ -30,7 +43,8 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline>{category.title}</Headline>
+    {/* 【修正】category.title だった部分を displayTitle に変更 */}
+    <Headline>{displayTitle}</Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
   </section>

@@ -1,0 +1,42 @@
+---
+import { fetchPosts } from '~/utils/blog'; // [cite: 38]
+import Layout from '~/layouts/Layout.astro'; // [cite: 38]
+import SinglePost from '~/components/blog/SinglePost.astro'; // [cite: 38]
+import { findImage } from '~/utils/images'; // [cite: 38]
+import type { ImageMetadata } from 'astro'; // [cite: 39]
+import ArchitectureStyles from '~/components/ArchitectureStyles.astro'; // [cite: 39]
+
+// 🟢 トップページと同じ共通ヘッダーウィジェットと、別館専用メニューデータをインポート
+import Header from '~/components/widgets/Header.astro';
+import { architectureHeaderData } from '~/navigation-architecture';
+
+export async function getStaticPaths() {
+  const allPosts = await fetchPosts(); // [cite: 40]
+  // 🟢 【変更点1】コラム（column）カテゴリの記事だけを徹底抽出するように蛇口を反転
+  const architecturePosts = allPosts.filter(post => post.category?.slug && post.category.slug === 'column'); // [cite: 41]
+  return architecturePosts.map(post => ({ // [cite: 42]
+    params: { slug: post.slug }, // [cite: 42]
+    props: { post }, // [cite: 42]
+  })); // [cite: 42]
+} // [cite: 43]
+
+const { post } = Astro.props; // [cite: 43]
+
+// 本家と全く同じ画像処理とURL生成
+const image = (await findImage(post.image)) as ImageMetadata | string | undefined; // [cite: 43]
+// 🟢 【変更点2】URLの生成先を思想別館（architecture）に変更
+const url = `/architecture/${post.slug}`; // [cite: 44]
+
+const metadata = { // [cite: 44]
+  title: post.title, // [cite: 44]
+  description: post.excerpt, // [cite: 44]
+  dontUseTitleTemplate: true, // [cite: 44]
+}; // [cite: 44]
+---
+
+<Layout metadata={metadata}> {/* 🟢 記事本文内のテキストリンクやドット等の細部にも別館専用の配色変数を注入 */}
+  <ArchitectureStyles /> <div class="dark bg-slate-950 text-slate-100 min-h-screen antialiased font-sans"> {/* 🟢 古いベタ書きヘッダーを撤去し、トップページと完全に同じ共通メニューを配置 */}
+    <Header {...(architectureHeaderData as any)} isSticky showToggleTheme homeUrl="/architecture" />
+
+    <main class="py-12"> <SinglePost post={{ ...post, image: image }} url={url}> {post.Content && <post.Content />} </SinglePost> </main> </div> </Layout> ```
+

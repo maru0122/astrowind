@@ -1,0 +1,86 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+const metadata = {
+  title: 'e-Shikumi-Labo —「泥臭い手作業」を、きれいに仕組み化',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+<Hero
+    actions={[
+      //{ variant: 'primary', text: '初めての方へ', href: '/newcomer' },
+      //{ text: '仕組化実験室を見る', href: '/blog' },
+    ]}
+  >
+    <Fragment slot="title">
+      業務フローの構造化 ➔ 自動化へ<br />
+      「泥臭い手作業」を、きれいな仕組みに
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      カオスな社内データ、ブラックボックス化した業務システム。<br />
+      テクノロジーを本当に飼い慣らすために必要なのは、コードの知識ではなく、業務を「入力・処理・出力」の視点できれいに整理する「仕組み化思考」です。
+    </Fragment>
+  </Hero>
+
+  <Features2
+    title="仕組み化とは「再現可能な構造」をつくること"
+    subtitle="仕組み化とは、作業や判断を「入力 → 処理 → 出力」の3段階に分け、誰が行っても同じ結果になるよう設計することを指します。単なる自動化ではなく、流れを“構造”に置き換えて品質と効率を安定させます。"
+    items={[
+      {
+        title: '入力',
+        description: '入力：外部API・CSV・スクレイピングでデータを取得',
+        icon: 'tabler:shopping-cart',
+      },
+      {
+        title: '処理',
+        description: '欠損や表記ゆれを整形し、ルール・指標で判断（必要に応じてAI補正）',
+        icon: 'tabler:world',
+      },
+      {
+        title: '出力',
+        description: 'スプレッドシート・DB・通知に反映',
+        icon: 'tabler:arrow-merge',
+      },
+    ]}
+  />
+
+  <BlogLatestPosts
+    title="ブログ"
+    information="日々の現場での気づきを公開しています。"
+  />
+
+  <Content
+    isReversed
+    id="profile"
+    title="プロフィール"
+    callToAction={{ text: 'プロフィールを見る', href: '/profile', variant: 'primary' }}
+    image={{
+      src: '~/assets/images/profile.png',
+      alt: 'Profile Image',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">e-Shikumi-Labo について</h3>
+      <p class="mb-4">
+        大学での研究以来30年以上、Excel VBAを中心に現場の業務整理に向き合ってきました。2014年には自らの輸出ビジネスを機にGoogleスプレッドシートやGASを用いた自動化システムを構築。同じ悩みを持つ方へツールの提供を始めました。
+      </p>
+      <p class="mb-4">
+        しかし、サイト側の急激なアクセス規制や自動化への防御策により、ツールを丸ごと手渡すだけの自動化が通用しなくなる限界（挫折）を経験します。
+      </p>
+      <p class="mb-4">
+        この苦い試行錯誤を経て、当ラボでは完成されたツールの「納品」を一切やめました。
+      </p>
+      <p class="mb-4">
+        現在は、業務を「入力・処理・出力」に分解するシンプルな思考法を伝え、エラーが起きてもAIを味方につけて「自分の手でツールを修正し、コントロールし続ける力（自走力）」を養う伴走支援に特化しています。  
+      </p>
+    </Fragment>
+  </Content>
+</Layout>

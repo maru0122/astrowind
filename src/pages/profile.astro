@@ -1,0 +1,106 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+
+const metadata = {
+  title: 'プロフィール — シン | e-Shikumi-Labo',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Owner Profile"
+    title="シン"
+  >
+    <Fragment slot="subtitle">
+      1974年1月生まれ、千葉県出身。<br />
+      30年以上のExcel/VBA経験と、過去のビジネスにおけるアクセス規制での挫折から辿り着いた、<br />
+      ツールに振り回されない「仕組み化思考」の専門家。
+    </Fragment>
+  </Hero>
+
+  <div class="max-w-3xl mx-auto px-4">
+
+    <div class="py-12 md:py-16 border-t border-gray-100">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+        これまでの歩みと挫折の歴史
+      </h2>
+      <Steps
+        items={[
+          {
+            title: '元エンジニアとしての原点',
+            description:
+              '大学卒業後、エンジニアとして勤務。業務のかたわらExcel VBAを用いた各種効率化ツールを自作し、社内で高い評価を受ける。「手作業を自動化し、仕組みを作る面白さ」にのめり込む原点となりました。',
+            icon: 'tabler:briefcase',
+          },
+          {
+            title: '2014年：輸出ビジネスでの圧倒的な手作業',
+            description:
+              '副業・起業を模索する中で海外輸出ビジネスに出会い、本格参入。すぐに実績を上げるも、データの収集、一括出品、在庫チェックなど、あまりに膨大で泥臭い手作業の多さに圧倒される日々を過ごしました。',
+            icon: 'tabler:manual-gearbox',
+          },
+          {
+            title: 'スプレッドシート＋GASによる一連の自動化',
+            description:
+              '「Web上のデータはプログラムで制御できるはず」と一念発起。Excel VBAの知識をベースに、GoogleスプレッドシートやGAS（Google Apps Script）を組み合わせた独自の効率化システムを構築。手作業を劇的に減らすことに成功します。',
+            icon: 'tabler:code',
+          },
+          {
+            title: 'アクセス規制の壁、そして「納品しない」決断へ',
+            description:
+              '同じ悩みを抱える人たちへツールの提供を始めるも、サイト側によるアクセス規制や自動化への防御策が激化。ツールを丸ごと渡すだけの自動化が通用しなくなる限界（挫折）を経験します。これを機に、ブラックボックスなツールを配るのをやめ、使う人自身がエラーに対応できる思考力を養う「自走支援」へと舵を切りました。',
+            icon: 'tabler:barrier-block',
+          },
+        ]}
+      />
+    </div>
+
+    <div class="py-12 md:py-16 border-t border-gray-100">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
+        プライベート & ライフスタイル
+      </h2>
+      <p class="text-lg text-muted mb-4 leading-relaxed">
+        妻と2人の息子との4人暮らし。家に帰ると長男のゲームの相手、次男の散歩など、子どもたちの賑やかさに振り回される毎日を過ごしています。
+      </p>
+      <p class="text-lg text-muted leading-relaxed">
+        趣味は読書。小説やビジネス書など、<strong>年間100冊以上</strong>を読んでいます。iPhoneのKindleアプリを使い、移動時間や少しの隙間時間を見つけては、新しい視点や思考に触れる時間を楽しんでいます。
+      </p>
+    </div>
+
+    <div class="py-6">
+      <Features2
+        title="思考の源泉（書籍・言葉）"
+        subtitle="私の「仕組み化」の考え方に大きな影響を与えた本と言葉です。"
+        items={[
+          {
+            title: 'オススメ書籍：エッセンシャル思考',
+            description: '（グレッグ・マキューン著）<br />「減らすことで価値を高める」という本質を教えてくれる一冊。業務を「入力・処理・出力」に極限までシンプルに分解する当ラボの思想の根底にあります。',
+            icon: 'tabler:book',
+          },
+          {
+            title: 'オススメ書籍：真田太平記',
+            description: '（池波正太郎著）<br />小が大を相手にする痛快さ。真田昌幸・幸村の智謀と信念に惹かれ、舞台となった信州上田には何度も足を運ぶほど大好きな作品です。',
+            icon: 'tabler:book',
+          },
+          {
+            title: '人生の指針にしている言葉',
+            description: '・Simple Life is My Way.（シンプルに生きる）<br />・モノより思い出',
+            icon: 'tabler:heart',
+          },
+        ]}
+      />
+    </div>
+
+    <div class="text-center py-16 border-t border-gray-200 mt-12">
+      <p class="text-lg text-muted italic leading-relaxed">
+        「複雑なことを、シンプルに分解して、自分でコントロールする。」
+      </p>
+      <p class="text-md mt-8">
+        <a href="/blog" class="text-primary hover:underline font-bold text-lg">→ 仕組み化実験室（ブログ）を見る</a>
+      </p>
+    </div>
+
+  </div>
+</Layout>

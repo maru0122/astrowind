@@ -1,0 +1,86 @@
+---
+/* 別館（思想空間）専用のスタイル定義ファイル */
+import '@fontsource-variable/inter';
+---
+
+<style is:inline>
+  :root, .dark {
+    --aw-font-sans: 'Inter Variable';
+    --aw-font-serif: 'Inter Variable';
+    --aw-font-heading: 'Inter Variable';
+
+    /* 🟢 ボタン等に使われるメインカラー（黒背景に映えるティール：緑青） */
+    --aw-color-primary: rgb(20 184 166);     /* Tailwindの teal-500 */
+    
+    /* 🟢 ヘッダーやフッターの背景（詳細ページに合わせた深いスレート・黒） */
+    --aw-color-secondary: rgb(15 23 42);    /* Tailwindの slate-900 */
+    
+    /* 🟢 ホバー時や選択文字に使われるアクセントカラー（明るいティール） */
+    --aw-color-accent: rgb(45 212 191);     /* Tailwindの teal-400 */
+
+    /* 文字色などの基本設定（黒背景用の明るいグレー・白） */
+    --aw-color-text-heading: rgb(247, 248, 248);
+    --aw-color-text-default: rgb(229 236 246);
+    --aw-color-text-muted: rgb(229 236 246 / 66%);
+    --aw-color-bg-page: rgb(3 6 32);
+
+    ::selection {
+      background-color: rgb(20 184 166);
+      color: rgb(255 255 255);
+    }
+  }
+
+  /* 以下は本家の CustomStyles.astro に書かれているヘッダー・フッターの一括色付け命令です。
+    構造を一切変えず、上記の別館用変数をそのまま適用させます。
+  */
+  #header,
+  #header.scroll,
+  #header > div:first-child {
+    background-color: var(--aw-color-secondary) !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #header a, 
+  #header button,
+  #header [data-aw-toggle-menu] {
+    color: rgb(255 255 255) !important;
+  }
+
+  #header a span {
+    color: rgb(255 255 255) !important;
+  }
+
+  #header ul ul {
+    background-color: var(--aw-color-secondary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  #header a:hover,
+  #header button:hover,
+  #header a:hover span {
+    color: var(--aw-color-accent) !important;
+  }
+
+  footer {
+    background-color: var(--aw-color-secondary) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  footer,
+  footer div,
+  footer a,
+  footer span {
+    color: rgb(255 255 255) !important;
+  }
+
+  footer a:hover {
+    color: var(--aw-color-accent) !important;
+    text-decoration: underline;
+  }
+
+  footer button, 
+  [data-aw-toggle-color-scheme] {
+    color: rgb(255 255 255) !important;
+  }
+</style>

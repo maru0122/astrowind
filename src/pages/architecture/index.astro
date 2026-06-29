@@ -1,0 +1,137 @@
+---
+// 🟢 【変更点1】PageLayoutの仲介をやめ、詳細ページと同じベースのLayoutに切り替え
+import Layout from '~/layouts/Layout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import { fetchPosts } from '~/utils/blog';
+import Header from '~/components/widgets/Header.astro';
+import BlogGrid from '~/components/blog/Grid.astro';
+import ArchitectureStyles from '~/components/ArchitectureStyles.astro'; // 🟢 これを追加
+import Features2 from '~/components/widgets/Features2.astro';
+
+// 🟢 【変更点2】PageLayoutが自動配置していたフッターを、黒背景の中に自分で配置するため追加
+import Footer from '~/components/widgets/Footer.astro';
+
+// 🟢 新設した別館専用メニューファイルからデータをインポート（本館の定義やベタ書きの塊は完全撤去）
+import { architectureHeaderData, architectureFooterData } from '~/navigation-architecture';
+
+import { getPermalink, getBlogPermalink } from '~/utils/permalinks';
+
+const allPosts = await fetchPosts();
+const architecturePosts = allPosts
+  .filter((post) => post.category?.slug && post.category.slug === 'column')
+  .map((post) => ({
+    ...post,
+    permalink: `/architecture/${post.slug}`,
+  }))
+  .slice(0, 4); // 🟢 追加：最新の4件だけを表示するように件数を制限
+
+const metadata = {
+  title: 'e-Shikumi-Labo:architecture — 仕組み化思考・思想コラム',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  {/* 🟢 別館専用のスタイル変数をここで注入して上書きする */}
+  <ArchitectureStyles />
+
+  <div class="dark bg-slate-950 text-slate-100 min-h-screen antialiased font-sans">
+    {/* 🟢 インポートした別館専用のヘッダーデータを適用 */}
+    <Header
+      {...(architectureHeaderData as any)}
+      isSticky
+      showToggleTheme
+      homeUrl="/architecture"
+    />
+
+    {/* 🟢 【変更点5】コンテンツ全体をmainタグで囲む（レイアウトや文章、属性は一切変更なし） */}
+    <main>
+      {/* 1. ヒーローセクション */}
+      <Hero
+        actions={[
+          // { variant: 'primary', text: '初めての方へ', href: '/newcomer' },
+          // { text: '仕組化実験室を見る', href: '/blog' },
+        ]}
+      >
+        <Fragment slot="title">
+          業務フローの構造化 ➔ 自動化へ<br />
+          「泥臭い手作業」を、きれいな仕組みに
+        </Fragment>
+        <Fragment slot="subtitle">
+          カオスな社内データ、ブラックボックス化した業務システム。<br />
+          テクノロジーを本当に飼い慣らすために必要なのは、コードの知識ではなく、業務を「入力・処理・出力」の視点できれいに整理する「仕組み化思考」です。
+        </Fragment>
+      </Hero>
+
+  <Features2
+    title="仕組み化とは「再現可能な構造」をつくること"
+    subtitle="仕組み化とは、作業や判断を「入力 → 処理 → 出力」の3段階に分け、誰が行っても同じ結果になるよう設計することを指します。単なる自動化ではなく、流れを“構造”に置き換えて品質と効率を安定させます。"
+    items={[
+      {
+        title: '入力',
+        description: '入力：外部API・CSV・スクレイピングでデータを取得',
+        icon: 'tabler:shopping-cart',
+      },
+      {
+        title: '処理',
+        description: '欠損や表記ゆれを整形し、ルール・指標で判断（必要に応じてAI補正）',
+        icon: 'tabler:world',
+      },
+      {
+        title: '出力',
+        description: 'スプレッドシート・DB・通知に反映',
+        icon: 'tabler:arrow-merge',
+      },
+    ]}
+  />
+
+
+      {/* 2. ブログ一覧セクション */}
+      <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-7xl">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 border-b border-gray-200 dark:border-slate-800 pb-6">
+          <div class="mb-4 md:mb-0">
+            <h2 class="text-3xl font-bold tracking-tight dark:text-white font-mono">
+              Architecture Lab // 思想別館
+            </h2>
+            <p class="text-sm text-primary dark:text-teal-400 font-medium mt-1">
+              Thought & Framework Articles
+            </p>
+          </div>
+          <p class="text-sm md:text-base text-gray-600 dark:text-slate-400 max-w-md md:text-right">
+            日々の現場での気づきを公開しています。
+          </p>
+        </div>
+
+        <BlogGrid posts={architecturePosts} />
+      </section>
+
+      {/* 3. プロフィールセクション */}
+      <Content
+        isReversed
+        id="profile"
+        title="プロフィール"
+        callToAction={{ text: 'プロフィールを見る', href: '/profile', variant: 'primary' }}
+        image={{
+          src: '~/assets/images/profile.png',
+          alt: 'Profile Image',
+        }}
+      >
+        <Fragment slot="content">
+          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+           【Excel VBA・現場の業務効率化・思考プロセスの紐解き】
+          </h3>
+          <p class="mb-4">
+            大学での研究以来30年以上、エンジニアとしての仕事の傍ら、業務改善としてExcel VBAコードを多数制作し、現場の業務整理に向き合ってきました。
+          </p>
+          <p class="mb-4">
+            現在は、業務効率化担当として現場に入り、Excel VBAを中心としたツールの整備や、担当社員が言語化できなかったプロセスの紐解きを行っています。全体を「入力・処理・出力」に分解するシンプルな思考法で、目の前の業務をクリアに整理しています。
+          </p>
+        </Fragment>
+      </Content>
+    </main>
+
+    {/* 🟢 インポートした別館専用のフッターデータを適用 */}
+    <Footer {...architectureFooterData} />
+  </div>
+</Layout>
