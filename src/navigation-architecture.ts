@@ -4,23 +4,6 @@ import { getPermalink } from './utils/permalinks';
 export const architectureHeaderData = {
   links: [
     {
-      text: '別館初めての方へ',
-      href: getPermalink('/newcomer'),
-    },
-    {
-      text: '個別相談',
-      links: [
-        {
-          text: '伴走支援サービスについて',
-          href: getPermalink('/banso'),
-        },
-        {
-          text: '実績紹介',
-          href: getPermalink('/results'),
-        },
-      ],
-    },
-    {
       text: 'ブログ',
       href: '/architecture/blog', // 思想別館の一覧トップへ
     },
