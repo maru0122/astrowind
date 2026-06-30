@@ -9,11 +9,11 @@ export const architectureHeaderData = {
     },
     {
       text: '会社概要',
-      href: getPermalink('/company'),
+      href: getPermalink('/architecture/company'),
     },
     {
       text: 'お問い合わせ',
-      href: getPermalink('/contact'),
+      href: getPermalink('/architecture/contact'),
     },
   ],
   //actions: [{ text: '実績一覧', href: getPermalink('/results'), target: '_blank' }], // 右端のボタン

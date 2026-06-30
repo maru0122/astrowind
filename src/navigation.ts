@@ -14,8 +14,8 @@ export const headerData = {
           href: getPermalink('/banso'),
         },
         {
-          text: '実績紹介',
-          href: getPermalink('/results'),
+          //text: '実績紹介',
+          //href: getPermalink('/results'),
         },
       ],
     },
@@ -49,7 +49,7 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  actions: [{ text: '実績一覧', href: getPermalink('/results'), target: '_blank' }], // 右端のボタン
+  //actions: [{ text: '実績一覧', href: getPermalink('/results'), target: '_blank' }], // 右端のボタン
 };
 
 export const footerData = {

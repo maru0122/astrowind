@@ -1,15 +1,16 @@
 ---
-title: "コードは正しいのに動かない？日付の「型」に振り回されないためのトラブル対処法"
+title: コードは正しいのに動かない？日付の「型」に振り回されないためのトラブル対処法
 publishDate: 2026-06-13
-author: "シン"
-excerpt: "GoogleスプレッドシートやGASでコードが正しいのに動かない原因は「型」の自動判定かも？見た目に騙されない対策と、6分の壁を越える高速化の鉄則を解説。"
+author: シン
+excerpt: GoogleスプレッドシートやGASでコードが正しいのに動かない原因は「型」の自動判定かも？見た目に騙されない対策と、6分の壁を越える高速化の鉄則を解説。
 image: ~/assets/images/blog/20260613_gas-type-error.png
-category: "gas-spreadsheet"
+category: column
 tags:
-  - "スプレッドシート"
-  - "エラー対処"
+  - スプレッドシート
+  - エラー対処
+  - 仕組み化思考
 metadata:
-  canonical: "https://e-shikumi-labo.com/blog/"
+  canonical: https://e-shikumi-labo.com/blog/
 ---
 こんにちは、e-Shikumi-Laboの シン です。 このブログでは、スプレッドシート＆GAS、Chrome拡張機能をはじめとする自動化のTipsや、日々の現場での気づきを公開しています。
 

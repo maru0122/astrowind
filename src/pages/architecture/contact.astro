@@ -1,0 +1,69 @@
+---
+// 🟢 PageLayout からベースの Layout に変更し、Header/Footer/Styles をインポート
+import Layout from '~/layouts/Layout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Header from '~/components/widgets/Header.astro';
+import Footer from '~/components/widgets/Footer.astro';
+import ArchitectureStyles from '~/components/ArchitectureStyles.astro';
+
+// 🟢 別館専用メニューのインポート
+import { architectureHeaderData, architectureFooterData } from '~/navigation-architecture';
+
+const metadata = {
+  title: 'お問い合わせ — e-Shikumi-Labo',
+};
+---
+
+<Layout metadata={metadata}>
+  {/* 🟢 別館専用スタイル変数の注入 */}
+  <ArchitectureStyles />
+
+  {/* 🟢 別館共通の最外枠ラッパー */}
+  <div class="dark bg-slate-950 text-slate-100 min-h-screen antialiased font-sans">
+    
+    {/* 🟢 別館専用ヘッダーの配置 */}
+    <Header
+      {...(architectureHeaderData as any)}
+      isSticky
+      showToggleTheme
+      homeUrl="/architecture"
+    />
+
+    <main class="py-12 sm:py-20">
+      <Hero
+        tagline="Contact"
+        title="お問い合わせ"
+        subtitle="e-Shikumi-Laboは、ツールの開発代行を行う場所ではありません。<br class='hidden sm:inline'/>「自分の業務をどう整理し、どうすれば自分で維持管理できる仕組みにできるか」を一緒に探求する場所です。<br class='hidden sm:inline'/>自立的な運用を目指すためのプロセス改善や、設計アイデアのご相談をお気軽にお寄せください。"
+        actions={[
+          {
+            variant: 'primary',
+            text: 'Googleフォームを開く（外部サイト）',
+            href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
+            target: '_blank',
+            icon: 'tabler:external-link',
+          },
+        ]}
+      />
+
+      {/* 🟢 背景と枠線を別館の Slate/ダークトーン（bg-slate-900 / border-slate-800）に適応 */}
+      <div class="-mt-12 sm:-mt-20 relative z-10 max-w-2xl mx-auto px-6 py-8 bg-slate-900 border border-slate-800 shadow-sm text-center rounded-2xl">
+        {/* 🟢 テキストカラーを blue から 別館のティール（text-primary dark:text-teal-400）に変更 */}
+        <p class="font-bold text-md mb-4 text-primary dark:text-teal-400 font-mono">
+          ▼ このようなご相談をお受けしています
+        </p>
+        {/* 🟢 テキストカラーを text-slate-400 に調整 */}
+        <ul class="text-left max-w-md mx-auto text-sm space-y-3 text-slate-400 list-disc pl-5">
+          <li>手作業が多く混沌とした業務の「整理・フロー化」の割り出し</li>
+          <li>業務プロセスにおける自動化の「設計アイデア」の検討</li>
+          <li>GASやChrome拡張機能を活用し、ユーザー自身がツールを維持管理していくためのアプローチ</li>
+        </ul>
+        <p class="mt-5 text-xs text-rose-400 font-semibold">
+          ※プログラミングコードの作成・開発代行のみを目的としたご依頼はお受けしておりません。あらかじめご了承ください。
+        </p>
+      </div>
+    </main>
+
+    {/* 🟢 別館専用フッターの配置 */}
+    <Footer {...architectureFooterData} />
+  </div>
+</Layout>
