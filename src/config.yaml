@@ -2,29 +2,29 @@ site:
   name: e-Shikumi-labo
   site: 'https://e-shikumi-labo.com'
   base: '/'
-  trailingSlash: false
+  trailingSlash: true # ★ false から true に変更しました
 
   googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
 
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
+    default: e-Shikumi-Labo # ★ AstroWind から変更
     template: '%s — e-Shikumi-Labo'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+  description: "GoogleスプレッドシートやGASを活用し、毎日の「手作業コピペ」やWebデータ取得をきれいに仕組み化。単なるツールの納品ではなく、AIを味方につけて「自分で作り、自分で直せる自走力」を養う伴走支援を行う個人ラボです。" # ★ 変更
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: e-Shikumi-Labo # ★ AstroWind から変更
     images:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 630
     type: website
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
+    handle: '' # ★ 不要なら空欄、あればご自身のX（Twitter）ID
+    site: ''   # ★ 同上
     cardType: summary_large_image
 
 i18n:
