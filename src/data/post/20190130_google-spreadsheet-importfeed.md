@@ -12,7 +12,7 @@ metadata:
   canonical: "https://e-shikumi-labo.com/blog/"
 ---
 
-こんにちは、e-Shikumi-Laboの シン です。 このブログでは、スプレッドシート＆GAS、Chrome拡張機能をはじめとする自動化のTipsや、日々の現場での気づきを公開しています。
+こんにちは、e-Shikumi-Laboのシンです。 このブログでは、スプレッドシート＆GASやChrome拡張機能をはじめとする、自動化のTipsを紹介しています。
 
 前回までに、プログラム（GASなど）を1行も書くことなく、Web上のデータを自動取得できる便利な関数として、以下の2つを紹介しました。
 
