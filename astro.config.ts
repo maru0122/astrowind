@@ -27,6 +27,7 @@ export default defineConfig({
   output: 'static',
   site: 'https://e-shikumi-labo.com', // ★この行を追加
   base: '/',                 // ★この行を追加
+  trailingSlash: 'always', // ★この1行を追加
 
   integrations: [
     sitemap(),

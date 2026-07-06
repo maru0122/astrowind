@@ -3,7 +3,7 @@ title: "IMPORTFEED関数を定期更新させる方法。キャッシュの罠�
 publishDate: 2026-07-04
 author: "シン"
 excerpt: "便利だけど最新データに更新されない…そんなIMPORTFEED関数の「キャッシュの罠」と「画面を閉じると眠る仕様」を突破。関数を維持したまま裏側で強制更新させるGASの仕掛けを解説します。"
-image: ~/assets/images/blog/20260704_top.png
+image: ~/assets/images/blog/20260704_importfeed-refresh-gas.png
 category: "gas-spreadsheet"
 tags:
   - "スプレッドシート"
