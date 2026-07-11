@@ -29,6 +29,11 @@ export default defineConfig({
   base: '/',                 // ★この行を追加
   trailingSlash: 'always', // ★この1行を追加
 
+  // ★ ここを新しいパスに合わせて修正します
+  redirects: {
+    '/tool-app/20170227_benecalc_r3b.html': '/20170227_benecalc_r3/'
+  },
+  
   integrations: [
     sitemap(),
     mdx(),

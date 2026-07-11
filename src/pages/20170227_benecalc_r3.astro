@@ -1,0 +1,264 @@
+---
+// AstroWindの共通レイアウトをインポート
+import Layout from '~/layouts/PageLayout.astro'; 
+
+const metadata = {
+  title: 'eBay簡易利益計算シート | e-Shikumi-Labo',
+};
+---
+
+<Layout metadata={metadata}>
+  <div class="calc-wrapper">
+    <h2>eBay簡易利益計算シート</h2>
+    <div class="notice-box">
+      <p class="notice-title">【サイトリニューアルに伴うお知らせ】</p>
+      <p>当サイトのリニューアルに伴いコンテンツを一新いたしましたが、この「eBay簡易利益計算シート」は長年多くの方にご利用いただいている人気ページのため、そのまま残しています。</p>
+
+      <p>現在、当ラボではeBay輸出の運営や関連ツールの開発は行っておりませんが 、今も現役で活躍されているセラーの皆様への**“置き土産”**として、引き続き無料で公開しております。日々の利益計算や損益分岐点の確認に、ぜひご活用ください。</p>
+    </div>
+
+    <p class="description">eBayの簡易利益計算シートです。出品価格や仕入れ価格を入力して計算ボタンを押してください。</p>
+
+    <div class="form-container">
+      <form id="ebayCalcForm">
+        <div class="input-group">
+          <label for="syupin">出品価格 ($)</label>
+          <input type="number" id="syupin" name="syupin" step="0.01" required placeholder="例: 100">
+        </div>
+        <div class="input-group">
+          <label for="crate">レート (円/ドル)</label>
+          <input type="number" id="crate" name="crate" value="160" step="0.1" required>
+        </div>
+        <div class="input-group">
+          <label for="shiire">仕入れ価格 (円)</label>
+          <input type="number" id="shiire" name="shiire" required placeholder="例: 5000">
+        </div>
+        <div class="input-group">
+          <label for="trate">手数料 (%)</label>
+          <input type="number" id="trate" name="trate" value="16" step="0.1" required>
+        </div>
+        <div class="input-group">
+          <label for="shipfee">送料 (円) <small>※FreeShipping設定用</small></label>
+          <input type="number" id="shipfee" name="shipfee" value="0" required>
+        </div>
+        
+        <button type="button" id="calcButton" class="btn-submit">計算する</button>
+      </form>
+    </div>
+
+    <div class="result-container">
+      <table class="result-table">
+        <tr>
+          <th>想定利益</th>
+          <td><span id="resultText1">0円</span></td>
+        </tr>
+        <tr>
+          <th>利益率</th>
+          <td><span id="resultText2">0%</span></td>
+        </tr>
+        <tr>
+          <th>損益分岐点</th>
+          <td><span id="resultText3">0$</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .calc-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    color: #333;
+  }
+  
+  h2 {
+    position: relative;
+    padding: 0.25em 0 0.5em 0.75em;
+    border-left: 6px solid #ccc;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  h2::before {
+    position: absolute;
+    left: -6px;
+    bottom: 0;
+    content: '';
+    width: 6px;
+    height: 50%;
+    background-color: #3498db; 
+  }
+  h2::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .description {
+    margin-bottom: 2rem;
+    color: #555;
+    font-size: 0.95rem;
+  }
+
+  .form-container, .result-container {
+    background: #fdfdfd;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+
+  .input-group small {
+    font-weight: normal;
+    color: #777;
+    font-size: 0.8rem;
+    display: block;
+  }
+
+  .input-group input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1.5rem;
+  }
+
+  .btn-submit:hover {
+    background-color: #2980b9;
+  }
+
+  .result-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .result-table th, .result-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
+  }
+
+  .result-table th {
+    width: 40%;
+    color: #555;
+    text-align: left;
+    font-weight: normal;
+  }
+
+  .result-table td {
+    font-weight: bold;
+    color: #e74c3c;
+    text-align: right;
+  }
+
+  .banner-area {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .banner-text {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .banner-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  @media (min-width: 600px) {
+    .input-group {
+      flex-direction: row;
+      align-items: center;
+    }
+    .input-group label {
+      width: 45%;
+    }
+    .input-group input {
+      width: 55%;
+    }
+
+    /* お知らせボックスのスタイル */
+  .notice-box {
+    background-color: #f4f9fc;
+    border-left: 4px solid #3498db;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #444;
+  }
+  .notice-box p {
+    margin-bottom: 0.75rem;
+  }
+  .notice-box p:last-child {
+    margin-bottom: 0;
+  }
+  .notice-title {
+    font-weight: bold;
+    color: #2980b9;
+    font-size: 0.95rem;
+  }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const calcButton = document.getElementById('calcButton');
+    if (!calcButton) return;
+
+    calcButton.addEventListener('click', () => {
+      const syupin = Number((document.getElementById('syupin') as HTMLInputElement).value) || 0;
+      const crate = Number((document.getElementById('crate') as HTMLInputElement).value) || 0;
+      const shiire = Number((document.getElementById('shiire') as HTMLInputElement).value) || 0;
+      const trate = Number((document.getElementById('trate') as HTMLInputElement).value) || 0;
+      const shipfee = Number((document.getElementById('shipfee') as HTMLInputElement).value) || 0;
+
+      const rieki = Math.round(syupin * (1 - trate / 100) * crate - shiire - shipfee);
+      const ritsu = (syupin > 0 && crate > 0) ? Math.round(rieki / (syupin * crate) * 100) : 0;
+      const sonekiDivider = (1 - trate / 100) * crate;
+      const soneki = sonekiDivider > 0 ? Math.round((shiire + shipfee) / sonekiDivider) : 0;
+
+      (document.getElementById('resultText1') as HTMLElement).innerText = rieki.toLocaleString() + "円";
+      (document.getElementById('resultText2') as HTMLElement).innerText = ritsu + "%";
+      (document.getElementById('resultText3') as HTMLElement).innerText = soneki.toLocaleString() + "$";
+    });
+  });
+</script>
