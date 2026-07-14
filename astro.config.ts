@@ -31,9 +31,10 @@ export default defineConfig({
 
   // ★ ここを新しいパスに合わせて修正します
   redirects: {
-    '/tool-app/20170227_benecalc_r3b.html': '/20170227_benecalc_r3/'
+    '/tool-app/20170227_benecalc_r3b.html': '/20170227_benecalc_r3/',
+    '/calculator': '/20170227_benecalc_r3/'
   },
-  
+
   integrations: [
     sitemap(),
     mdx(),
