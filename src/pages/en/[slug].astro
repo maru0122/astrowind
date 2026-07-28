@@ -1,0 +1,38 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+// ★ 先ほど作った英語版レイアウトを使用
+import Layout from '~/layouts/PageLayoutEn.astro';
+import SinglePost from '~/components/blog/SinglePost.astro';
+import ToBlogLink from '~/components/blog/ToBlogLink.astro';
+import { fetchPosts } from '~/utils/blog';
+
+export const prerender = true;
+
+// 🟢 英語記事のみを抽出して個別ページのURLを生成
+export const getStaticPaths = (async () => {
+  const posts = await fetchPosts();
+  const enPosts = posts.filter(
+    (post) => (post as any).lang === 'en' || (post as any).frontmatter?.lang === 'en'
+  );
+
+  return enPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { post } = Astro.props as Props;
+
+const metadata = {
+  title: post.title,
+  description: post.excerpt,
+};
+---
+
+<Layout metadata={metadata}>
+  <SinglePost post={{ ...post, image: post.image }} url={`/en/${post.slug}`} />
+  <ToBlogLink text="Back to blog" href="/en/blog" />
+</Layout>

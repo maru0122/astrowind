@@ -19,12 +19,17 @@ import { getPermalink, getBlogPermalink } from '~/utils/permalinks';
 
 const allPosts = await fetchPosts();
 const architecturePosts = allPosts
-  .filter((post) => post.category?.slug && post.category.slug === 'column')
+  .filter(
+    (post) =>
+      post.category?.slug === 'column' &&
+      (post as any).lang !== 'en' &&
+      (post as any).frontmatter?.lang !== 'en'
+  )
   .map((post) => ({
     ...post,
     permalink: `/architecture/${post.slug}`,
   }))
-  .slice(0, 4); // 🟢 追加：最新の4件だけを表示するように件数を制限
+  .slice(0, 4);
 
 const metadata = {
   title: 'e-Shikumi-Labo:architecture — 仕組み化思考・思想コラム',

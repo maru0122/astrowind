@@ -1,0 +1,32 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Footer from '~/components/widgets/Footer.astro';
+import Announcement from '~/components/widgets/Announcement.astro';
+
+// 英語版ナビゲーションの読み込み
+import { headerData, footerData } from '~/navigation-en';
+
+import type { MetaData } from '~/types';
+
+export interface Props {
+  metadata?: MetaData;
+}
+
+const { metadata } = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <slot name="announcement">
+  </slot>
+  <slot name="header">
+    {/* 🟢 homeUrl="/en" を追加してロゴのリンク先を英語版トップに設定 */}
+    <Header {...headerData} isSticky showRssFeed showToggleTheme homeUrl="/en" />
+  </slot>
+  <main>
+    <slot />
+  </main>
+  <slot name="footer">
+    <Footer {...footerData} />
+  </slot>
+</Layout>

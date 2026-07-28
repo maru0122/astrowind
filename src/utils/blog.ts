@@ -55,9 +55,10 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     author,
     draft = false,
     metadata = {},
+    lang, // 🟢 追加：data から lang を抽出
   } = data;
 
-  const slug = cleanSlug(id); // cleanSlug(rawSlug.split('/').pop());
+  const slug = cleanSlug(id);
   const publishDate = new Date(rawPublishDate);
   const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
 
@@ -90,11 +91,11 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     author: author,
 
     draft: draft,
+    lang: lang, // 🟢 追加：オブジェクトに lang をセット
 
     metadata,
 
     Content: Content,
-    // or 'content' in case you consume from API
 
     readingTime: remarkPluginFrontmatter?.readingTime,
   };

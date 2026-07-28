@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
 
 import { unified } from '@astrojs/markdown-remark';
+import rehypeExternalLinks from 'rehype-external-links'; // ★ この1行を追加！
 
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -29,6 +30,16 @@ export default defineConfig({
   base: '/',                 // ★この行を追加
   trailingSlash: 'always', // ★この1行を追加
 
+  // ★ ここから追加：言語ルーティング設定
+  i18n: {
+    defaultLocale: 'ja',
+    locales: ['ja', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+  // ★ ここまで追加
+  
   // ★ ここを新しいパスに合わせて修正します
   redirects: {
     '/tool-app/20170227_benecalc_r3b.html': '/20170227_benecalc_r3/',
@@ -96,7 +107,17 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [readingTimeRemarkPlugin],
-      rehypePlugins: [responsiveTablesRehypePlugin],
+      rehypePlugins: [responsiveTablesRehypePlugin,
+        // ★ ここから追加
+        [
+          rehypeExternalLinks,
+          {
+            target: '_blank',
+            rel: ['noopener', 'noreferrer'],
+          },
+        ],
+        // ★ ここまで追加
+      ],
     }),
   },
 

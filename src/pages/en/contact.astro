@@ -1,0 +1,39 @@
+---
+import Layout from '~/layouts/PageLayoutEn.astro';
+
+const metadata = {
+  title: 'Contact Us — e-Shikumi-Labo',
+  description: 'Get in touch with e-Shikumi-Labo for inquiries regarding our products and scripts.',
+};
+
+// 🟢 作成したGoogleフォームの埋め込み用URLをここに貼り付けます
+const GOOGLE_FORM_URL = "https://forms.gle/LodUURbDEy2vEmBPA";
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-3">
+        Contact Us
+      </h1>
+      <p class="text-gray-600 dark:text-slate-400 max-w-xl mx-auto">
+        Have questions about our Chrome Extension boilerplate or GAS scripts? Send us a message below.
+      </p>
+    </div>
+
+    {/* Google Form 埋め込みコンテナ */}
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-2 sm:p-6 overflow-hidden">
+      <iframe
+        src={GOOGLE_FORM_URL}
+        width="100%"
+        height="820"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        class="w-full min-h-[750px]"
+      >
+        Loading form…
+      </iframe>
+    </div>
+  </section>
+</Layout>

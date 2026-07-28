@@ -24,6 +24,7 @@ export interface Post {
   metadata?: MetaData;
 
   draft?: boolean;
+  lang?: string; // 🟢 これを追記
 
   /** Rendered Astro component factory for the post body. */
   Content?: AstroComponentFactory;

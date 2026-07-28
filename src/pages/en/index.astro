@@ -1,0 +1,146 @@
+---
+import Layout from '~/layouts/PageLayoutEn.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import BlogGrid from '~/components/blog/Grid.astro';
+import { fetchPosts } from '~/utils/blog';
+
+export const prerender = true;
+
+// 🟢 英語記事のみを取得し、最新4件をピックアップ（完全自動更新）
+const allPosts = await fetchPosts();
+const enPosts = allPosts
+  .filter((post) => (post as any).lang === 'en' || (post as any).frontmatter?.lang === 'en')
+  .map((post) => ({
+    ...post,
+    permalink: `/en/${post.slug}`,
+  }))
+  .slice(0, 4);
+
+const metadata = {
+  title: 'e-Shikumi-Labo — Chrome Extension Boilerplate & Workflow Automation',
+  ignoreTitleTemplate: true,
+};
+
+// 💡 実際の Gumroad 商品ページの URL を設定してください
+const GUMROAD_URL = 'https://maru0122.gumroad.com/l/chatsaverforgemini'; 
+---
+
+<Layout metadata={metadata}>
+  <main>
+    {/* 1. ヒーローセクション */}
+    <Hero
+      actions={[
+        { variant: 'primary', text: 'Get Boilerplate on Gumroad', href: GUMROAD_URL, target: '_blank', icon: 'tabler:shopping-cart' },
+        { text: 'Read Blog', href: '/en/blog' },
+      ]}
+    >
+      <Fragment slot="title">
+        Production-Ready Boilerplate for <br class="hidden sm:inline" />
+        <span class="text-accent dark:text-teal-400">Chrome Extension & GAS</span>
+      </Fragment>
+      <Fragment slot="subtitle">
+        Sync Gemini chat logs directly to Google Sheets & Drive in real-time. <br />
+        Built on Manifest V3 with zero infrastructure costs — perfect for Indie Hackers & Engineers.
+      </Fragment>
+    </Hero>
+
+    {/* 2. メイン商品紹介セクション（Gumroad商品カード） */}
+    <section class="py-12 sm:py-16 lg:py-20 bg-slate-50 dark:bg-slate-900/50 border-y border-gray-200 dark:border-slate-800">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-800 space-y-6">
+          
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+            ⚡ Featured Boilerplate ($0 Backend Costs)
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Gemini Chat Sync — Chrome Extension Boilerplate
+          </h2>
+
+          <p class="text-gray-600 dark:text-slate-300 leading-relaxed">
+            A clean, production-ready codebase powered by <strong>Chrome Manifest V3</strong> and <strong>Google Apps Script (GAS)</strong>. Automatically formats Gemini responses into clean Markdown and syncs structured data into Google Sheets & Drive in real-time.
+          </p>
+
+          {/* 主な特徴 */}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm pt-2">
+            <div class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span><strong>Real-Time Sync:</strong> MutationObserver debounce sync without duplicates</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span><strong>Isolated Parser:</strong> Easily update CSS selectors if Gemini UI changes</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span><strong>$0 Backend Server:</strong> Runs entirely within Google's free tier (GAS)</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span><strong>Commercial Friendly:</strong> Modify, rebrand, and publish anywhere</span>
+            </div>
+          </div>
+
+          {/* 購入導線 */}
+          <div class="pt-4 flex flex-col sm:flex-row gap-4 items-center border-t border-gray-100 dark:border-slate-800">
+            <a
+              href={GUMROAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-md"
+            >
+              Get Source Code on Gumroad
+            </a>
+            <span class="text-xs text-slate-500 dark:text-slate-400">
+              Includes Extension Code, Code.gs, Sheet Template & Guides
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {/* 3. Target Audience (Features2) */}
+    <Features2
+      title="Perfect For"
+      items={[
+        {
+          title: 'Indie Hackers',
+          description: 'A solid base to build and launch custom AI / Gemini tools rapidly.',
+          icon: 'tabler:rocket',
+        },
+        {
+          title: 'Web Engineers',
+          description: 'Clean design pattern integrating Chrome Manifest V3 with GAS.',
+          icon: 'tabler:code',
+        },
+        {
+          title: 'Automation Enthusiasts',
+          description: 'Automate manual copy-pasting by syncing AI output directly to Drive.',
+          icon: 'tabler:cpu',
+        },
+      ]}
+    />
+
+    {/* 4. 最新の英語ブログ記事（完全自動連動） */}
+    {
+      enPosts.length > 0 && (
+        <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-7xl border-t border-gray-200 dark:border-slate-800">
+          <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 border-b border-gray-200 dark:border-slate-800 pb-6">
+            <div>
+              <h2 class="text-3xl font-bold tracking-tight dark:text-white font-mono">
+                Latest Articles
+              </h2>
+              <p class="text-sm text-primary dark:text-teal-400 font-medium mt-1">
+                Automation & System Design Insights
+              </p>
+            </div>
+          </div>
+
+          <BlogGrid posts={enPosts} />
+        </section>
+      )
+    }
+  </main>
+</Layout>

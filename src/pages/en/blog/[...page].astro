@@ -1,7 +1,8 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 
-import Layout from '~/layouts/PageLayout.astro';
+// ★ 先ほど作った英語版レイアウトを使用
+import Layout from '~/layouts/PageLayoutEn.astro';
 import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
@@ -10,22 +11,19 @@ import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 
 export const prerender = true;
 
-// ★【主従逆転・移行】本館ブログ一覧には column 以外の技術記事だけを流すように蛇口を反転
+// 🟢 【蛇口】英語版（lang: 'en'）の記事だけを徹底抽出
 export const getStaticPaths = (async ({ paginate }) => {
-  // 本物の paginate を包む「別注の判定マシーン」
   const customPaginate = (posts: any[], options: any) => {
-    // 🟢 【蛇口の反転】column（思想別館）と lang: 'en'（英語版）を除外した技術記事だけを徹底抽出
-  const techPosts = posts.filter(
-    (post) =>
-      post.category?.slug !== 'column' &&
-      (post as any).lang !== 'en' &&
-      (post as any).frontmatter?.lang !== 'en'
-  );
-    // 厳選した技術記事だけを本物の処理に引き渡す
-    return paginate(techPosts, options);
+    const enPosts = posts
+      .filter((post) => (post as any).lang === 'en' || (post as any).frontmatter?.lang === 'en')
+      .map((post) => ({
+        ...post,
+        // 🟢 リンク先を強制的に /en/ 配下に上書き
+        permalink: `/en/${post.slug}`,
+      }));
+    return paginate(enPosts, options);
   };
 
-  // 引数の customPaginate の後ろに「as any」を適用して型を守る
   return await getStaticPathsBlogList({ paginate: customPaginate as any });
 }) satisfies GetStaticPaths;
 
@@ -49,9 +47,9 @@ const metadata = {
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
     <Headline
-      subtitle="手作業を減らし、時間を生み出すためのヒント。ノンプログラマーでも自分で維持管理できる自動化・業務整理のアイデアをお届けします。"
+      subtitle="Discover insights, tips, and articles about automation and workflow optimization."
     >
-      ブログ
+      Blog
     </Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

@@ -6,14 +6,28 @@ import Features2 from '~/components/widgets/Features2.astro';
 import Content from '~/components/widgets/Content.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
+// 🟢 記事取得用の関数をインポート
+import { fetchPosts } from '~/utils/blog';
+
 const metadata = {
   title: 'e-Shikumi-Labo —「泥臭い手作業」を、きれいに仕組み化',
   ignoreTitleTemplate: true,
 };
+
+// 🟢 日本語の本館用：思想別館(column)と英語版(lang: 'en')を除外して最新4件を取得
+const allPosts = await fetchPosts();
+const latestPosts = allPosts
+  .filter(
+    (post) =>
+      post.category?.slug !== 'column' &&
+      (post as any).lang !== 'en' &&
+      (post as any).frontmatter?.lang !== 'en'
+  )
+  .slice(0, 4);
 ---
 
 <Layout metadata={metadata}>
-<Hero
+  <Hero
     actions={[
       { variant: 'primary', text: '初めての方へ', href: '/newcomer' },
       { text: '仕組化実験室を見る', href: '/blog' },
@@ -30,7 +44,7 @@ const metadata = {
     </Fragment>
   </Hero>
 
-
+  {/* 🟢 フィルター済みの記事配列 (posts={latestPosts}) をコンポーネントへ渡す */}
   <BlogLatestPosts
     title="ブログ"
     information="Webデータ取得の自動化に関するノウハウを公開しています。"
@@ -48,7 +62,8 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        【Webデータ取得・自走力の伴走支援】</h3>
+        【Webデータ取得・自走力の伴走支援】
+      </h3>
       <p class="mb-4">
         大学での研究以来30年以上、エンジニアとしての仕事の傍ら、業務改善としてExcel VBAコードを多数制作してきました。2014年には自らの輸出ビジネスを機に、GASなどによるWebデータ取得・自動化システムを本格的に構築。同じ悩みを持つ方へツールの提供を始めました。
       </p>

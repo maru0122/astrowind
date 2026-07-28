@@ -7,6 +7,10 @@ export const headerData = {
       href: getPermalink('/newcomer'), // 固定ページ（後で作ります）へのリンク
     },
     {
+      text: 'プロダクト',
+      href: '/chatsaverforgemini', // ※先ほど作成したAstroファイルのURLパス
+    },
+    {
       text: '個別相談',
       links: [
         {
@@ -49,7 +53,8 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  //actions: [{ text: '実績一覧', href: getPermalink('/results'), target: '_blank' }], // 右端のボタン
+  // 🟢 ここを修正・有効化：右端に「EN」切り替えボタンを配置
+  actions: [{ text: 'EN', href: getPermalink('/en') }], 
 };
 
 export const footerData = {

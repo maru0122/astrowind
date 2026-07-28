@@ -23,10 +23,17 @@ export interface Props {
 
 const { metadata = {} } = Astro.props;
 const { language, textDirection } = I18N;
+
+// ★ ここから追加：現在のURLパスを取得して、言語を動的に判定
+const currentPath = Astro.url.pathname;
+const isEnglish = currentPath.startsWith('/en/') || currentPath === '/en';
+const resolvedLanguage = isEnglish ? 'en' : language;
+// ★ ここまで追加
+
 ---
 
 <!doctype html>
-<html lang={language} dir={textDirection} class="2xl:text-[20px]">
+<html lang={resolvedLanguage} dir={textDirection} class="2xl:text-[20px]">
   <head>
     <CommonMeta />
     <Favicons />

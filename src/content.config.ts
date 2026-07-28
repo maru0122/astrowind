@@ -48,7 +48,8 @@ const metadataDefinition = () =>
     .optional();
 
 const postCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
+  // 🟢 サブフォルダ内のマークダウンも対象にするため **/*.md に変更
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/data/post' }),
   schema: z.object({
     publishDate: z.date().optional(),
     updateDate: z.date().optional(),
@@ -61,6 +62,9 @@ const postCollection = defineCollection({
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
     author: z.string().optional(),
+
+    // 🟢 追加：lang 属性をスキーマに許可
+    lang: z.string().optional(),
 
     metadata: metadataDefinition(),
   }),
