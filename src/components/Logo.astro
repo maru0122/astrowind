@@ -2,8 +2,8 @@
 import { SITE } from 'astrowind:config';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
->
-  🚀 {SITE?.name}
+<span class="flex items-center gap-2 self-center ml-2 rtl:ml-0 mr-2 rtl:mr-0 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
+  <!-- 絵文字 🚀 を <img> タグに変更 -->
+  <img src="/logo_fine3.png" alt="Logo" class="w-8 h-8 object-contain" />
+  {SITE?.name}
 </span>
