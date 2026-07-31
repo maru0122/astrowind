@@ -33,6 +33,14 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <SinglePost post={{ ...post, image: post.image }} url={`/en/${post.slug}`} />
+  <SinglePost post={{ ...post, image: post.image }} url={`/en/${post.slug}`}>
+    {
+      post.Content ? (
+        <post.Content />
+      ) : (
+        <Fragment set:html={post.content || ''} />
+      )
+    }
+  </SinglePost>
   <ToBlogLink text="Back to blog" href="/en/blog" />
 </Layout>
