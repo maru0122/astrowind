@@ -7,7 +7,9 @@ export const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat(I18N?.lang
   timeZone: 'UTC',
 });
 
-export const getFormattedDate = (date: Date): string => (date ? formatter.format(date) : '');
+//export const getFormattedDate = (date: Date): string => (date ? formatter.format(date) : '');
+export const getFormattedDate = (date: Date): string =>
+  date ? new Date(date).toISOString().split('T')[0] : '';
 
 export const trim = (str = '', ch?: string) => {
   let start = 0,
