@@ -1,5 +1,5 @@
 ---
-title: "Part 3: The '1.5-Second Trap' Overlooked by AI. Avoiding Account Ban Risks Using Years of Scraping Experience"
+title: "Avoiding Ban Risks in Chrome Extension Automation: Smart DOM Monitoring with MutationObserver (Part 3)"
 publishDate: 2026-07-24
 author: Shin
 excerpt: "Taking on the challenge of fully automating the Gemini chat log saver (Part 3). I detail the process of avoiding the risks of periodic execution every 1.5 seconds, and building a smart DOM monitoring process (MutationObserver) that doesn't burden the other party's server. I'll share the thinking process of having the human point out risks and making the AI come up with safe alternatives."

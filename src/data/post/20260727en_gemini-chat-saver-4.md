@@ -1,5 +1,5 @@
 ---
-title: "Part 4: When It Breaks, Just Fix the 'Raw Parts'. The Self-Reliance to Maintain Tools Yourself by Commanding AI"
+title: "How to Maintain AI-Generated Chrome Extensions When Web UIs Update (Part 4)"
 publishDate: 2026-07-27
 author: Shin
 excerpt: "The final installment on gaining the self-reliance to remain unfazed even when 'the tool that worked yesterday suddenly stops'! I'll teach you the independent design of parser.js (assuming it will break) and the steps to give precise fix instructions to AI when the UI changes. Here's a summary of the thinking process to safely maintain and operate tools without completely leaving everything to AI."

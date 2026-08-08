@@ -1,5 +1,5 @@
 ---
-title: "Part 2: Spreadsheets Are Hard to Read. Building a System to Auto-Generate Markdown Files Simultaneously via GAS"
+title: "Auto-Export Gemini Chats to Markdown & Google Drive via GAS (Part 2)"
 publishDate: 2026-07-22
 author: Shin
 excerpt: "Solved the 'long texts and code are hard to read' issue in spreadsheet saves! I expanded GAS to build a system that auto-generates Markdown (.md) files to Google Drive. I'll explain the process of fixing a line-break bug with AI, and the ingenuity behind a 'robust design' resistant to UI changes."

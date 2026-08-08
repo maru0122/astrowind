@@ -1,5 +1,5 @@
 ---
-title: "Part 1: How Far Can You Get by 'Leaving It Completely to AI'? Building a Chrome Extension to Auto-Save Gemini Chat Logs"
+title: "Building a Chrome Extension to Auto-Save Gemini Chat Logs using AI (Part 1)"
 publishDate: 2026-07-20
 author: Shin
 excerpt: "Avoid the trap of 'I made the AI write the code, but it doesn't match the actual screen and won't work'! I'm revealing the development process behind a tool that automatically saves Gemini chat logs. In Part 1, I'll show you how to effectively control AI through understanding system structure and giving precise instructions using DevTools."
