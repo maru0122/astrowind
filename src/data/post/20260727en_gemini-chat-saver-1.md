@@ -52,8 +52,6 @@ From here on, it's human work. I opened Gemini in the Chrome browser, pressed th
 
 I selected the HTML code for my prompt area and Gemini's response area, copied it, and pasted it into the chat window with the AI.
 
-Plaintext
-
 ```
 [Human]
 Here is the HTML for the prompt area: <div class="query-text">...</div>
@@ -80,16 +78,29 @@ The reason I was still able to build the tool was because **I understood the ove
 
 I realized that the real initiative in tool-building lies not in knowing the grammar, but in "grasping the overall mechanism and how to control the AI."
 
-## 4. About the Finished Tool: "Chat Saver for Gemini"
+## 4. About the Finished Tool: "Chat Saver for Gemini" (Lite & Pro)
 
-"Chat Saver for Gemini" is the completed version, built upon this prototype by layering on error handling and duplicate prevention processing.
+Building upon this prototype, I layered on robust error handling, duplicate prevention processing, and file export options. To accommodate different workflows, I split the tool into two editions: **Lite** and **Pro**.
 
-The overall structure is simple: it involves "creating a receiving endpoint (GAS) on the spreadsheet side, and sending data to it from the Chrome extension."
+### 📄 Free Edition: Chat Saver for Gemini (Lite)
+For users who want a **zero-setup, 1-second solution** without configuring backend scripts or Google Apps Script (GAS), I created the **Lite version**.
 
-For those who think, "Rather than building it from scratch myself, I just want to use it in my practical work quickly," or "I want the complete set of the latest Manifest V3 compatible code and setup instructions," I have placed the finished package that I actually use on Gumroad.
+- **Instant Local Export:** Export your current Gemini chat directly to a Markdown (`.md`) file with 1 click.
+- **Zero Configuration:** Works right out of the box—no GAS web apps, spreadsheet links, or API keys required.
+- **100% Private:** Runs entirely inside your local browser without sending data to any external server.
 
-🔗 **[Chat Saver for Gemini (View the complete code package on Gumroad)](https://maru0122.gumroad.com/l/chatsaverforgemini)**
+If you just want to quickly save your chat logs into local files or note-taking apps like Obsidian, you can grab the Lite version source code for free on GitHub:
 
+🔗 **[Chat Saver for Gemini - Lite (Free & Open Source on GitHub)](https://github.com/maru0122/chat-saver-for-gemini-lite)**
+
+---
+
+### 🚀 Full Auto-Sync Edition: Chat Saver for Gemini (Pro)
+For those who think, "Rather than manual exports, I want continuous, real-time background syncing to Google Sheets and Google Drive," the **Pro version** provides the complete automated pipeline.
+
+It automatically detects new responses as you chat (`MutationObserver`) and pushes diffs seamlessly to your cloud storage without duplicate entries.
+
+🔗 **[Chat Saver for Gemini - Pro (View the complete code package on Gumroad)](https://maru0122.gumroad.com/l/chatsaverforgemini)**
 > ⚠️ **Things You Should Know as a Prerequisite**
 > 
 > Since the counterpart is Google (Gemini), there is a possibility that it will stop working due to UI specification changes. It is not a product with a guarantee of permanent operation; please use it simply as a "tool to experience the mechanism and make practical work more convenient."
