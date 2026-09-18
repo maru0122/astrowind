@@ -1,0 +1,201 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { Image } from 'astro:assets';
+
+// 画像のインポート（パスは環境に合わせて調整してください）
+import heroImg from '../assets/aimemo/20250911_4.png';
+import feature1Img from '../assets/aimemo/20260911_1.png';
+import feature2Img from '../assets/aimemo/20260911_2.png';
+import feature3Img from '../assets/aimemo/20260911_3.png';
+import feature4Img from '../assets/aimemo/20260911_5.png';
+
+const storeUrl = "https://chromewebstore.google.com/detail/aimemo-project-notes-for/defcpmdjodcnhaaihkplkonippbnjnpd?authuser=0&hl=ja&pli=1";
+
+const metadata = {
+  title: 'AIMemo - AIチャットのメモをGoogleシートに自動保存 | Chrome拡張機能',
+  description: 'ChatGPT、Gemini、Claudeでのやり取りをプロジェクトごとに横断管理。外部サーバーを経由せず、自身のGoogleスプレッドシートへ安全に自動保存します。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Chromeに追加（無料）',
+        href: storeUrl,
+        target: '_blank',
+        icon: 'tabler:brand-chrome',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white highlight">AIMemo</span><br />
+      AIチャットのメモをGoogleシートに自動保存
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      ChatGPT、Gemini、Claudeのチャットを横断してプロジェクト管理。<br />
+      外部サーバー不使用。データはあなたのGoogleドライブだけに安全保存されます。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={heroImg}
+        alt="AIMemo - AIチャットのメモをGoogleシートに自動保存"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Hero>
+
+  <!-- 特徴概要 -->
+<Features
+    id="features"
+    tagline="Features"
+    title="💡 AIMemoが選ばれる理由"
+    subtitle="散らばりがちなAIとの対話を資産に変え、日常の業務効率を劇的に向上させます"
+    items={[
+      {
+        title: 'マルチAIの一元管理',
+        description: 'ChatGPT, Gemini, Claudeなど、複数のAIに散らばった会話履歴をプロジェクトごとにスッキリ整理できます。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: '思考メモやプロンプトの流出防止',
+        description: '外部サーバーを経由せず自社のGoogleドライブだけに保存。貴重なプロンプトやアイデアが第三者に渡りません。',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: 'ノーストレスな自動保存',
+        description: '保存ボタンを押す手間はゼロ。画面の切り替えや離脱時もリアルタイムで同期され、重要なアイデアを失いません。',
+        icon: 'tabler:device-floppy',
+      },
+      {
+        title: 'Markdown対応で見やすい構造化',
+        description: '見出しやコードブロックを綺麗に残せるMarkdownに対応。後から見返した時も欲しい情報へすぐアクセスできます。',
+        icon: 'tabler:edit',
+      },
+    ]}
+  />
+
+  <!-- ポイント1: マルチAI集約 -->
+  <Content
+    isReversed
+    tagline="Point 1"
+    title="マルチAIのメモを1か所に集約"
+    items={[
+      { title: 'サイドパネルでチャット画面を見ながら即座に記録', icon: 'tabler:check' },
+      { title: 'ChatGPT・Gemini・Claudeを共通フォーマットで管理', icon: 'tabler:check' },
+    ]}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">画面を切り替えずにスマート記録</h3>
+      AIチャットの画面を開いたまま、ブラウザのサイドパネルでメモやタスクをサクサク記録。過去の対話履歴や重要なプロンプトを迷わず参照できます。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={feature1Img}
+        alt="ChatGPT・Gemini・Claudeのメモを1か所に集約"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Content>
+
+<!-- ポイント2: ドライブ直接保存 -->
+  <Content
+    tagline="Point 2"
+    title="データはあなたのGoogleドライブだけに自動保存"
+    items={[
+      { title: '外部サーバーを経由しないためプライバシー面も安心', icon: 'tabler:check' },
+      { title: 'Googleスプレッドシートとして自由な二次利用・分析が可能', icon: 'tabler:check' },
+    ]}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">安全＆自由度の高いデータ構造</h3>
+      サードパーティの外部サーバーを一切経由せず、あなたのGoogleドライブ内に直接保存。貴重なプロンプトや思考ログが外部へ流出する心配がなく、自分だけのデータベースとして永続的に管理・活用できます。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={feature2Img}
+        alt="データはGoogleドライブだけに自動保存"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- ポイント3: プロジェクト分類 ＆ 3つのメモタブ -->
+  <Content
+    isReversed
+    tagline="Point 3"
+    title="プロジェクト別分類 ＆ 3つのメモタブ"
+    items={[
+      { title: 'プロジェクトごとにチャット履歴をスッキリ整理', icon: 'tabler:check' },
+      { title: '最大3つの独立メモタブ（用途別）で使い分け', icon: 'tabler:check' },
+    ]}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">進行中のタスクを迷わず一発検索</h3>
+      「要約」「コード分析」「タスクメモ」など、目的別のメモタブを活用して必要な情報へ瞬時にアクセスできます。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={feature3Img}
+        alt="プロジェクト別分類＆3つのメモタブ"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- ポイント4: 初期設定1分 -->
+  <Content
+    tagline="Point 4"
+    title="初期設定はわずか1分！Google連携だけで即スタート"
+    items={[
+      { title: '面倒なAPIキーの取得やバックエンドサーバー構築は不要', icon: 'tabler:check' },
+      { title: 'ワンクリック連携で即座にデータベース自動構築', icon: 'tabler:check' },
+    ]}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">届いたその日からすぐ使える</h3>
+      複雑な設定作業は一切不要。Googleアカウントでログインするだけで、すぐに使い始めることができます。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={feature4Img}
+        alt="初期設定はわずか1分"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Chromeウェブストアで追加（無料）',
+        href: storeUrl,
+        target: '_blank',
+        icon: 'tabler:brand-chrome',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      🚀 AIとの対話記録を、もっとスマートに管理しましょう
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      インストールは無料。今すぐ拡張機能を導入して、AI活用の生産性を向上させましょう。
+    </Fragment>
+  </CallToAction>
+</PageLayout>

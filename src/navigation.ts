@@ -8,7 +8,16 @@ export const headerData = {
     },
     {
       text: 'プロダクト',
-      href: '/chatsaverforgemini', // ※先ほど作成したAstroファイルのURLパス
+      links:[
+        {
+          text: '拡張機能：AIMemo（無料）',
+          href: getPermalink('/aimemo'),
+        },
+        {
+          text: '拡張機能：Gemini会話履歴自動保存',
+          href: getPermalink('/chatsaverforgemini'),
+        },
+        ]
     },
     {
       text: '個別相談',
