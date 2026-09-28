@@ -150,7 +150,7 @@ function askOpenAI(prompt) {
 
 完成したものがこちらです。見た目は変わっていませんが、前回紹介したGASのトリガー機能を使って2時間ごとに自動更新しています。
  
- ![記事内の画像](../../assets/images/20260702_001.png)
+ ![記事内の画像](../../assets/images/products/ittrendboard/20260702_001.png)
  
 🔗 <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSMWZ0PusHKth0_KQmm2EBDywKJhFufqG0pm-2szrw-6c9bdH_QuKLizvxf3f_JA2hI68pKv_LSeLGa/pubhtml?gid=0&single=true" target="_blank" rel="noopener noreferrer">実際の公開ページはこちら</a>
 

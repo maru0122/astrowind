@@ -1,0 +1,154 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { Image } from 'astro:assets';
+
+// 画像のインポート（パスは実際のディレクトリ構成に合わせて調整してください）
+import heroImg from '../../assets/images/products/aimemo/20260911_1.png';
+import feature1Img from '../../assets/images/products/aimemo/20260911_1.png';
+
+
+const storeUrl = "https://chromewebstore.google.com/detail/YOUR_EXTENSION_ID";
+
+const metadata = {
+  title: 'Flight Monitor - 自宅上空の航空機をリアルタイム監視 | Chrome拡張機能',
+  description: 'ブラウザのサイドパネルで、コックピット風ダークテーマのフライトレーダーを起動。OpenSky APIとスプレッドシート連携で、通過する航空機データをリアルタイムに表示します。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: 'https://github.com/YOUR_GITHUB_REPO',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white highlight">Flight Monitor</span><br />
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      指定した監視拠点（自宅等）の上空を通過する航空機データをリアルタイムに取得し、Side Panel上のダークテーマ地図とフライトカード型一覧に表示するManifest V3準拠のChrome拡張機能です。サーバーレス設計により、OpenSky APIおよび公開Googleスプレッドシートからブラウザ上で直接データを同期・結合します。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={heroImg}
+        alt="動作イメージ画面 / システム構成図"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Hero>
+
+  <!-- 技術仕様・構成要素 -->
+  <Features
+    id="architecture"
+    tagline="Features"
+    title="特徴"
+    subtitle="作業の邪魔をしないサイドパネルUIで、高度な航空機トラッキングをブラウザ上で実現します。"
+    items={[
+      {
+        title: 'リアルタイムなデータ取得',
+        description: 'OpenSky Network APIを利用し、10〜15秒ごとの定期通信で航空機の位置・高度・速度を正確に取得します。',
+        icon: 'tabler:radar',
+      },
+      {
+        title: 'コックピット風ダークテーマ',
+        description: 'Leaflet.jsとEsriダークタイルを採用。ステータス発光バッジを備えたレーダー風UIで視認性を高めています。',
+        icon: 'tabler:moon',
+      },
+      {
+        title: '独自データの自動結合',
+        description: '公開Googleスプレッドシートと連携し、便名から路線、発着時刻、IATAコードを動的にタイムテーブルへ付加します。',
+        icon: 'tabler:table',
+      },
+      {
+        title: '安全なサーバーレス設計',
+        description: '独自の外部サーバーを経由せず、APIやシートからブラウザへ直接データを取得。設定はローカルにのみ安全に保存されます。',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <!-- 技術的詳細 1: データフローとAPI連携 -->
+  <Content
+    isReversed
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    items={[
+      { title: 'OpenSky REST API (/states/all) からのリアルタイム取得', icon: 'tabler:check' },
+      { title: 'Google スプレッドシートからの路線データ (CSV) 自動結合', icon: 'tabler:check' },
+    ]}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">複数データソースのブラウザ内統合</h3>
+      10〜15秒のポーリング処理により、OpenSky APIからバウンディングボックス内の航空機データを取得。同時に、便名をキーとして公開スプレッドシートから発着地・時刻・IATAコードを取得し、ブラウザ上で結合します。IATAコードを用いてTravelpayouts Logo APIから航空会社ロゴも動的に取得し、リッチなUIを構成します。
+    </Fragment>
+
+    <Fragment slot="image">
+      <Image
+        src={feature1Img}
+        alt="API連携とデータフロー図"
+        class="mx-auto rounded-lg shadow-lg w-full h-auto"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- 技術的詳細 2: 動作条件・必要なもの -->
+<Features
+    id="requirements"
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="複雑なバックエンドサーバーの構築は不要です。上記のアカウントとデータソースを用意し、拡張機能のOptionsページから設定するだけで動作を開始します。"
+    columns={2}
+    items={[
+      {
+        title: 'OpenSkyアカウント（無料登録可）',
+        description: 'OpenSky Network APIを利用し、10〜15秒ごとの定期通信で航空機の位置・高度・速度を正確に取得するために必要です。',
+        icon: 'tabler:user',
+      },
+      {
+        title: '公開設定のGoogleスプレッドシート',
+        description: '便名、出発地、到着地、出発時刻、到着時刻、IATAコードを含むCSVファイル。（当ラボで毎月1回程度自動更新・提供予定）',
+        icon: 'tabler:table-export',
+      },
+    ]}
+  />
+
+  <!-- CallToAction (ドキュメントへの誘導) -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: 'https://github.com/YOUR_GITHUB_REPO',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+      {
+         variant: 'secondary',
+         text: 'OpenSky API ドキュメント',
+         href: 'https://openskynetwork.github.io/opensky-api/rest.html',
+         target: '_blank',
+      }
+    ]}
+  >
+    <Fragment slot="title">
+      📄 関連記事・技術ドキュメント
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      ソースコードの詳細な実装やセットアップ手順はGitHubをご確認ください。
+    </Fragment>
+  </CallToAction>
+</PageLayout>

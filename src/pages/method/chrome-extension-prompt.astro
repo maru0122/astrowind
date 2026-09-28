@@ -1,0 +1,151 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'AIに破綻しないコードを書かせる「Chrome拡張機能 初期設計プロンプト」 — e-Shikumi-Labo',
+  description: 'Chrome拡張機能の初期開発において、AIに破綻のないモジュール構造とPROJECT_MAPを出力させるための設計指示プロンプト。',
+};
+---
+
+<Layout metadata={metadata}>
+  <main class="max-w-3xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+    
+    <!-- ヘッダー部分 -->
+    <header class="mb-16 border-b border-gray-200 pb-10 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">
+        AIに破綻しないコードを書かせる<br />「Chrome拡張機能 初期設計プロンプト」
+      </h1>
+      <p class="text-xl text-gray-600 font-medium mb-4">いきなりコードを書かせず、アーキテクチャと型を固めさせるための第1ステップ指示書</p>
+    </header>
+
+    <div class="space-y-16">
+      
+      <!-- セクション1 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          なぜ「いきなりコードを出力させる」と失敗するのか
+        </h2>
+        <div class="space-y-5">
+          <p>
+            AI（LLM）に対して「〜なChrome拡張機能を作って」と単に指示を出すと、1つのファイルにすべての処理を詰め込んだ長大なコードをいきなり生成しようとする。
+          </p>
+          <p>
+            初期動作はしても、機能追加やデバッグを行う段階になると、コードの肥大化によってAI自身が過去の文脈や全体構造を把握できなくなり、修正不可能なバグを引き起こす。
+          </p>
+          <p>
+            この問題を回避するためには、<strong>「実装コードを書かせる前に、モジュール構造・型定義・PROJECT_MAPの設計のみをまず最初に出力させる」</strong>手順の強制が不可欠である。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション2 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          プロンプトに組み込まれた4つの設計ルール
+        </h2>
+        <div class="space-y-5">
+          <p>
+            本プロンプトでは、AIに対して以下の4つのアーキテクチャルールを厳格に指定している。
+          </p>
+          
+          <ul class="space-y-4 py-2">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                <strong class="text-gray-900">単一責任の原則に基づくモジュール分割</strong><br />
+                画面描画（<code class="text-xs bg-gray-100 px-1 py-0.5 rounded">/components/</code>）、通信処理（<code class="text-xs bg-gray-100 px-1 py-0.5 rounded">api.js</code>）、ロジック（<code class="text-xs bg-gray-100 px-1 py-0.5 rounded">utils.js</code>）のようにファイルを機能単位で分割定義させる[cite: 5]。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                <strong class="text-gray-900">JSDocによる型定義の事前明示（types.js）</strong><br />
+                データ構造をプログラムの最初に固定定義させ、AIが出力するデータキー（プロパティ名）の揺れや命名のブレを防ぐ[cite: 5]。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">3</span>
+              <div>
+                <strong class="text-gray-900">多言語化（i18n）前提の辞書キー管理</strong><br />
+                内部データに「進行中」等の言語依存文字列を持たせず、<code class="text-xs bg-gray-100 px-1 py-0.5 rounded">statusInProgress</code> 等の言語非依存キーで保持させる規則を強制する[cite: 5]。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">4</span>
+              <div>
+                <strong class="text-gray-900">PROJECT_MAP.md 草案の作成指示</strong><br />
+                システムの全体図（アーキテクチャマップ）を初期出力段階で作成させ、開発継続時の文脈維持用テキストを自動生成させる[cite: 5]。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- セクション3 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          プロンプト記述サンプル
+        </h2>
+        <div class="space-y-5">
+          <p>
+            以下は、新規にChrome拡張機能（Manifest V3）を作成する際、AIへ投じるプロンプトの全文である。[例: ...] の記述部分を作成したいツールの仕様に書き換えて利用する。
+          </p>
+
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code>あなたには熟練したChrome拡張機能（Manifest V3）エンジニアとして、新しい拡張機能の初期設計およびコード生成を担当してもらいます。
+
+コードの肥大化を防ぎ、今後の追加開発をスムーズに行うため、以下の設計ルールとステップに厳格に従って出力してください。
+
+### 【作成したい拡張機能の概要】
+* **拡張機能名**: [例: AI Chat Bookmark Engine]
+* **主な機能**: [例: 各AIチャットの重要な発言をワンクリックで保存し、カテゴリ別に整理する]
+* **主な構成要素**: [例: SidePanel, Background Service Worker, GAS（バックエンド）]
+* **使用技術**: HTML, CSS, JavaScript (ES Modules), JSDoc, Manifest V3
+
+### 【アーキテクチャ・設計ルール】
+1. **単一責任の原則に基づくモジュール分割**:
+   * 機能・役割ごとにファイルを細かく分割してください。
+   * UI描画・DOM操作は `/components/` ディレクトリ以下に独立したモジュールとして作成してください（例: `elements.js`, `drawer.js` など）。
+   * 通信処理（`api.js`）や判定・計算ロジック（`utils.js`）は独立したモジュールにしてください。
+2. **JSDocによる型定義の明示化**:
+   * プロジェクト内で扱う主要データ構造を定義する `types.js` を最初に定義し、各ファイルでJSDocによる型アノテーションを記述してください。
+3. **多言語化（i18n）の前提設計**:
+   * 初期段階から `chrome.i18n` を用いた多言語化（`_locales/en`, `_locales/ja`）を前提としてください。
+   * **[重要]** データベースに保存・通信する内部データ（ステータス、カテゴリ等）は、言語に依存する文字列（例："進行中"）ではなく、**言語非依存のキー（例: `statusInProgress`）** で管理し、UI描画時に `chrome.i18n.getMessage()` で翻訳する設計を徹底してください。
+4. **管理用マップの作成**:
+   * 全体構造やデータフローを把握するための `PROJECT_MAP.md` の定義を必ず含めてください。
+
+### 【ステップ1：出力内容】
+まずは以下の3点を出力してください。実際のコード実装（HTML/JSの全記述）は次のステップで行うため、ここでは全体設計に集中してください。
+
+1. **想定ディレクトリ構成**（ファイル一覧とその役割。多言語リソース `_locales` も含めること）
+2. **`types.js` のJSDoc型定義**（内部データがキーベースで設計されていることを明記）
+3. **`PROJECT_MAP.md` の草案**（全体概要、構成要素、データフロー、データ構造）
+
+内容を確認・調整した上で、次のステップで具体的なソースコードの作成を依頼します。</code></pre>
+          </div>
+
+          <div class="border-l-4 border-gray-800 pl-5 py-2 mt-8">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">技術的効果とメカニズム</h3>
+            <ul class="space-y-4 text-gray-800">
+              <li>
+                <strong class="text-gray-900">コード途切れ（トークン上限）の回避：</strong><br />
+                「設計出力（ステップ1）」と「ソース実装（ステップ2）」を意図的に切り離すことで、文字数制限（LLMの出力トークン上限）によるコード出力の途切れを防ぐ[cite: 5]。
+              </li>
+              <li>
+                <strong class="text-gray-900">データスキーマの固定によるバグ抑制：</strong><br />
+                ステップ1で `types.js` による型定義をAI自身に出力させることで、ステップ2での実装コード生成時にキー名の誤りや未定義参照が発生する確率を大幅に低減する[cite: 5]。
+              </li>
+              <li>
+                <strong class="text-gray-900">メンテナンス性の確保：</strong><br />
+                コンポーネントごとのファイル分割をルール化することで、一部のUI変更や処理修正を行った際に、他のモジュールへ影響が波及する「破壊的変更」を論理的に排除する[cite: 5]。
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

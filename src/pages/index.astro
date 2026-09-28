@@ -2,80 +2,73 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-
-// 🟢 記事取得用の関数をインポート
-import { fetchPosts } from '~/utils/blog';
+import ProductGallery from '~/components/widgets/ProductGallery.astro';
+import MethodGallery from '~/components/widgets/MethodGallery.astro';
 
 const metadata = {
-  title: 'e-Shikumi-Labo —「泥臭い手作業」を、きれいに仕組み化',
+  title: 'e-Shikumi-Labo｜大人のデジタルDIY',
   ignoreTitleTemplate: true,
 };
-
-// 🟢 日本語の本館用：思想別館(column)と英語版(lang: 'en')を除外して最新4件を取得
-const allPosts = await fetchPosts();
-const latestPosts = allPosts
-  .filter(
-    (post) =>
-      post.category?.slug !== 'column' &&
-      (post as any).lang !== 'en' &&
-      (post as any).frontmatter?.lang !== 'en'
-  )
-  .slice(0, 4);
 ---
 
 <Layout metadata={metadata}>
   <Hero
     actions={[
-      { variant: 'primary', text: '初めての方へ', href: '/newcomer' },
-      { text: '仕組化実験室を見る', href: '/blog' },
+      { variant: 'primary', text: '作例ギャラリーを見る', href: '#gallery' },
+      { text: 'プロフィール', href: '#profile' },
     ]}
   >
     <Fragment slot="title">
-      Webデータ取得 × スプレッドシート<br />
-      毎日の「手作業コピペ」を、きれいな仕組みに
+      <span class="text-lg sm:text-xl font-bold text-slate-600 dark:text-slate-400 block mb-1 tracking-normal">
+        Chrome拡張機能 × AI × スプレッドシート
+      </span>
+      
+      <span class="text-2xl sm:text-3xl lg:text-4xl leading-snug block font-bold">
+        <span class="inline-block">自分専用の「道具」を、</span>
+        <span class="inline-block">自分の手で構築・維持する</span>
+      </span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      手作業では追いつかないWebデータの収集・集計をスプレッドシートで自動化。<br />
-      本当に集中すべき「考える時間」を生み出します。
+      AIを相棒にして、日々の作業環境を快適にする仕組みを自作する。<br class="hidden sm:inline" />
+      仕様変更やトラブルが起きても、自力で修正して使い続ける「自走力」を養うラボです。
     </Fragment>
   </Hero>
 
-  {/* 🟢 フィルター済みの記事配列 (posts={latestPosts}) をコンポーネントへ渡す */}
-  <BlogLatestPosts
-    title="ブログ"
-    information="Webデータ取得の自動化に関するノウハウを公開しています。"
-  />
+  <!-- カタログセクション（コンポーネント呼び出し） -->
+  <ProductGallery />
 
+  <!-- 2. 開発メソッド・ノウハウ (🟢 ここに追加) -->
+  <MethodGallery />
+
+  <!-- プロフィール -->
   <Content
     isReversed
     id="profile"
     title="プロフィール"
-    callToAction={{ text: 'プロフィールを見る', href: '/profile', variant: 'primary' }}
+    callToAction={{ text: 'プロフィール詳細', href: '/profile', variant: 'primary' }}
     image={{
       src: '~/assets/images/profile.png',
-      alt: 'Profile Image',
+      alt: 'シン（e-Shikumi-Labo 所長）',
     }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        【Webデータ取得・自走力の伴走支援】
-      </h3>
-      <p class="mb-4">
-        大学での研究以来30年以上、エンジニアとしての仕事の傍ら、業務改善としてExcel VBAコードを多数制作してきました。2014年には自らの輸出ビジネスを機に、GASなどによるWebデータ取得・自動化システムを本格的に構築。同じ悩みを持つ方へツールの提供を始めました。
-      </p>
-      <p class="mb-4">
-        しかし、サイト側の急激なアクセス規制や自動化への防御策により、ツールを丸ごと手渡すだけの自動化が通用しなくなる限界（挫折）を経験します。
-      </p>
-      <p class="mb-4">
-        当ラボでは完成されたツールの「納品」を一切やめました。
-      </p>
-      <p class="mb-4">
-        現在は、AIを味方につけて、**Webデータ取得を自力で構築・維持管理し続ける力（自走力）**を養う伴走支援に特化しています。  
-      </p>
-    </Fragment>
+<Fragment slot="content">
+  <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+    【Chrome拡張機能 × AIで養う自走力】
+  </h3>
+  <p class="mb-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
+    50代｜関東在住｜現場サポート（業務改善・VBA/RPA担当）
+  </p>
+  <p class="mb-4">
+    外部の現場スタッフとして業務改善を担当しています。30年の経験から現場の最適解が見えても立場上踏み込めない、「知識も経験もあるのに力を出し切れない」50代ならではの不完全燃焼感を抱えてきました。
+  </p>
+  <p class="mb-4">
+    また、過去に越境EC向けツールを自作・提供した際、サイトの仕様変更やボット対策に振り回された経験から、「完成品ツールを渡して終わり」にする仕組みの限界も痛感。そこから行き着いたのが、ボット対策に強い<b>「Chrome拡張機能」</b>と、開発を任せられる<b>「AI」</b>の掛け合わせでした。
+  </p>
+  <p class="mb-4">
+    当ラボでは「ツールを買って終わり」ではなく、環境が変わってもAIと一緒に<b>自分で直せる力（自走力）</b>を身につける「大人のデジタルDIY」の作例公開と、個別での実践サポートを行っています。
+  </p>
+</Fragment>
   </Content>
 </Layout>

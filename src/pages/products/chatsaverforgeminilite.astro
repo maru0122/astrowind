@@ -1,0 +1,145 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro'; // Stepsをインポート
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import heroImg from '~/assets/images/products/chatsaverlite/chatsaverlight01.png';
+
+const metadata = {
+  title: 'Chat Saver for Gemini - Lite - 作例詳細・アーキテクチャ | Chrome拡張機能',
+  description: 'Google Geminiの会話ログを1クリックでローカルのMarkdownファイルとして保存できるChrome拡張機能です。完全ローカルで動作し、Chrome Extension API (Manifest V3) に準拠しています。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: 'https://github.com/maru0122/chat-saver-for-gemini-lite',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+    ]}
+    image={{
+      src: heroImg,
+      alt: 'Chat Saver for Gemini - Lite 動作イメージ',
+    }}
+  >
+    <Fragment slot="title">
+      Chat Saver for Gemini - Lite
+    </Fragment>
+    <Fragment slot="subtitle">
+      Google Geminiの会話ログを1クリックでローカルのMarkdownファイルとして保存できるChrome拡張機能です。外部サーバーとの通信を行わない完全ローカル仕様で動作し、Manifest V3に準拠して構築されています。
+    </Fragment>
+  </Hero>
+
+  <!-- 特徴 -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="特徴"
+    items={[
+      {
+        title: '完全ローカル動作',
+        description: '外部サーバーとの通信を行わず、すべてのデータ処理がブラウザ内で完結します。データ漏洩リスクのないプライバシーが確保された設計です。',
+        icon: 'tabler:shield-lock',
+      },
+      {
+        title: 'ワンクリックMarkdown出力',
+        description: 'ポップアップのボタンをクリックするだけで、現在画面に表示されているチャット履歴を抽出し、Markdownファイルとしてローカルへ即時保存します。',
+        icon: 'tabler:markdown',
+      },
+      {
+        title: '独立したDOM解析モジュール',
+        description: 'GeminiのUI変更に備え、DOMツリーの解析とテキスト抽出ロジックを独立したファイル（parser.js）に集約し、保守性を向上させています。',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'Manifest V3準拠',
+        description: '最新のChrome拡張機能の仕様であるManifest V3に従い、Vanilla JavaScript (ES6+) のみで軽量に実装されています。',
+        icon: 'tabler:browser-check',
+      },
+    ]}
+  />
+
+  <!-- 構成要素と処理の流れ (Stepsを使用) -->
+  <Steps
+    id="architecture-flow"
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    items={[
+      {
+        title: 'UI・トリガー層 (popup.html / popup.js)',
+        description: '実行のためのユーザーインターフェースを提供します。開いているアクティブタブのURLを検証し、対象がGeminiのページ（gemini.google.com）であれば、コンテンツスクリプトへメッセージを送信して処理を開始します。',
+        icon: 'tabler:app-window',
+      },
+      {
+        title: 'DOM解析・変換層 (parser.js)',
+        description: 'Geminiのチャット画面のDOMツリーを走査し、生成中の回答をスキップしながらユーザーとGeminiの対話テキストを抽出します。抽出したHTML要素はMarkdown形式の記法にパースされます。',
+        icon: 'tabler:scan',
+      },
+      {
+        title: 'ファイル生成・保存層 (content.js)',
+        description: '解析モジュールから受け取ったデータを元にMarkdownテキストを結合します。OSの禁則文字を処理した上でBlobオブジェクトを作成し、動的なリンクを利用してローカルへのダウンロードを実行します。',
+        icon: 'tabler:download',
+      },
+    ]}
+  />
+
+  <!-- 必要なもの -->
+  <Features
+    id="requirements"
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="本拡張機能をローカルで動作させるための条件と必要な環境です。セットアップの詳細な手順はGitHubのREADMEをご参照ください。"
+    columns={2}
+    items={[
+      {
+        title: 'Google Chrome',
+        description: '拡張機能の実行環境です。Manifest V3をサポートする最新バージョンのブラウザをご利用ください。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: 'Google Gemini アカウント',
+        description: '会話ログを抽出するための対象サービスです（gemini.google.com にアクセスできること）。',
+        icon: 'tabler:brand-google',
+      },
+      {
+        title: '開発者モードの有効化',
+        description: 'ローカルディレクトリから「パッケージ化されていない拡張機能を読み込む」ために、Chromeの拡張機能設定（chrome://extensions/）で開発者モードを有効にする必要があります。',
+        icon: 'tabler:settings',
+      },
+      {
+        title: 'ソースコード一式',
+        description: '対象リポジトリからダウンロード、またはクローンしたプロジェクトファイル群が必要です。',
+        icon: 'tabler:folder-code',
+      },
+    ]}
+  />
+
+  <!-- CallToAction 
+  <CallToAction
+    title="📄 関連記事・技術ドキュメント"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: 'https://github.com/maru0122/chat-saver-for-gemini-lite',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+      {
+        variant: 'secondary',
+        text: 'Chrome Extensions API',
+        href: 'https://developer.chrome.com/docs/extensions/mv3/',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+    ]}
+  />　-->
+</PageLayout>

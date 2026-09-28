@@ -11,7 +11,7 @@ metadata:
   title:
     default: e-Shikumi-Labo # ★ AstroWind から変更
     template: '%s — e-Shikumi-Labo'
-  description: "GoogleスプレッドシートやGASを活用し、毎日の「手作業コピペ」やWebデータ取得をきれいに仕組み化。単なるツールの納品ではなく、AIを味方につけて「自分で作り、自分で直せる自走力」を養う伴走支援を行う個人ラボです。" # ★ 変更
+  description: "Chrome拡張機能やGAS、AIを活用し、デスク周りを面白くする『大人のデジタルDIY』の個人ラボ。完成品の提供ではなく、AIを相棒に自分で作り直せる力を養う作例公開と、個別の実践相談を行っています。" # ★ 変更
   robots:
     index: true
     follow: true

@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import { products } from '~/data/products';
+---
+
+<section id="gallery" class="px-4 pt-4 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-6 lg:pb-16 bg-slate-50 dark:bg-slate-900/50">
+  <div class="mb-8 md:mx-auto md:mb-10 max-w-3xl text-center">
+    <h2 class="text-2xl font-bold leading-none tracking-tight sm:text-3xl mb-3 font-heading">
+      作例・ラボプロダクト
+    </h2>
+    <p class="text-sm text-muted dark:text-slate-400">
+      当ラボで開発・提供しているWebデータ取得ツールです。
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {
+      products.map((item) => (
+        <div class="flex flex-col justify-between bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+          <div>
+            <!-- サムネイル画像表示部 -->
+            <div class="relative w-full h-48 bg-slate-100 dark:bg-slate-800 overflow-hidden border-b border-slate-100 dark:border-slate-800">
+              {typeof item.image === 'string' ? (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                />
+              ) : item.image ? (
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={600}
+                  height={300}
+                  class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div class="flex flex-col items-center justify-center h-full text-slate-400 dark:text-slate-500">
+                  <span class="text-2xl font-bold mb-1">e-Shikumi-Labo</span>
+                  <span class="text-xs">{item.name}</span>
+                </div>
+              )}
+
+              <!-- 価格・提供方法バッジ -->
+              <div class="absolute top-3 right-3 flex gap-2">
+                <span class="px-2.5 py-1 text-xs font-semibold text-slate-800 bg-white/90 backdrop-blur-sm rounded-md shadow-sm dark:bg-slate-900/90 dark:text-slate-200">
+                  {item.method}
+                </span>
+                <span class="px-2.5 py-1 text-xs font-bold text-white bg-blue-600/90 backdrop-blur-sm rounded-md shadow-sm">
+                  {item.price}
+                </span>
+              </div>
+            </div>
+
+            <!-- カード本文 -->
+            <div class="p-6">
+              <!-- タグ -->
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="inline-block px-2 py-0.5 text-xs font-medium text-slate-700 bg-slate-100 rounded dark:bg-slate-800 dark:text-slate-300">
+                  {item.type}
+                </span>
+                {item.tags.map((tag) => (
+                  <span class="inline-block px-2 py-0.5 text-xs text-slate-500 bg-slate-50 border border-slate-100 rounded dark:bg-slate-800/50 dark:border-slate-800 dark:text-slate-400">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+
+              <!-- プロダクト名 -->
+              <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">
+                {item.name}
+              </h3>
+            </div>
+          </div>
+
+          <!-- アクションボタン（パターンA：詳細ページがメイン） -->
+          <div class="p-6 pt-0 flex gap-2">
+            <!-- 左（メイン・黒ボタン）：詳細ページへ -->
+            {item.siteUrl ? (
+              <a
+                href={item.siteUrl}
+                class="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white transition-colors"
+              >
+                詳細ページを見る
+              </a>
+            ) : (
+              item.directUrl && (
+                <a
+                  href={item.directUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white transition-colors"
+                >
+                  {item.method === 'Gumroad' && 'Gumroadで入手 ($29)'}
+                  {item.method === 'GitHub' && 'GitHubでコードを見る'}
+                  {item.method === 'ChromeWebストア' && 'Chromeストアで見る'}
+                  {item.method === 'リンク' && 'Webアプリを開く'}
+                </a>
+              )
+            )}
+
+            <!-- 右（サブ・グレーボタン）：外部/直接リンク（詳細ページがある場合のみ表示） -->
+            {item.siteUrl && item.directUrl && (
+              <a
+                href={item.directUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors whitespace-nowrap"
+              >
+                {item.method === 'Gumroad' && 'Gumroad ↗'}
+                {item.method === 'GitHub' && 'GitHub ↗'}
+                {item.method === 'ChromeWebストア' && 'ストア ↗'}
+                {item.method === 'リンク' && 'Webアプリ ↗'}
+              </a>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

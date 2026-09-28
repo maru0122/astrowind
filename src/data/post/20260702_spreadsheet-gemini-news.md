@@ -41,7 +41,7 @@ IMPORTFEED関数は、サイトの更新情報をまとめた「RSSフィード�
         
 - **【出力】** スプレッドシートのWeb公開
     
- ![記事内の画像](../../assets/images/20260702_001.png)
+ ![記事内の画像](../../assets/images/products/ittrendboard/20260702_001.png)
  
 
 

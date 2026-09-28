@@ -1,0 +1,212 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'AIと共作するための設計図「PROJECT_MAP.md」 — e-Shikumi-Labo',
+  description: 'AIと一緒にツールを作るためのアーキテクチャマップの役割と書き方。',
+};
+---
+
+<Layout metadata={metadata}>
+  <main class="max-w-3xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+    
+    <!-- ヘッダー部分 -->
+    <header class="mb-16 border-b border-gray-200 pb-10 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">
+        AIと共作するための設計図<br />「PROJECT_MAP.md」
+      </h1>
+      <p class="text-xl text-gray-600 font-medium mb-4">大人のデジタルDIYを自走させるためのテキスト型アーキテクチャマップ</p>
+    </header>
+
+    <div class="space-y-16">
+      
+      <!-- セクション1 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          PROJECT_MAP.md とは何か
+        </h2>
+        <div class="space-y-5">
+          <p>
+            PROJECT_MAP.md とは、AI（ChatGPTやClaudeなど）を相棒としてWebアプリや拡張機能を自作する際、AIにシステム全体の構造とルールを正しく認識させるための「テキスト型設計図」である。
+          </p>
+          <p>
+            AIによるコード生成は強力だが、プログラムの規模が大きくなるにつれ、AIは過去の指示やシステムの全体像を喪失していく。その結果、既存のコードと矛盾する実装を出力したり、不要なライブラリを勝手に読み込んだりするトラブルが起きる。
+          </p>
+          <p>
+            そこで、プロジェクトの目的、ファイル構成、データの流れを単一のテキストファイルとして定義し、開発時にプロンプトとしてAIへ読み込ませる。これにより、AIの認識を常にシステム全体と同期させ、意図通りの開発を継続させることができる。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション2 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          どんな役割を果たすのか
+        </h2>
+        <div class="space-y-5">
+          <p>
+            PROJECT_MAP.md は、AIに対する「思考のガードレール」として機能し、以下の技術的役割を果たす。
+          </p>
+          
+          <ul class="space-y-4 py-2">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                <strong class="text-gray-900">コンテキスト（文脈）の維持</strong><br />
+                対話を重ねてもAIが全体の設計思想を見失わず、一貫したロジックでコードを出力し続ける状態を保つ。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                <strong class="text-gray-900">不適切なコード生成や構造破壊の防止</strong><br />
+                各ファイルの責務（役割）や共通ルールをあらかじめ示すことで、関係のないファイルを不適切に書き換えたり、規定外のコードを追加する動作を抑制する。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">3</span>
+              <div>
+                <strong class="text-gray-900">開発の再開性の確保</strong><br />
+                週末など、時間を置いて開発を再開する際も、このファイルをAIに読み込ませるだけで即座に正確な開発環境の文脈を再構築できる。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- セクション3 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          どんな構成で書くのか
+        </h2>
+        <div class="space-y-5">
+          <p>
+            システム構造を過不足なくAIに伝えるため、以下の5つのセクションで構成する。
+          </p>
+          <div class="bg-gray-50 p-6 rounded-lg text-gray-800">
+            <ul class="space-y-3 list-disc list-inside">
+              <li><strong class="text-gray-900">全体概要</strong>：システムの目的、主要機能、動作環境の定義。</li>
+              <li><strong class="text-gray-900">技術選定・外部サービス仕様</strong>：使用言語、ライブラリ、外部APIの仕様および選定理由。</li>
+              <li><strong class="text-gray-900">構成要素と責務 (Components & Roles)</strong>：ディレクトリ構造と各ファイルの役割分担。</li>
+              <li><strong class="text-gray-900">データフロー (Data Flow)</strong>：システム内のデータの入出力と処理順序。</li>
+              <li><strong class="text-gray-900">データ構造と設計規則</strong>：データ形式、変数・関数の命名規則、ローカライズ（i18n）等の共通ルール。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション4 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          記述サンプルと解説
+        </h2>
+        <div class="space-y-5">
+          <p>
+            以下は、上空の航空機データをリアルタイムで取得・表示するChrome拡張機能「Flight Monitor」向けに作成した実例である。
+          </p>
+
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code># Flight Monitor - Project Architecture Map
+
+## 1. 全体概要
+本拡張機能は、指定した監視拠点（自宅等）の上空を通過する航空機データをリアルタイムに取得し、Side Panel 上のダークテーマ地図（Leaflet.js）およびコンパクトなフライトカード型一覧（タイムテーブル）へ表示する Manifest V3 準拠の Chrome 拡張機能です。
+
+サーバーレス設計を採用し、OpenSky API および公開 Google スプレッドシートから直接ブラウザ上でデータを同期・結合します。
+
+## 2. 技術選定・外部サービス仕様
+
+- **Manifest Version**: Manifest V3
+- **地図描画**: Leaflet.js (ローカル同梱) + Esri World Dark Gray Canvas Tile
+  - *選定理由*: CartoDB (要APIキー) や OpenStreetMap (拡張機能からの直接通信に対する403ブロック) を回避し、認証不要かつネイティブでダークテーマに対応するため。
+- **データ通信・外部API**: 
+  - OpenSky Network REST API (`/states/all`): リアルタイムの航空機位置・高度・速度を取得。
+  - Google スプレッドシート (Web公開 CSV): 便名に連動する路線、発着時刻、IATAコードを取得。
+- Travelpayouts Logo API (`https://pics.avs.io/200/200/&#123;iataCode&#125;.png`): IATAコードをキーとした航空会社ロゴ画像の動的取得。
+- **データ保存**: `chrome.storage.local`
+
+## 3. 構成要素と責務 (Components & Roles)
+
+### [Core / Infrastructure]
+- **manifest.json**: Manifest V3 拡張機能設定、Side Panel / Storage / Options パーミッション定義。
+- **sidepanel.html / sidepanel.css**: 
+  - メインUI構造定義（地図コンテナおよびフライトカード用 `#timetable-body` 容器）。
+  - コックピット/レーダー風ダークテーマ、ステータス発光バッジ、視認性向上のためのロゴ画像白枠・カードレイアウトスタイリング。
+- **scripts/types.js**: `UserSettings`, `AircraftInfo`（時刻・ロゴURL追加版）, `TimetableEntry`（IATAコード追加版）のデータ型定義およびi18n管理キーの集中化。
+- **scripts/storage.js**: `chrome.storage.local` に対する設定値・キャッシュデータの非同期 CRUD ラッパー。
+- **scripts/i18n.js**: `chrome.i18n.getMessage` を安全かつ簡潔に呼び出すための UI 翻訳ユーティリティ。
+
+### [Data & Logic]
+- **scripts/api.js**: 
+  - OpenSky REST API へのフェッチ通信。
+  - Google スプレッドシートからのタイムテーブルマップ取得（便名, 出発地, 到着地, 出発時刻, 到着時刻, IATAコードの解析）。
+- **scripts/utils.js**: 
+  - ハバーサイン公式による距離計算 (km)。
+  - 座標バウンディングボックス計算。
+  - 生データから `AircraftInfo` オブジェクトへの変換・コールサイン抽出・ステータスキー判定。
+
+### [UI Components (`/scripts/components/`)]
+- **elements.js**: DOM操作のキャッシュ層および共通UIエレメントの生成。
+- **map.js**: Leaflet.js の初期化、Esriダークタイルの適用、Home/範囲円/航空機マーカーのプロットとアニメーション更新。
+- **timetable.js**: 監視エリア内航空機のフライトカード群（ヘッダー/ルート/航法データ）の生成・更新ロジック。ロゴ読み込み失敗時のテキストバッジフォールバック処理。
+- **optionsForm.js**: 設定画面のフォーム制御、位置情報 Geolocation API 連動。
+
+## 4. データフロー (Data Flow)
+
+[Options Page]
+└─> settings (Storage) ─> chrome.storage.local
+
+[Side Panel (sidepanel.js)]
+├─> 1. storage.js から UserSettings 取得
+├─> 2. map.js を初期化（Homeマーカー・監視円を描画）
+├─> 3. 定期実行 (10〜15秒毎のポーリング):
+│     ├─> api.js: OpenSky API よりバウンディングボックス内の生データ取得
+│     ├─> api.js: Googleスプレッドシートから便名付加情報（路線・時刻・IATAコード）を取得
+│     ├─> utils.js: 距離計算・コールサイン抽出・i18nキー付与を行い AircraftInfo[] へ変換
+│     ├─> map.js: 航空機マーカーの位置・回転角・ポップアップを更新
+│     └─> timetable.js: IATAコードからロゴURLを組み立て、フライトカードUIを最新情報で再描画
+└─> 4. i18n.js: 表示時すべてのステータスキーを chrome.i18n 経由で翻訳
+
+## 5. データ構造と i18n 設計規則
+
+### [スプレッドシート (CSV) 仕様]
+便名をキー（1列目）として、以下の順序でカラムを定義して公開・連携する。
+1. **便名 (Callsign)**: 例 `JAL584`
+2. **出発地 (Departure)**: 例 `函館`
+3. **到着地 (Destination)**: 例 `羽田`
+4. **出発時刻 (depTime)**: 例 `09:40`
+5. **到着時刻 (arrTime)**: 例 `11:10`
+6. **IATAコード (iataCode)**: 例 `JL` （※ロゴ画像取得に使用）
+
+### [データ分離原則]
+- 内部ロジックで保持するステータスは言語依存文字列（"飛行中" など）を直持ちせず、`statusInFlight`, `statusApproaching` 等の辞書キーで管理する。
+- **ローカライズ変換**: DOM 描画処理 (`map.js`, `timetable.js`) の最終段で `i18n.js` の `getMessage(statusKey)` を実行して画面に表示する。</code></pre>
+          </div>
+          
+          <div class="border-l-4 border-gray-800 pl-5 py-2 mt-8">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">AIに対する制御ロジック（なぜこう書くのか）</h3>
+            <ul class="space-y-4 text-gray-800">
+              <li>
+                <strong class="text-gray-900">技術選定の明示：</strong><br />
+                通信制限（403ブロック等）の回避理由を明記することで、AIが誤って利用不可のAPIを提案・実装するのを論理的に防ぐ。
+              </li>
+              <li>
+                <strong class="text-gray-900">責務の分離：</strong><br />
+                UI層、データ処理層などに各ファイルの役割を明確に分けることで、通信用処理の中に画面描画コードを混入させるといった構造の崩壊を防ぐ。
+              </li>
+              <li>
+                <strong class="text-gray-900">データフローの図示：</strong><br />
+                ポーリングとデータ取得の順序をテキスト図示することで、非同期通信において未取得のデータを参照してしまうエラー（undefinedエラー等）を回避させる。
+              </li>
+              <li>
+                <strong class="text-gray-900">設計規則の強制：</strong><br />
+                「日本語テキストを直持ちせず、辞書キーで管理する」というルールを定義し、AIが勝手にプログラム内へ日本語をハードコードするのを防ぐ。
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

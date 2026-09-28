@@ -1,0 +1,138 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { Image } from 'astro:assets';
+
+import heroImg from '~/assets/images/products/ittrendboard/20260708_001.png';
+
+const metadata = {
+  title: '日米ITトレンドボード - 作例詳細・アーキテクチャ',
+  description: 'GoogleスプレッドシートとGASを基盤とし、Gemini・OpenAIによるニュース分析を自動化するシステム',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    tagline="Google Spreadsheet × GAS × AI"
+    title="日米ITトレンドボード"
+    subtitle="Googleスプレッドシートを基盤とし、GASを用いてGoogleニュースデータの取得とAI（OpenAI）による分析を自動化するシステムです。PicoCSSを利用したWeb Appsとしてフロントエンドを構築する完全サーバーレス設計を採用しています。"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'ボードを見る',
+        href: 'https://script.google.com/macros/s/AKfycbxS_ImGSnJDyKPDMbZ3VrDCz6LGrqMBvcwXB8fKYFYF-Zjd1Z_UHAHYHH9L-HledHFOIQ/exec', // 実際のGitHubリポジトリURLを指定
+        icon: 'tabler:brand-github',
+      },
+    ]}
+    image={{
+      src: heroImg,
+      alt: '日米ITトレンドボードのシステム構成と動作イメージ',
+    }}
+  />
+
+  <!-- 特徴 -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="特徴"
+    items={[
+      {
+        title: 'スプレッドシートデータ基盤',
+        description: 'IMPORTFEED関数で取得したニュースフィードを生データとして格納し、定期的にリフレッシュして最新の状態に自動更新します。',
+        icon: 'tabler:table',
+      },
+      {
+        title: 'GASによる自動化処理',
+        description: 'Google Apps Scriptをバックエンドとして採用し、データ取得・更新からAI呼び出しまでの処理を自動化しています。',
+        icon: 'tabler:server-cog',
+      },
+      {
+        title: 'OpenAI API連携',
+        description: '取得したニュースデータをGAS経由でOpenAIのAI APIサービスへ渡し、IT関連ニュースの分析・抽出処理を実行します。',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'PicoCSSによるWeb配信',
+        description: 'GASのWeb Apps機能と軽量CSSフレームワークであるPicoCSSを利用し、整理・分析されたデータをユーザー向けに表示します。',
+        icon: 'tabler:browser',
+      }
+    ]}
+  />
+
+  <!-- 構成要素と処理の流れ (Stepsを使用) -->
+  <Steps
+    id="architecture-flow"
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    items={[
+      {
+        title: '1. データ収集・自動更新',
+        description: 'IMPORTFEEDを利用してニュースフィードを取得し「Googleニュース_元データ」シートに格納。GAS処理（importfeed-refresh-gas）により定期的に自動更新されます。',
+        icon: 'tabler:cloud-download',
+      },
+      {
+        title: '2. AI分析処理',
+        description: 'GASを通じて取得データをOpenAI APIに渡し、自動化処理（gas-openai-automation等）を実行します。',
+        icon: 'tabler:cpu',
+      },
+      {
+        title: '3. 分析結果の保存',
+        description: 'AIによるITニュースの分析結果は、「Googleニュース_ITニュース分析」シートに構造化して保存されます。',
+        icon: 'tabler:database-export',
+      },
+      {
+        title: '4. UI表示',
+        description: 'GAS Web Appsがスプレッドシートのデータを読み込み、PicoCSSでスタイリングされたWeb画面（gas-webapps-picocss）として提供します。',
+        icon: 'tabler:layout-dashboard',
+      }
+    ]}
+  >
+    <Fragment slot="content">
+      本システムは、データの収集・AIによる分析・Web画面への出力という3つのフェーズで構成され、すべてGAS上で連携・自動制御されています。
+    </Fragment>
+  </Steps>
+
+  <!-- 必要なもの（画像なしのためFeatures columns={2}を使用） -->
+  <Features
+    id="requirements"
+    columns={2}
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="本システムの動作および開発・検証に必要な環境・アカウント要件です。詳細な設定・デプロイ手順はGitHubのREADMEを参照してください。"
+    items={[
+      {
+        title: 'Google アカウント',
+        description: '基盤となるGoogleスプレッドシートの作成、およびGAS（Google Apps Script）の開発・実行に必要です。',
+        icon: 'tabler:brand-google-drive',
+      },
+      {
+        title: 'OpenAI API アカウント',
+        description: 'ニュース分析の自動化処理（gas-openai-automation）でAIモデルを呼び出すために必要です。安価なOpenAIの gpt-4o-mini モデルを使用することでコストを抑えています。',
+        icon: 'tabler:brand-openai',
+      }
+    ]}
+  />
+
+  <!-- CallToAction 
+  <CallToAction
+    title="📄 関連記事・技術ドキュメント"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: '#', // 実際のGitHubリポジトリURLを指定
+        icon: 'tabler:brand-github',
+      },
+      {
+        text: 'Google Apps Script ドキュメント',
+        href: 'https://developers.google.com/apps-script',
+        icon: 'tabler:external-link',
+      }
+    ]}
+  />　-->
+</PageLayout>

@@ -1,8 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 
 const metadata = {
   title: 'プロフィール — シン | e-Shikumi-Labo',
@@ -10,97 +7,156 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline="Owner Profile"
-    title="シン"
-  >
-    <Fragment slot="subtitle">
-      1974年1月生まれ、千葉県出身。<br />
-      30年以上のExcel/VBA経験と、過去のビジネスにおけるアクセス規制での挫折から辿り着いた、<br />
-      ツールに振り回されない「仕組み化思考」の専門家。
-    </Fragment>
-  </Hero>
+  <main class="max-w-3xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+    
+    <!-- ヘッダー部分 -->
+    <header class="mb-16 border-b border-gray-200 pb-10 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">シン</h1>
+      <p class="text-xl text-gray-600 font-medium mb-4">e-Shikumi-Labo 所長</p>
+      <div class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-semibold">
+        50代｜関東在住｜現場サポート（業務改善・VBA/RPA担当）
+      </div>
+    </header>
 
-  <div class="max-w-3xl mx-auto px-4">
+    <div class="space-y-16">
+      
+      <!-- セクション1 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          現場でのもどかしさと、「稼ぐ」を脇に置いた選択
+        </h2>
+        <div class="space-y-5">
+          <p>現在、外部の現場スタッフとして、現場の業務改善（Excel VBAやRPA）を担当しています。</p>
+          <p>
+            ただ、外部の現場スタッフという立場上、手を出せる範囲や責任にはどうしても制限があります。30年近く組織で働いていると、<strong>「ここをこう変えればもっと楽になるのに」</strong>という最適解や全体像が自然と見えてきます。ですが、人手不足の現場で日々の業務に追われている社員さんたちを見ていると、余計な領域にまで踏み込むわけにもいきません。
+          </p>
+          <p>
+            <span class="font-bold text-gray-900">30年の知見や経験があるのに立場上力を出し切れないもどかしさと、50代ならではの不完全燃焼感。</span>「自分の知識や情熱を、もっと自由に100%活かせる場所があるんじゃないか」というモヤモヤをずっと抱えていました。
+          </p>
+          <p>
+            そんな中で出てきたのが、<strong>AIという存在</strong>です。せっかくこんなすごい技術が登場したのだから、受け身でいるのではなく自分から使って何か作れないか。自分の知識や知的好奇心を思い切りぶつけられる場所を、自分の手で作ってみたいと思ったのがきっかけでした。
+          </p>
+          <p class="text-sm text-gray-500">
+            ……なんて格好いい理由を並べましたが、本音を言えば「AIを使って副業で一儲けできないか」という下心もありました。ごく自然な欲です。ですがNoteなどを覗いて現実を知りました。AIが書いた記事があふれ、「非エンジニアがAIでアプリを作りました！」という記事が無数に流れてくる。「作る」ことは簡単になっても、それを個人が「広めて売る」のは完全にムリゲーな世界でした。
+          </p>
+          
+          <!-- 強調ブロック -->
+          <div class="bg-gray-50 border-l-4 border-gray-800 p-5 mt-6 rounded-r-lg">
+            <p class="text-lg font-bold text-gray-900 mb-2">
+              でも、一度その「短絡的に稼ぐ」というプレッシャーを脇に置いてみたとき、ふと気づきました。
+            </p>
+            <p class="text-gray-800">
+              子供の頃、アニメやSF映画で見てワクワクしていた「AIと一緒に何かを作る世界」が、今気に目の前にある。<strong class="text-gray-900">稼ぐためのツールではなく、自分のデスク周りを面白くする相棒</strong>としてAIを触り始めた瞬間、これはこれで純粋にめちゃくちゃ楽しい趣味になると思ったのです。
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <div class="py-12 md:py-16 border-t border-gray-100">
-      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
-        これまでの歩みと挫折の歴史
-      </h2>
-      <Steps
-        items={[
-          {
-            title: '元エンジニアとしての原点',
-            description:
-              '大学卒業後、エンジニアとして勤務。業務のかたわらExcel VBAを用いた各種効率化ツールを自作し、社内で高い評価を受ける。「手作業を自動化し、仕組みを作る面白さ」にのめり込む原点となりました。',
-            icon: 'tabler:briefcase',
-          },
-          {
-            title: '2014年：輸出ビジネスでの圧倒的な手作業',
-            description:
-              '副業・起業を模索する中で海外輸出ビジネスに出会い、本格参入。すぐに実績を上げるも、データの収集、一括出品、在庫チェックなど、あまりに膨大で泥臭い手作業の多さに圧倒される日々を過ごしました。',
-            icon: 'tabler:manual-gearbox',
-          },
-          {
-            title: 'スプレッドシート＋GASによる一連の自動化',
-            description:
-              '「Web上のデータはプログラムで制御できるはず」と一念発起。Excel VBAの知識をベースに、GoogleスプレッドシートやGAS（Google Apps Script）を組み合わせた独自の効率化システムを構築。手作業を劇的に減らすことに成功します。',
-            icon: 'tabler:code',
-          },
-          {
-            title: 'アクセス規制の壁、そして「納品しない」決断へ',
-            description:
-              '同じ悩みを抱える人たちへツールの提供を始めるも、サイト側によるアクセス規制や自動化への防御策が激化。ツールを丸ごと渡すだけの自動化が通用しなくなる限界（挫折）を経験します。これを機に、中身がわからない状態でのツール提供（納品）をやめ、コードの構造を理解した上で、使う人自身がエラーに対応できる思考力を養う「自走支援」へと舵を切りました。',
-            icon: 'tabler:barrier-block',
-          },
-        ]}
-      />
+      <!-- セクション2 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          越境ECと、データ取得で揉まれた挫折
+        </h2>
+        <div class="space-y-5">
+          <p>
+            以前、副業で「越境EC（海外向け中古品販売）」をやっていた時期があります。仕入れの精度を上げるために重要だったのが、<strong>「いかに効率よくフリマサイトから商品を探して仕入れるか」</strong>でした。
+          </p>
+          <p>
+            最初はExcel VBAから始まり、GAS、最終的にはPythonまで使ってリサーチツールを作りました。すっかりツール作りの面白さにハマり、同業者向けにツールの提供まで始めたほどです。
+          </p>
+          <p>
+            ですが、苦労してプログラムを組んでも、<strong class="text-gray-900">相手サイトのレイアウト変更や、年々厳しくなるボット対策に毎回振り回されっぱなし</strong>でした。最終的にはボット対策がどんどん厳しくなり、ツールが動かなくなってサービス終了に追い込まれました。この経験から、「ブラックボックス化された完成品を渡して終わり」にするビジネスモデルの限界を痛感したのです。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション3 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          AI時代に「価値があるもの」は何だろう？
+        </h2>
+        <div class="space-y-5">
+          <p>文章作成からツール・アプリ作成まで何でもAIでできるようになる中で、「一体何に価値が残るんだろう？」と試行錯誤して気づいたことがありました。</p>
+          
+          <ul class="space-y-3 bg-gray-50 p-6 rounded-lg text-lg font-bold text-gray-900">
+            <li class="flex items-center">
+              <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-sm">1</span>
+              自分自身が直接経験した「一次情報」
+            </li>
+            <li class="flex items-center">
+              <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-sm">2</span>
+              フリマサイトなどの「リアルタイムの情報（生のデータ）」
+            </li>
+          </ul>
+
+          <p>
+            たとえば、AIに「今メルカリでNintendo Switchがいくらで出品されているか調べて」と頼んでも、正確な情報は取ってこれません。<strong class="text-gray-900">AIが得意なのは知識や集約されたデータであって、「今この瞬間のWeb上の生データ」を取得することではない</strong>からです。
+          </p>
+          <p class="text-xl font-bold text-gray-900 mt-4">
+            だからこそ、リアルタイムのWebデータを取ってくる技術には、今でも明確な価値があるのだと確信しました。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション4 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          行き着いたのが「Chrome拡張機能 × AI」
+        </h2>
+        <div class="space-y-5">
+          <p>
+            そこで「リアルタイムな生データを確実に取る方法」として行き着いたのが、<strong>Chrome拡張機能を使ってデータを取得し、スプレッドシートに連携させる方法</strong>でした。
+          </p>
+          <p>
+            外部からプログラムで無理やりデータを叩きにいくPython等と違って、Chrome拡張機能は「自分が開いているブラウザの画面」上で動きます。だから<strong class="text-gray-900">ボット対策に引っかかりにくく、データの取得が圧倒的に安定</strong>します。
+          </p>
+          <p>おまけに、お金も環境のハードルもすごく低いです。</p>
+          
+          <ul class="list-none space-y-4 py-4">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>土台になるGoogleスプレッドシートは<strong>無料</strong>。</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Chrome拡張機能を作るのも使うのも<strong>基本無料</strong>（ストア公開時のみ初回約800円）。</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>面倒なコード書きは<strong>AI（ChatGPTやGemini等）に任せて</strong>、自分は得意な「課題整理」と日本語での指示（プロンプト）に集中できる。</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Windowsだけでなく、Linuxやラズパイ（Raspberry Pi）なんかでも動く柔軟さがある。</span>
+            </li>
+          </ul>
+
+          <p>私自身、SE（システムエンジニア）でもないので、Chrome拡張機能が自分で作れるとは正直思っていませんでした。ですが、Excel VBAをはじめとする基礎的なプログラミングの考え方を知っていること、そしてAIがあれば、思っていた以上にスムーズに形にすることができました。</p>
+          <p class="font-bold text-gray-900 bg-gray-50 p-4 rounded-lg">
+            世間でよく聞く「誰でも簡単に作れる！」なんて安直な言い方は口が裂けても言えません。けれど、プログラムの基礎的な考え方を理解している人がAIという相棒を得れば、諦めていた便利ツールを自分の手で形にすることは十分に可能です。
+          </p>
+        </div>
+      </section>
+
+<!-- セクション5 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          完成品ではなく「自分で直せる力（自走力）」を
+        </h2>
+        <div class="space-y-5">
+          <p>
+            過去にブラックボックスのツールを提供して失敗した苦い経験があるので、私は<strong>「自分が作ったツールを渡して終わり」という形にするつもりはありません。</strong>サイトの仕様が変わったら使えなくなるからです。
+          </p>
+          <p class="text-xl font-bold text-gray-900">
+            一番大事なのは、トラブルが起きてもAIと一緒に自分で直せる「自分で直せる力（自走力）」です。
+          </p>
+          
+          <div class="bg-gray-900 text-white p-6 md:p-8 rounded-xl mt-6 shadow-lg text-center space-y-4">
+            <p>当ラボ（e-Shikumi-Labo）では、お金も場所もかけずに楽しめる<br class="hidden md:block" /><span class="text-2xl font-bold text-blue-300">「大人のデジタルDIY」</span>の作例を公開しています。</p>
+          </div>
+        </div>
+      </section>
+
     </div>
-
-    <div class="py-12 md:py-16 border-t border-gray-100">
-      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
-        プライベート & ライフスタイル
-      </h2>
-      <p class="text-lg text-muted mb-4 leading-relaxed">
-        妻と2人の息子との4人暮らし。家に帰ると長男のゲームの相手、次男の散歩など、子どもたちの賑やかさに振り回される毎日を過ごしています。
-      </p>
-      <p class="text-lg text-muted leading-relaxed">
-        趣味は読書。小説やビジネス書など、<strong>年間100冊以上</strong>を読んでいます。iPhoneのKindleアプリを使い、移動時間や少しの隙間時間を見つけては、新しい視点や思考に触れる時間を楽しんでいます。
-      </p>
-    </div>
-
-    <div class="py-6">
-      <Features2
-        title="思考の源泉（書籍・言葉）"
-        subtitle="私の「仕組み化」の考え方に大きな影響を与えた本と言葉です。"
-        items={[
-          {
-            title: 'オススメ書籍：エッセンシャル思考',
-            description: '（グレッグ・マキューン著）<br />「減らすことで価値を高める」という本質を教えてくれる一冊。業務を「入力・処理・出力」に極限までシンプルに分解する当ラボの思想の根底にあります。',
-            icon: 'tabler:book',
-          },
-          {
-            title: 'オススメ書籍：真田太平記',
-            description: '（池波正太郎著）<br />小が大を相手にする痛快さ。真田昌幸・幸村の智謀と信念に惹かれ、舞台となった信州上田には何度も足を運ぶほど大好きな作品です。',
-            icon: 'tabler:book',
-          },
-          {
-            title: '人生の指針にしている言葉',
-            description: '・Simple Life is My Way.（シンプルに生きる）<br />・モノより思い出',
-            icon: 'tabler:heart',
-          },
-        ]}
-      />
-    </div>
-
-    <div class="text-center py-16 border-t border-gray-200 mt-12">
-      <p class="text-lg text-muted italic leading-relaxed">
-        「複雑なことを、シンプルに分解して、自分でコントロールする。」
-      </p>
-      <p class="text-md mt-8">
-        <a href="/blog" class="text-primary hover:underline font-bold text-lg">→ 仕組み化実験室（ブログ）を見る</a>
-      </p>
-    </div>
-
-  </div>
+  </main>
 </Layout>

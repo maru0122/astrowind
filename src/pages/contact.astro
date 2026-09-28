@@ -3,7 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 
 const metadata = {
-  title: 'お問い合わせ — e-Shikumi-Labo',
+  title: 'お問い合わせ・ご相談 — e-Shikumi-Labo',
 };
 ---
 
@@ -11,32 +11,39 @@ const metadata = {
   <div class="py-12 sm:py-20">
     <Hero
       tagline="Contact"
-      title="お問い合わせ"
-      subtitle="e-Shikumi-Laboは、ツールの開発代行を行う場所ではありません。<br class='hidden sm:inline'/>「自分の業務をどう整理し、どうすれば自分で維持管理できる仕組みにできるか」を一緒に探求する場所です。<br class='hidden sm:inline'/>自立的な運用を目指すためのプロセス改善や、設計アイデアのご相談をお気軽にお寄せください。"
+      title="お問い合わせ・ご相談"
+      subtitle="当ラボの作例に関するご質問や、サイトへのお問い合わせはこちらからどうぞ。<br class='hidden sm:inline'/>「自分の環境に合わせて一緒に画面を見ながら組み立てたい」「自作ツールで詰まっている」といった個別のスポット相談も承っています。"
       actions={[
         {
           variant: 'primary',
           text: 'Googleフォームを開く（外部サイト）',
           href: 'https://forms.gle/ZQGWuwhJZRmo8xvGA',
-          target: '_blank', // ◀◀ 別タブで開く設定
+          target: '_blank',
           icon: 'tabler:external-link',
         },
       ]}
     />
 
-  <div class="-mt-12 sm:-mt-20 relative z-10 max-w-2xl mx-auto px-6 py-8 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
-        <p class="font-bold text-md mb-4 text-primary text-blue-600 dark:text-blue-400">
-        ▼ このようなご相談をお受けしています
+    <div class="-mt-12 sm:-mt-20 relative z-10 max-w-2xl mx-auto px-6 py-8 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+      <!-- スポット相談の金額提示 -->
+      <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-800">
+        <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 tracking-wider">オンライン個別スポット相談（Zoom等）</p>
+        <p class="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">30分 5,000円〜</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">※ご相談内容や作業量に応じて調整いたします。</p>
+      </div>
+
+      <p class="font-bold text-sm mb-3 text-blue-600 dark:text-blue-400">
+        ▼ たとえば、このようなご相談が可能です
       </p>
-      <ul class="text-left max-w-md mx-auto text-sm space-y-3 text-gray-600 dark:text-gray-400 list-disc pl-5">
-        <li>手作業が多く混沌とした業務の「整理・フロー化」の割り出し</li>
-        <li>業務プロセスにおける自動化の「設計アイデア」の検討</li>
-        <li>GASやChrome拡張機能を活用し、ユーザー自身がツールを維持管理していくためのアプローチ</li>
+      <ul class="text-left max-w-md mx-auto text-sm space-y-2 text-gray-600 dark:text-gray-400 list-disc pl-5 mb-6">
+        <li>作例コードの自分の環境（スプレッドシート等）への落とし込み</li>
+        <li>自作ツールで動かなくなった部分のエラー調査・修正アドバイス</li>
+        <li>AI（ChatGPT/Gemini等）へうまく指示を出すプロンプトの出し方</li>
       </ul>
-      <p class="mt-5 text-xs text-rose-500 font-semibold">
-        ※プログラミングコードの作成・開発代行のみを目的としたご依頼はお受けしておりません。あらかじめご了承ください。
+      
+      <p class="text-xs text-gray-500 dark:text-gray-400">
+        ※「完成品ツールの開発代行」ではなく、AIを使って自分の手で仕組みを動かしたい方をサポートしています。
       </p>
     </div>
-
   </div>
 </Layout>
