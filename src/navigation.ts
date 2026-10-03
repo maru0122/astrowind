@@ -6,6 +6,10 @@ export const headerData = {
       text: 'プロダクト',
       links:[
         {
+          text: '拡張機能：FlightMonitor',
+          href: getPermalink('/products/flightmonitor'),
+        },
+        {
           text: '拡張機能：AIMemo（無料）',
           href: getPermalink('/products/aimemo'),
         },

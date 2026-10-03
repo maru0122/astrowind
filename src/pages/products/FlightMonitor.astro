@@ -2,21 +2,14 @@
 import PageLayout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Features from '~/components/widgets/Features.astro';
-import Content from '~/components/widgets/Content.astro';
+import Steps from '~/components/widgets/Steps.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
-import { Image } from 'astro:assets';
-
-// 画像のインポート（パスは実際のディレクトリ構成に合わせて調整してください）
-import heroImg from '../../assets/images/products/aimemo/20260911_1.png';
-import feature1Img from '../../assets/images/products/aimemo/20260911_1.png';
-
-
-const storeUrl = "https://chromewebstore.google.com/detail/YOUR_EXTENSION_ID";
+import heroImg from '~/assets/images/products/flightmonitor/flightmonitor01.png';
 
 const metadata = {
-  title: 'Flight Monitor - 自宅上空の航空機をリアルタイム監視 | Chrome拡張機能',
-  description: 'ブラウザのサイドパネルで、コックピット風ダークテーマのフライトレーダーを起動。OpenSky APIとスプレッドシート連携で、通過する航空機データをリアルタイムに表示します。',
+  title: 'Flight Monitor - 作例詳細・アーキテクチャ | Chrome拡張機能',
+  description: '指定した監視拠点（自宅等）の上空を通過する航空機データをリアルタイムに取得し、コックピット風ダークテーマ地図とフライトカード型一覧に表示する完全ローカル・サーバーレスなChrome拡張機能です。',
 };
 ---
 
@@ -27,35 +20,29 @@ const metadata = {
       {
         variant: 'primary',
         text: 'GitHubでコードを見る',
-        href: 'https://github.com/YOUR_GITHUB_REPO',
+        href: 'https://github.com/maru0122/FlightMonitor',
         target: '_blank',
         icon: 'tabler:brand-github',
       },
     ]}
+    image={{
+      src: heroImg,
+      alt: 'Flight Monitor 動作イメージ',
+    }}
   >
     <Fragment slot="title">
-      <span class="text-accent dark:text-white highlight">Flight Monitor</span><br />
+      Flight Monitor
     </Fragment>
-
     <Fragment slot="subtitle">
-      指定した監視拠点（自宅等）の上空を通過する航空機データをリアルタイムに取得し、Side Panel上のダークテーマ地図とフライトカード型一覧に表示するManifest V3準拠のChrome拡張機能です。サーバーレス設計により、OpenSky APIおよび公開Googleスプレッドシートからブラウザ上で直接データを同期・結合します。
-    </Fragment>
-
-    <Fragment slot="image">
-      <Image
-        src={heroImg}
-        alt="動作イメージ画面 / システム構成図"
-        class="mx-auto rounded-lg shadow-lg w-full h-auto"
-      />
+      指定した監視拠点（自宅等）の上空を通過する航空機データをリアルタイムに取得し、Side Panel上のダークテーマ地図とフライトカード型一覧に表示するChrome拡張機能です。サーバーレス設計により、OpenSky APIおよび公開Googleスプレッドシートからブラウザ上で直接データを同期・結合します。
     </Fragment>
   </Hero>
 
-  <!-- 技術仕様・構成要素 -->
+  <!-- 特徴 -->
   <Features
-    id="architecture"
+    id="features"
     tagline="Features"
     title="特徴"
-    subtitle="作業の邪魔をしないサイドパネルUIで、高度な航空機トラッキングをブラウザ上で実現します。"
     items={[
       {
         title: 'リアルタイムなデータ取得',
@@ -80,32 +67,37 @@ const metadata = {
     ]}
   />
 
-  <!-- 技術的詳細 1: データフローとAPI連携 -->
-  <Content
-    isReversed
+  <!-- 構成要素と処理の流れ (Stepsを使用) -->
+  <Steps
+    id="architecture-flow"
     tagline="Architecture & Flow"
     title="構成要素と処理の流れ"
     items={[
-      { title: 'OpenSky REST API (/states/all) からのリアルタイム取得', icon: 'tabler:check' },
-      { title: 'Google スプレッドシートからの路線データ (CSV) 自動結合', icon: 'tabler:check' },
+      {
+        title: '1. 設定のロードとマップ初期化',
+        description: 'サイドパネルの起動時にローカルストレージからユーザー設定を取得し、ダークテーママップ上にHomeマーカーや監視エリアを描画して表示基盤を初期化します。',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: '2. 外部データソースとの同期 (api.js)',
+        description: '10〜15秒間隔のポーリング処理により、OpenSky APIから航空機生データを取得します。同時にGoogleスプレッドシートから便名に紐づく付加情報（路線・時刻等）を読み込みます。',
+        icon: 'tabler:cloud-download',
+      },
+      {
+        title: '3. データの統合・変換処理 (utils.js)',
+        description: '現在位置からの距離計算（ハバーサイン公式）やコールサインの抽出を実行し、複数のデータソースから得た情報を拡張機能内で扱いやすい形式に統合・変換します。',
+        icon: 'tabler:calculator',
+      },
+      {
+        title: '4. UIの動的更新と多言語化',
+        description: '最新のデータをもとに地図上のマーカー位置を更新します。同時に航空会社ロゴを動的取得してフライトカードを再構築し、画面に反映させます。',
+        icon: 'tabler:layout-dashboard',
+      },
     ]}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">複数データソースのブラウザ内統合</h3>
-      10〜15秒のポーリング処理により、OpenSky APIからバウンディングボックス内の航空機データを取得。同時に、便名をキーとして公開スプレッドシートから発着地・時刻・IATAコードを取得し、ブラウザ上で結合します。IATAコードを用いてTravelpayouts Logo APIから航空会社ロゴも動的に取得し、リッチなUIを構成します。
-    </Fragment>
+  />
 
-    <Fragment slot="image">
-      <Image
-        src={feature1Img}
-        alt="API連携とデータフロー図"
-        class="mx-auto rounded-lg shadow-lg w-full h-auto"
-      />
-    </Fragment>
-  </Content>
-
-  <!-- 技術的詳細 2: 動作条件・必要なもの -->
-<Features
+  <!-- 必要なもの -->
+  <Features
     id="requirements"
     tagline="Requirements"
     title="必要なもの"
@@ -125,8 +117,9 @@ const metadata = {
     ]}
   />
 
-  <!-- CallToAction (ドキュメントへの誘導) -->
+  <!-- CallToAction 
   <CallToAction
+    title="📄 関連記事・技術ドキュメント"
     actions={[
       {
         variant: 'primary',
@@ -136,19 +129,12 @@ const metadata = {
         icon: 'tabler:brand-github',
       },
       {
-         variant: 'secondary',
-         text: 'OpenSky API ドキュメント',
-         href: 'https://openskynetwork.github.io/opensky-api/rest.html',
-         target: '_blank',
-      }
+        variant: 'secondary',
+        text: 'OpenSky API ドキュメント',
+        href: 'https://openskynetwork.github.io/opensky-api/rest.html',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
     ]}
-  >
-    <Fragment slot="title">
-      📄 関連記事・技術ドキュメント
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      ソースコードの詳細な実装やセットアップ手順はGitHubをご確認ください。
-    </Fragment>
-  </CallToAction>
+  /> -->
 </PageLayout>
