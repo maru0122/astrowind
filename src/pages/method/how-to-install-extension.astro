@@ -1,0 +1,151 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Image } from 'astro:assets';
+
+// 画像ファイルをインポート
+// ※ '~/assets/...' は src/assets/ へのエイリアス設定を前提としています
+import imgInstallSteps from '~/assets/images/method/20261021_01.png';
+import imgManageSteps from '~/assets/images/method/20261021_02.png';
+
+const metadata = {
+  title: 'Chrome拡張機能の導入方法（パッケージ化されていない拡張機能の読み込み） — e-Shikumi-Labo',
+  description: 'e-Shikumi-Laboで作成・配布しているChrome拡張機能をご自身のブラウザに導入し、利用・更新・削除するまでの手順を画像付きで解説します。',
+};
+---
+
+<Layout metadata={metadata}>
+  <main class="max-w-4xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+    
+    <!-- ヘッダー -->
+    <header class="mb-12 border-b border-gray-200 pb-8 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">
+        Chrome拡張機能の導入方法<br />
+        <span class="text-xl md:text-2xl text-gray-600 mt-2 block font-normal">（パッケージ化されていない拡張機能の読み込み）</span>
+      </h1>
+      <p class="text-lg text-gray-600 mt-4">
+        当ラボで配布しているZIPファイルや自作した拡張機能を、ローカル環境からChromeブラウザに直接読み込んで有効化する手順です。
+      </p>
+    </header>
+
+    <div class="space-y-16">
+      
+      <!-- セクション1: 導入手順 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          導入の全体フロー（手順 ① 〜 ④）
+        </h2>
+        
+        <!-- 画像1の配置 (Astro Imageコンポーネントに変更) -->
+        <div class="mb-8 rounded-xl overflow-hidden shadow-md border border-gray-200 bg-gray-50">
+          <Image 
+            src={imgInstallSteps} 
+            alt="Chrome拡張機能の導入手順（1〜4ステップ）" 
+            class="w-full h-auto block"
+          />
+        </div>
+
+        <!-- 各ステップ解説 -->
+        <div class="space-y-8 mt-6">
+          
+          <div class="flex items-start">
+            <span class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center mr-4 mt-0.5 text-sm font-bold flex-shrink-0">1</span>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 mb-1">ZIPファイルの解凍・フォルダの確認</h3>
+              <p class="text-gray-700 text-sm md:text-base">
+                ダウンロードしたZIPファイルを右クリックし、<strong>「すべて展開」</strong>で解凍します。<br />
+                展開したフォルダを開き、直下に <code>manifest.json</code> や関連ファイル・フォルダが入っていることを確認してください。
+              </p>
+              <p class="text-xs text-amber-700 bg-amber-50 border-l-2 border-amber-500 p-2 mt-2">
+                ※ ZIPファイルのままでは読み込めません。また、後からフォルダを移動・削除すると拡張機能が停止するため、誤って消さない場所（ドキュメントフォルダ等）に置いてください。
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <span class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center mr-4 mt-0.5 text-sm font-bold flex-shrink-0">2</span>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 mb-1">拡張機能の管理画面を開く</h3>
+              <p class="text-gray-700 text-sm md:text-base">
+                Chromeのアドレスバーに <code>chrome://extensions</code> と入力してEnterキーを押します。<br />
+                （または、ブラウザ右上の「︙」メニュー ＞「拡張機能」＞「拡張機能を管理」から開くこともできます）
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <span class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center mr-4 mt-0.5 text-sm font-bold flex-shrink-0">3</span>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 mb-1">「デベロッパー モード」を有効化</h3>
+              <p class="text-gray-700 text-sm md:text-base">
+                管理画面の右上にある<strong>「デベロッパー モード」</strong>のトグルスイッチをクリックしてオンにします。
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <span class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center mr-4 mt-0.5 text-sm font-bold flex-shrink-0">4</span>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 mb-1">フォルダを選択して読み込む</h3>
+              <p class="text-gray-700 text-sm md:text-base">
+                左上に出現した<strong>「パッケージ化されていない拡張機能を読み込む」</strong>をクリックし、<strong>手順①で準備したフォルダ</strong>を選択します。
+              </p>
+              <div class="bg-gray-100 p-3 rounded text-sm text-gray-800 mt-2">
+                <strong>導入完了：</strong>画面一覧に拡張機能のカードが追加され、トグルスイッチがオンになっていればすぐにブラウザ上で動作します。
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- セクション2: 更新・無効化・削除 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          更新・有効化の切替・削除について
+        </h2>
+        
+        <!-- 画像2の配置 (Astro Imageコンポーネントに変更) -->
+        <div class="mb-8 rounded-xl overflow-hidden shadow-md border border-gray-200 bg-gray-50">
+          <Image 
+            src={imgManageSteps} 
+            alt="Chrome拡張機能の更新・有効無効・削除" 
+            class="w-full h-auto block"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <span class="w-7 h-7 rounded bg-gray-200 text-gray-800 flex items-center justify-center mr-3 mt-0.5 text-sm font-bold flex-shrink-0">①</span>
+              <div>
+                <strong class="text-gray-900 block font-bold">更新（リロード）</strong>
+                <span class="text-sm text-gray-600">
+                  プログラムコードや設定ファイルを修正した際は、カード右下の丸い矢印アイコンをクリックすると最新状態が即座にブラウザへ反映されます。
+                </span>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-7 h-7 rounded bg-gray-200 text-gray-800 flex items-center justify-center mr-3 mt-0.5 text-sm font-bold flex-shrink-0">②</span>
+              <div>
+                <strong class="text-gray-900 block font-bold">有効・無効の切り替え</strong>
+                <span class="text-sm text-gray-600">
+                  一時的に拡張機能を止めたい場合は、トグルスイッチをオフにします。アンインストールせずに一時停止できます。
+                </span>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-7 h-7 rounded bg-gray-200 text-gray-800 flex items-center justify-center mr-3 mt-0.5 text-sm font-bold flex-shrink-0">③</span>
+              <div>
+                <strong class="text-gray-900 block font-bold">削除（アンインストール）</strong>
+                <span class="text-sm text-gray-600">
+                  不要になった場合は「削除」ボタンをクリックします。管理画面から登録が解除されます（元のローカルフォルダは手動でゴミ箱へ移動してください）。
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

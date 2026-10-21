@@ -6,6 +6,7 @@ import imgChatSaver from '~/assets/images/products/chatsaver/chatsaver01.gif';
 import imgChatSaverLite from '~/assets/images/products/chatsaverlite/chatsaverlight01.png';
 import imgAimemo from '~/assets/images/products/aimemo/20250911_4.png'; 
 import imgFlightMonitor from '~/assets/images/products/flightmonitor/flightmonitor01.png'; 
+import imgflemacheck from '~/assets/images/products/flemacheck/flemacheck_001.png'; 
 
 
 export interface Product {
@@ -80,6 +81,18 @@ export const products: Product[] = [
     siteUrl: '/products/flightmonitor/',
     directUrl: 'https://github.com/maru0122/FlightMonitor',
     image: imgFlightMonitor,
+    tags: ['スプレッドシート', '拡張機能', 'GAS'],
+  },
+  {
+    no: 6,
+    status: '公開',
+    type: 'Chrome拡張',
+    method: 'DLリンク',
+    price: '無料',
+    name: 'フリマチェック',
+    siteUrl: '/products/flemacheck/',
+    directUrl: '/downloads/flemacheck_r00.zip',
+    image: imgflemacheck,
     tags: ['スプレッドシート', '拡張機能', 'GAS'],
   },
 ];

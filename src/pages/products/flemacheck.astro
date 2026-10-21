@@ -1,0 +1,209 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { Image } from 'astro:assets';
+
+import heroImg from '~/assets/images/products/flemacheck/flemacheck_001.png';
+import feature1Img from '~/assets/images/products/flemacheck/flemacheck_002.jpg';
+
+const metadata = {
+  title: 'Flema Check - 作例詳細・アーキテクチャ | Chrome拡張機能',
+  description:
+    'メルカリの検索結果に連動し、他フリマサイトの最安値比較や相場分析・売り時ランク判定をSide Panel上で即時実行するManifest V3準拠の完全スタンドアロン型Chrome拡張機能。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'ダウンロードはこちら',
+        href: '/downloads/flemacheck_r00.zip',
+        target: '_blank',
+        icon: 'tabler:download',
+      },
+    ]}
+    image={{
+      src: heroImg,
+      alt: 'Flema Check 動作イメージ画面',
+    }}
+  >
+    <Fragment slot="title">
+      Flema Check
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      メルカリの検索結果に連動し、他フリマサイト（ラクマ・ヤフオク・Yフリマ）の最安値や新着出品をSide Panel上に自動整理して比較表示する拡張機能です。外部サーバーを一切介さずブラウザ内部ストレージのみで動作するManifest V3準拠の完全スタンドアロンアーキテクチャを採用しています。
+    </Fragment>
+  </Hero>
+
+  <!-- 特徴 -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="特徴"
+    items={[
+      {
+        title: '完全スタンドアロン・サーバーレス構成',
+        description:
+          '外部データベース（Node.js / SQLite等）を撤廃し、ブラウザ内部ストレージ（chrome.storage.local）とメモリ上の差分検知のみで完結。容量制限（5MB）を遵守するため、不要プロパティの自動除外と最新1,000件の自動ローテーションを実施します。',
+        icon: 'tabler:database-off',
+      },
+      {
+        title: 'APIパッシブフック & 非表示裏タブ並列抽出',
+        description:
+          'メルカリの通信（entities:search等）をMAIN空間でフックして生JSONを取得し、他フリマサイトは非表示裏タブ（active: false）で並列取得。DOM変更の影響やBot対策を回避し、安定したデータ抽出を実現します。',
+        icon: 'tabler:layers-intersect',
+      },
+      {
+        title: 'Chrome Side Panel APIによる最適化UI',
+        description:
+          '閲覧中ページのレイアウトを崩さず独立領域で操作可能。直リンク対策（no-referrer）によるYahoo!系画像表示の担保、多角フィルタリング、サイト別サマリ、旧価格打消し表示などをゼロ秒レスポンスで描画します。',
+        icon: 'tabler:layout-sidebar-right',
+      },
+      {
+        title: '直近90日優先の相場分析・価格判定ロジック',
+        description:
+          'メルカリの販売実績（Sold）から相場中央値と平均販売日数を算出し、売り時ランク（S〜C）や推奨価格を算出。他フリマ出品に対して「青（刈り取り）」「赤（独占・高値）」「黄（値崩れ警戒）」を自動ハイライトします。',
+        icon: 'tabler:chart-histogram',
+      },
+    ]}
+  />
+
+  <!-- 構成要素と処理の流れ -->
+  <Content
+    isReversed
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    subtitle="メルカリの検索トリガーから他サイト並列検索、ローカル保存、Side Panel上での即時相場分析までのデータ連携フローです。"
+    items={[
+      {
+        title: '1. メルカリ検索キャプチャ（inject.js / content.js）',
+        description:
+          'MAIN空間で window.fetch / XMLHttpRequest をフックし生JSONをキャプチャ。content.js を経由して background.js へ転送し、URL判別（Shops/個人）およびステータス・日時を正規化します。',
+        icon: 'tabler:needle',
+      },
+      {
+        title: '2. 他フリマ自動検索 & 並列データ抽出（tabRunner.js）',
+        description:
+          'background.js が指示を出し、ラクマ・Yフリマ・ヤフオクを非表示タブ（active: false）で同時に起動。各サイトの構造化データやJSONを抽出後、タブを自動クローズします。',
+        icon: 'tabler:browser-plus',
+      },
+      {
+        title: '3. 内部ストレージ保存 & 差分自動検知（dbClient.js）',
+        description:
+          '正規化データを chrome.storage.local へUPSERT保存。価格変更日時やステータス変更日時を保持しつつ、最新1,000件を超えた古いアイテムを自動切り詰めして容量を維持します。',
+        icon: 'tabler:database-import',
+      },
+      {
+        title: '4. 相場分析 & チャンス品判定描画（sidepanel.js / marketAnalysis.js）',
+        description:
+          'DB更新通知を受信後、Side Panelのメモリ上で直近90日実績に基づく売り時ランク（S〜C）および推奨販売価格をゼロ秒計算。条件に応じたハイライトCSS（青・赤・黄）を各カードへ即時適用します。',
+        icon: 'tabler:chart-dots-3',
+      },
+    ]}
+  >
+    <Fragment slot="image">
+      <Image
+        class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+        width={600}
+        height={450}
+        widths={[400, 768]}
+        sizes="(max-width: 768px) 100vw, 432px"
+        src={feature1Img}
+        alt="Flema Check データフロー構成図"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- 必要なもの（画像なしのためFeatures columns={2}を使用） -->
+  <Features
+    id="requirements"
+    columns={2}
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="外部サーバーや外部データベースの構築は不要です。動作に必要な環境条件は以下の通りです。セットアップ手順の詳細はGitHubのREADMEを参照してください。"
+    items={[
+      {
+        title: 'Google Chrome（最新版）',
+        description:
+          'Manifest V3 および Chrome Side Panel API（Chrome 114以降）に対応したデスクトップ向けChromium系ブラウザ環境。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: '拡張機能の読み込み権限',
+        description:
+          'Chromeの拡張機能管理画面（chrome://extensions/）で「デベロッパーモード」を有効化し、展開したソースコードをパッケージ化されていない拡張機能として読み込める環境。',
+        icon: 'tabler:folder-code',
+      },
+      {
+        title: '対象フリマサービスへのアクセス環境',
+        description:
+          'メルカリ、ラクマ、Yフリマ、ヤフオクの各Webサイトへ正常にHTTP/HTTPS通信が可能なネットワーク接続（各サービスのアカウントログインは必須ではありません）。',
+        icon: 'tabler:shopping-cart',
+      },
+      {
+        title: 'ブラウザ内部ストレージ領域',
+        description:
+          'chrome.storage.local が使用可能な領域（不要プロパティ削除および最新1,000件自動ローテーションにより、上限5MB以内で自動管理されます）。',
+        icon: 'tabler:device-floppy',
+      },
+    ]}
+  />
+
+<!-- 注意事項 -->
+  <Features
+    id="disclaimer"
+    columns={2}
+    tagline="Disclaimer"
+    title="注意事項・ご利用にあたって"
+    subtitle="本拡張機能をご利用になる前に、以下の内容をご確認・ご了承ください。"
+    items={[
+      {
+        title: '著作権について',
+        description:
+          '本ソフトウェア（ソースコード・デザイン等を含む）の著作権は制作者に帰属します。',
+        icon: 'tabler:copyright',
+      },
+      {
+        title: 'コードの改変と商用公開の禁止',
+        description:
+          'ご自身でコードを改変・カスタマイズして利用することは自由です。ただし、改変したものの再配布・公開や、商用目的（有料販売やサービスへの組み込み等）での公開・利用はご遠慮ください。',
+        icon: 'tabler:code-off',
+      },
+      {
+        title: '利用は自己責任で',
+        description:
+          '本拡張機能の利用により生じたいかなる損害やアカウントトラブル等についても、制作者は責任を負いかねます。ご自身の判断と責任のもとでご利用ください。',
+        icon: 'tabler:alert-triangle',
+      },
+      {
+        title: '動作保証について（現状渡し）',
+        description:
+          '現時点での仕様に基づいて制作しています。対象フリマサイトの仕様変更等により、予告なく動作しなくなる可能性があります（継続的なアップデートや動作の保証はありません）。',
+        icon: 'tabler:tool',
+      },
+    ]}
+  />
+    
+  <!-- CallToAction -->
+  <CallToAction
+    title="📦 Flema Check をダウンロード"
+    subtitle="ZIPファイルをダウンロードして、Chromeブラウザに読み込ませるだけですぐに使えます。"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'ダウンロードはこちら',
+        href: '/downloads/flemacheck_r00.zip',
+        target: '_blank',
+        icon: 'tabler:download',
+      },
+    ]}
+  />
+</PageLayout>

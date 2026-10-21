@@ -6,6 +6,9 @@ export const headerData = {
       text: 'プロダクト',
       links:[
         {
+          text: 'フリマチェック',
+          href: getPermalink('/products/flemacheck'),
+        },        {
           text: '拡張機能：FlightMonitor',
           href: getPermalink('/products/flightmonitor'),
         },

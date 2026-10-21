@@ -8,6 +8,13 @@ export interface Method {
 
 export const methods: Method[] = [
   {
+    title: 'パッケージ化されていない拡張機能の読み込み',
+    subtitle: '第1ステップ指示書',
+    description: '当ラボで配布しているZIPファイルや自作した拡張機能を、ローカル環境からChromeブラウザに直接読み込んで有効化する手順。',
+    url: '/method/how-to-install-extension',
+    tags: ['Chrome拡張機能'],
+  },
+  {
     title: 'AIに破綻しないコードを書かせる「Chrome拡張機能 初期設計プロンプト」',
     subtitle: '第1ステップ指示書',
     description: 'Chrome拡張機能の開発で、いきなりコードを書かせずモジュール構造・型定義・PROJECT_MAPの設計のみを最初に出力させるプロンプト。',
