@@ -7,6 +7,7 @@ import imgChatSaverLite from '~/assets/images/products/chatsaverlite/chatsaverli
 import imgAimemo from '~/assets/images/products/aimemo/20250911_4.png'; 
 import imgFlightMonitor from '~/assets/images/products/flightmonitor/flightmonitor01.png'; 
 import imgflemacheck from '~/assets/images/products/flemacheck/flemacheck_001.png'; 
+import imgmerucalc from '~/assets/images/products/mercaricalc/mercaricalc_001.png'; 
 
 
 export interface Product {
@@ -94,5 +95,17 @@ export const products: Product[] = [
     directUrl: '/downloads/flemacheck_r00.zip',
     image: imgflemacheck,
     tags: ['スプレッドシート', '拡張機能', 'GAS'],
+  },
+  {
+    no: 7,
+    status: '公開',
+    type: 'Webアプリ',
+    method: 'リンク',
+    price: '無料',
+    name: 'メルカリ利益・リセール計算機 ＆ 発送・梱包ガイド',
+    siteUrl: '/products/merucalc/',
+    directUrl: '/mercari-calc',
+    image: imgmerucalc,
+    tags: ['スプレッドシート', 'WebApp', 'GAS'],
   },
 ];

@@ -1,0 +1,87 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+// 先ほど作成したバナー画像を配置
+import heroImg from '~/assets/images/products/mercaricalc/mercaricalc_001.png';
+
+const metadata = {
+  title: 'メルカリ利益・リセール計算機 ＆ 発送・梱包ガイド - プロダクト詳細',
+  description: 'メルカリ出品時の手取り額試算および購入・売却時の実質負担額・日割りコストを即時算出するWebツール。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: '計算ツールを開く',
+        href: '/mercari-calc',
+        icon: 'tabler:calculator',
+      },
+    ]}
+    image={{
+      src: heroImg,
+      alt: 'メルカリ利益・リセール計算機の画面キャプチャ',
+    }}
+  >
+    <Fragment slot="title">
+      メルカリ利益・リセール計算機 ＆ 発送・梱包ガイド
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      出品時の手取り額と、買って使って売る「実質レンタルコスト・日割り負担額」を即座にシミュレーションできるWebツールです。サーバーレスな静的配信環境に最適化し、外部ライブラリに依存しない軽量設計で構築しています。
+    </Fragment>
+  </Hero>
+
+  <!-- 特徴（4つの強み） -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="主な機能と特徴"
+    items={[
+      {
+        title: '手取り額のリアルタイム算出',
+        description:
+          '販売価格の入力に伴い、手数料（10%）や配送方法別の実費・梱包費を自動控除し、手元に残る振込金額を即座に計算します。',
+        icon: 'tabler:calculator',
+      },
+      {
+        title: 'リセール回収率・実質負担額の逆算',
+        description:
+          '購入価格と売却想定額、利用日数から実質的な自己負担額や日割り単価を可視化。手取りで購入代金を全額回収できる「実質0円ライン」も算出します。',
+        icon: 'tabler:receipt-refund',
+      },
+      {
+        title: '発送場所・資材規格・再利用ルールの網羅',
+        description:
+          '主要メルカリ便の送料・サイズ制限・持ち込み場所に加え、専用箱の再利用可否（ゆうパケットプラス：可 / 宅急便コンパクト：不可）などの実用情報を整理しています。',
+        icon: 'tabler:box-seam',
+      },
+      {
+        title: '超軽量・ゼロ依存のステートレス設計',
+        description:
+          'React等の重厚なフレームワークを使わず、ネイティブなJavaScriptのみで実装。ページの読み込みが極めて高速で、端末を選ばずスムーズに動作します。',
+        icon: 'tabler:bolt',
+      },
+    ]}
+  />
+
+  <!-- CallToAction -->
+  <CallToAction
+    title="今すぐツールを使う"
+    subtitle="ブラウザ上で登録不要・完全無料でご利用いただけます。"
+    actions={[
+      {
+        variant: 'primary',
+        text: '計算ツールを開く',
+        href: '/mercari-calc',
+        icon: 'tabler:calculator',
+      },
+    ]}
+  />
+</PageLayout>

@@ -1,0 +1,424 @@
+---
+// src/pages/mercari-calc.astro
+import Layout from '~/layouts/PageLayout.astro';
+import MercariTakeHomeCalc from '~/components/MercariTakeHomeCalc.astro';
+import MercariResaleCalc from '~/components/MercariResaleCalc.astro';
+
+const metadata = {
+  title: 'メルカリ利益・リセール計算機 ＆ 発送・梱包ガイド',
+  description: 'メルカリ出品時の手取り額計算と、購入後に売却した際の実質負担額シミュレーター。配送方法・発送場所・専用資材のサイズ規格・再利用ルール完全ガイド。',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-12 sm:py-16 mx-auto max-w-5xl space-y-16">
+    
+    <!-- ページ見出し ＆ イントロ -->
+    <div class="text-center space-y-4">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        メルカリ計算ツール ＆ 発送・梱包ガイド
+      </h1>
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        メルカリ出品時の「手取り額」と、買って使って売る「実質負担額（レンタル換算コスト）」を瞬時にシミュレーションできるツールです。<br class="hidden sm:inline" />
+        出品価格の決定から、迷いやすい発送方法・専用資材のサイズ規格、発送場所の確認までまとめてご活用いただけます。
+      </p>
+    </div>
+
+    <!-- 計算機エリア -->
+    <div class="space-y-12">
+      <MercariTakeHomeCalc />
+    </div>
+    <div class="space-y-12">
+      <MercariResaleCalc />
+    </div>
+    <!-- 配送方法 × 梱包資材 × 発送場所 早見表 -->
+    <section class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+          📦 配送方法・送料・発送場所・梱包資材一覧
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          主要なメルカリ便の送料、サイズ、資材の購入先、および持ち込み可能な発送場所の一覧です。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-base border-collapse min-w-[760px]">
+          <thead>
+            <tr class="bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700 text-sm">
+              <th class="py-3.5 px-4 font-bold">配送方法</th>
+              <th class="py-3.5 px-4 font-bold">送料</th>
+              <th class="py-3.5 px-4 font-bold">サイズ目安</th>
+              <th class="py-3.5 px-4 font-bold">梱包資材・主な購入先</th>
+              <th class="py-3.5 px-4 font-bold">発送できる場所</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットポストmini</td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">180円</td>
+              <td class="py-4 px-4 text-sm">薄手の小物・トレカ・アクセ</td>
+              <td class="py-4 px-4 text-sm"><strong>専用封筒（20円）</strong><br /><span class="text-slate-400 text-xs">郵便局、ローソン</span></td>
+              <td class="py-4 px-4 text-sm">
+                <span class="font-bold text-slate-900 dark:text-white">📮 郵便ポストのみ</span><br />
+                <span class="text-rose-500 text-xs">※窓口・レジ発送不可</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">ネコポス（らくらく）</td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">210円</td>
+              <td class="py-4 px-4 text-sm">A4サイズ・厚さ3cm以内</td>
+              <td class="py-4 px-4 text-sm"><strong>角形A4封筒 / 薄型箱</strong><br /><span class="text-slate-400 text-xs">100均（ダイソー・セリア）、通販</span></td>
+              <td class="py-4 px-4 text-sm">
+                セブン-イレブン<br />
+                ファミリーマート<br />
+                ヤマト営業所 / PUDO
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットポスト</td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">220円（※）</td>
+              <td class="py-4 px-4 text-sm">ポストに入る厚さ（目安3.5〜4cm）</td>
+              <td class="py-4 px-4 text-sm"><strong>発送用シール（5円/枚）＋ 自前の袋</strong><br /><span class="text-slate-400 text-xs">シールは郵便局・ローソン・100均で購入</span></td>
+              <td class="py-4 px-4 text-sm">
+                <span class="font-bold text-slate-900 dark:text-white">📮 郵便ポストのみ</span><br />
+                <span class="text-rose-500 text-xs">※窓口・レジ発送不可</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">宅急便コンパクト（らくらく）</td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">520円（箱代込）</td>
+              <td class="py-4 px-4 text-sm">専用BOX（厚さ5cm / 薄型）</td>
+              <td class="py-4 px-4 text-sm"><strong>専用BOX（70円・1回限り）</strong><br /><span class="text-slate-400 text-xs">セブン、ファミマ、ヤマト営業所</span></td>
+              <td class="py-4 px-4 text-sm">
+                セブン-イレブン<br />
+                ファミリーマート<br />
+                ヤマト営業所 / PUDO<br />
+                <span class="text-slate-400 text-xs">（自宅集荷＋100円）</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットプラス（ゆうゆう）</td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">520円（箱代込）</td>
+              <td class="py-4 px-4 text-sm">専用箱（厚さ7cm）</td>
+              <td class="py-4 px-4 text-sm"><strong>専用BOX（65円・再利用可）</strong><br /><span class="text-slate-400 text-xs">郵便局、ローソン</span></td>
+              <td class="py-4 px-4 text-sm">
+                郵便局 窓口<br />
+                ローソン
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">宅急便（らくらく）<br /><span class="text-xs text-slate-400 font-normal">60〜160サイズ</span></td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">750円〜</td>
+              <td class="py-4 px-4 text-sm">靴・バッグ・中〜大型家電など</td>
+              <td class="py-4 px-4 text-sm"><strong>家にある段ボールでOK（0円）</strong><br /><span class="text-slate-400 text-xs">通販ダンボールや紙袋で可</span></td>
+              <td class="py-4 px-4 text-sm">
+                セブン-イレブン<br />
+                ファミリーマート<br />
+                ヤマト営業所 / PUDO<br />
+                <span class="text-slate-400 text-xs">（自宅集荷＋100円）</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-slate-900 dark:text-white">ゆうパック（ゆうゆう）<br /><span class="text-xs text-slate-400 font-normal">60〜170サイズ</span></td>
+              <td class="py-4 px-4 font-bold text-emerald-600 dark:text-emerald-400">750円〜</td>
+              <td class="py-4 px-4 text-sm">靴・バッグ・中〜大型家電など</td>
+              <td class="py-4 px-4 text-sm"><strong>家にある段ボールでOK（0円）</strong><br /><span class="text-slate-400 text-xs">通販ダンボールや紙袋で可</span></td>
+              <td class="py-4 px-4 text-sm">
+                郵便局 窓口<br />
+                ローソン
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
+        <span>※ ゆうパケットポストは送料215円＋シール代約5円で実質220円換算です。</span>
+        <a href="https://help.jp.mercari.com/guide/articles/147/" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+          <span>🔗 メルカリ公式：配送方法 早わかり表</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 専用資材のサイズ規格・重量制限 -->
+    <section class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+          📐 各専用資材のサイズ規格・重量制限
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          専用資材を使用する配送方法の外寸・内寸・重量規定の一覧です。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm sm:text-base border-collapse min-w-[640px]">
+          <thead>
+            <tr class="bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700 text-sm">
+              <th class="py-3 px-4 font-bold">資材名</th>
+              <th class="py-3 px-4 font-bold">資材価格</th>
+              <th class="py-3 px-4 font-bold">外寸サイズ（縦 × 横 × 厚さ）</th>
+              <th class="py-3 px-4 font-bold">重量制限</th>
+              <th class="py-3 px-4 font-bold">公式根拠</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットポストmini 封筒</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-200">20円</td>
+              <td class="py-3.5 px-4 text-sm">
+                21.6cm × 17.8cm<br/>
+                <span class="text-xs text-slate-400">（内寸目安：21.1cm × 16.8cm）</span>
+              </td>
+              <td class="py-3.5 px-4 text-sm">2kg以下</td>
+              <td class="py-3.5 px-4 text-xs">
+                <a href="https://help.jp.mercari.com/guide/articles/1435/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">メルカリ公式</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットポスト 専用箱</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-200">65円</td>
+              <td class="py-3.5 px-4 text-sm">32.7cm × 22.8cm × 厚さ3.0cm</td>
+              <td class="py-3.5 px-4 text-sm">2kg以下</td>
+              <td class="py-3.5 px-4 text-xs">
+                <a href="https://www.post.japanpost.jp/service/send/domestic/delivery/e-shipping/yu-packetpost.html" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">日本郵便公式</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white">ゆうパケットプラス 専用箱</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-200">65円</td>
+              <td class="py-3.5 px-4 text-sm">24.0cm × 17.0cm × 厚さ7.0cm</td>
+              <td class="py-3.5 px-4 text-sm">2kg以下</td>
+              <td class="py-3.5 px-4 text-xs">
+                <a href="https://www.post.japanpost.jp/service/send/domestic/delivery/e-shipping/yu-packetplus.html" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">日本郵便公式</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white">宅急便コンパクト 専用BOX</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-200">70円</td>
+              <td class="py-3.5 px-4 text-sm">20.0cm × 25.0cm × 厚さ5.0cm</td>
+              <td class="py-3.5 px-4 text-sm font-semibold text-emerald-600 dark:text-emerald-400">制限なし</td>
+              <td class="py-3.5 px-4 text-xs">
+                <a href="https://www.kuronekoyamato.co.jp/ytc/customer/send/services/compact/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">ヤマト運輸公式</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white">宅急便コンパクト 薄型専用BOX</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-200">70円</td>
+              <td class="py-3.5 px-4 text-sm">24.8cm × 34.0cm（マチなし・A4対応）</td>
+              <td class="py-3.5 px-4 text-sm font-semibold text-emerald-600 dark:text-emerald-400">制限なし</td>
+              <td class="py-3.5 px-4 text-xs">
+                <a href="https://www.kuronekoyamato.co.jp/ytc/customer/send/services/compact/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">ヤマト運輸公式</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ゆうパケットポストの投函ルール & 郵便ポスト規格 -->
+    <section class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          📮 ゆうパケットポストの投函ルールと郵便ポストの口径
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          ゆうパケットポストは、<strong>「郵便ポストの投函口にスムーズに入るサイズであること」</strong>が公式ルールです。
+        </p>
+      </div>
+
+      <div class="space-y-6 text-slate-700 dark:text-slate-300">
+        <div class="p-4 sm:p-5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/80 dark:border-slate-700 space-y-2 text-sm sm:text-base">
+          <span class="font-bold text-slate-900 dark:text-white block">
+            ゆうパケットポスト（発送用シール）の公式規定サイズ：
+          </span>
+          <ul class="list-disc pl-5 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+            <li><strong>3辺合計60cm以内</strong>（長辺34cm以内、かつ郵便ポストに投函可能であること）</li>
+            <li><strong>最小サイズ</strong>：縦14cm × 横9cm以上</li>
+            <li><strong>重さ</strong>：2kg以下</li>
+          </ul>
+          <p class="text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-700">
+            根拠リンク：<a href="https://help.jp.mercari.com/guide/articles/813/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline">メルカリ公式ガイド（ゆうパケットポスト）</a>
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">
+            郵便ポストの種類と投函口（厚さ）の目安
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            街中にある赤い郵便ポストは型番によって投函口の厚みが異なります。無理やりねじ込むと荷物の破損や回収不能の原因となり、返送される恐れがあるためご注意ください。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 space-y-1">
+              <span class="text-xs font-bold text-slate-500 block">最も一般的なポスト（13号等）</span>
+              <div class="text-xl font-bold text-slate-900 dark:text-white">厚さ 約3.4cm 〜 4.0cm</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">街中で最もよく見かける2口ポスト。ネコポス（3cm）より少し厚いものも通ります。</p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 space-y-1">
+              <span class="text-xs font-bold text-slate-500 block">旧型ポスト・小型ポスト</span>
+              <div class="text-xl font-bold text-slate-900 dark:text-white">厚さ 約3.0cm</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">口が1つの古いポストやコンビニ店内設置の小型ポスト。厚みがあると入らない場合があります。</p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 space-y-1">
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">大型投函口ポスト（新設型）</span>
+              <div class="text-xl font-bold text-slate-900 dark:text-white">厚さ 約7.0cm</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">主要駅前や郵便局前などに順次設置されている新型ポスト。ゆうパケットプラスと同等の厚みも投函可能です。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 専用箱の再利用ルール比較 -->
+    <section class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span>♻️</span> 専用箱の再利用（使い回し）ルール比較
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          専用箱が必要な2大配送サービスですが、<strong>発送箱として再利用できるかどうかはルールが真逆</strong>です。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        
+        <!-- 左：ゆうパケットプラス（OK） -->
+        <div class="box-card box-card-green">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-emerald-200/60 dark:border-emerald-800/40">
+              <span class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">ゆうパケットプラス（日本郵便）</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+                ✅ 条件付きで再利用OK
+              </span>
+            </div>
+            
+            <p class="text-sm sm:text-base text-emerald-950 dark:text-emerald-200 font-medium leading-relaxed">
+              メルカリ等で届いた箱を、そのまま次の発送に使い回すことができます（箱代65円が浮きます）。<br/>
+              ※ただし、状態が悪いと引受不可（返送）になるため注意が必要です。
+            </p>
+
+            <div class="box-inner-container">
+              <span class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100 block mb-3">
+                再利用するための3つの必須条件：
+              </span>
+              <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed list-disc pl-5">
+                <li><strong>ロゴが残っていること</strong>：文字やロゴがガムテープ等で完全に隠れていないこと</li>
+                <li><strong>箱の形状・強度</strong>：著しい変形、破れ、穴、水濡れがなく、フタが閉まること</li>
+                <li><strong>古い伝票の処理</strong>：前の送り状やバーコードシールを綺麗に剥がすか消すこと</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-emerald-200/50 dark:border-emerald-800/30 text-xs text-emerald-800 dark:text-emerald-300 flex flex-col gap-2">
+            <span class="font-bold">公式根拠：</span>
+            <span class="text-[11px] leading-relaxed opacity-90">
+              日本郵便公式ページにて「以下のケースは引受をお断りする場合があります」として、ロゴの消失・規定サイズ超え・変形や加工などが挙げられています（＝それらの条件をクリアしていれば使用済みでも引受可能です）。
+            </span>
+            <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+              <a href="https://www.post.japanpost.jp/service/send/domestic/delivery/e-shipping/yu-packetplus.html" target="_blank" rel="noopener noreferrer" class="font-semibold underline hover:text-emerald-950 dark:hover:text-white inline-flex items-center gap-0.5">
+                🔗 日本郵便公式：ゆうパケットプラス
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右：宅急便コンパクト（NG） -->
+        <div class="box-card box-card-rose">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-rose-200/60 dark:border-rose-800/40">
+              <span class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">宅急便コンパクト（ヤマト運輸）</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200">
+                ❌ 再利用NG（1回限り）
+              </span>
+            </div>
+
+            <p class="text-sm sm:text-base text-rose-950 dark:text-rose-200 font-medium leading-relaxed">
+              ヤマト運輸およびメルカリの公式ルールで「1回限りの利用」と明確に定められており、箱を使い回すことはできません。
+            </p>
+
+            <div class="box-inner-container">
+              <span class="font-bold text-sm sm:text-base text-rose-600 dark:text-rose-400 block mb-2">
+                使い回すとどうなる？
+              </span>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                配送の安全上、強度が落ちているとみなされ、受付で断られるか<strong>通常の「宅急便（60サイズ〜 / 送料750円〜）」に自動引き上げ</strong>となり、差額が差し引かれてしまいます。
+              </p>
+              
+              <div class="pt-3 border-t border-slate-200/70 dark:border-slate-700 text-sm">
+                <span class="font-bold text-slate-800 dark:text-slate-200">【例外的な使い道】</span><br/>
+                <span class="text-slate-600 dark:text-slate-300 leading-relaxed text-xs sm:text-sm mt-1 block">
+                  「宅急便コンパクト」としては使えませんが、通常の宅急便（60サイズ扱い）や定形外郵便の梱包箱として使う分には問題ありません。
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-rose-200/50 dark:border-rose-800/30 text-xs text-rose-800 dark:text-rose-300 flex flex-col gap-2">
+            <span class="font-bold">公式根拠：</span>
+            <span class="text-[11px] leading-relaxed opacity-90">
+              メルカリ公式ガイドおよび、ヤマト運輸公式FAQにて「専用資材の再利用はできません」と明確に記載されています。
+            </span>
+            <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+              <a href="https://help.jp.mercari.com/guide/articles/135/" target="_blank" rel="noopener noreferrer" class="font-semibold underline hover:text-rose-950 dark:hover:text-white inline-flex items-center gap-0.5">
+                🔗 メルカリガイド：宅急便コンパクト
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+              <a href="https://jp-news.mercari.com/contents/1933" target="_blank" rel="noopener noreferrer" class="font-semibold underline hover:text-rose-950 dark:hover:text-white inline-flex items-center gap-0.5">
+                🔗 メルカリびより：再利用についての解説
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </section>
+</Layout>
+
+<style>
+  .box-card {
+    border-radius: 1.25rem;
+    padding: 1.75rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .box-card-green {
+    background-color: rgba(236, 253, 245, 0.6);
+    border: 1px solid #a7f3d0;
+  }
+  .box-card-rose {
+    background-color: rgba(255, 241, 242, 0.6);
+    border: 1px solid #fecdd3;
+  }
+
+  .box-inner-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem !important;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  :global(.dark) .box-card-green {
+    background-color: rgba(6, 78, 59, 0.2);
+    border-color: rgba(6, 95, 70, 0.5);
+  }
+  :global(.dark) .box-card-rose {
+    background-color: rgba(136, 19, 55, 0.2);
+    border-color: rgba(159, 18, 57, 0.5);
+  }
+  :global(.dark) .box-inner-container {
+    background-color: rgba(15, 23, 42, 0.85);
+    border-color: rgba(51, 65, 85, 0.8);
+  }
+</style>
