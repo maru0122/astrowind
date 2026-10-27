@@ -8,6 +8,13 @@ export interface Method {
 
 export const methods: Method[] = [
   {
+    title: 'Chrome内蔵AI（Prompt API）の導入と初期セットアップ手順',
+    subtitle: '第1ステップ指示書',
+    description: 'ブラウザローカル環境で推論を完結させるための実行基盤構築と疎通確認手順。',
+    url: '/method/chrome-builtin-ai-setup',
+    tags: ['Chrome拡張機能','Chrome内蔵AI'],
+  },
+  {
     title: 'パッケージ化されていない拡張機能の読み込み',
     subtitle: '第1ステップ指示書',
     description: '当ラボで配布しているZIPファイルや自作した拡張機能を、ローカル環境からChromeブラウザに直接読み込んで有効化する手順。',

@@ -1,0 +1,248 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Chrome内蔵AI（Prompt API）の導入と初期セットアップ手順',
+  description: 'ブラウザローカル環境で推論を完結させるための実行基盤構築と疎通確認手順',
+};
+---
+
+<Layout metadata={metadata}>
+  <main class="max-w-3xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+    
+    <!-- ヘッダー部分 -->
+    <header class="mb-16 border-b border-gray-200 pb-10 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">
+        Chrome内蔵AI（Prompt API）の導入と初期セットアップ手順
+      </h1>
+      <p class="text-xl text-gray-600 font-medium mb-4">ブラウザローカル環境で推論を完結させるための実行基盤構築と疎通確認手順</p>
+    </header>
+
+    <div class="space-y-16">
+      
+      <!-- 概要と導入メリット -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          Chrome内蔵AIとは
+        </h2>
+        <div class="space-y-5">
+          <p>
+            Chrome内蔵AI（Prompt API）は、Google Chromeブラウザの中に組み込まれた小型AIモデルを手元のPC上で直接動かす仕組みである。ChatGPTなどのクラウドサービスにアクセスするのではなく、ブラウザ自体が持っている推論エンジンをJavaScriptから直接呼び出して利用する。手元のPCリソースを使ってブラウザ単体で処理が完結するため、特別なサーバーや外部サービスを用意する必要がない。
+          </p>
+          
+          <div class="border-l-4 border-gray-800 pl-5 py-2 mt-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">導入するメリット</h3>
+            <ul class="space-y-4 text-gray-800">
+              <li>
+                <strong class="text-gray-900">データを外部に送信せず、手元だけで処理が完結する：</strong><br />
+                入力したテキストや処理対象のデータが外部サーバーへ送信されない。社内文書や個人情報が絡むテキストを扱う場合でも、情報漏洩のリスクを気にせず手元で安全に処理できる。
+              </li>
+              <li>
+                <strong class="text-gray-900">APIキーの管理や利用料金が一切かからない：</strong><br />
+                クラウドAPIを利用する際に必要なアカウント登録、クレジットカード設定、APIキーの厳重な管理、月々の従量課金が不要である。モデルさえ一度ダウンロードしてしまえば、完全オフラインの状態でもそのまま動作する。
+              </li>
+              <li>
+                <strong class="text-gray-900">自作のChrome拡張機能へ手軽に組み込める：</strong><br />
+                バックエンドサーバーの構築や認証処理を挟む必要がなく、ブラウザの標準的なJavaScriptコードだけで直接AIを呼び出せる。日常のブラウザ操作やちょっとした業務ルーティンを効率化する自作ツールに、最小限の手間でAI機能を追加できる。
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 全体の導入ステップ（ロードマップ） -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          セットアップの全体フロー
+        </h2>
+        <div class="space-y-5">
+          <p>
+            本機能は現在Chromeの試験運用フラグとして提供されている。以下の手順でブラウザ設定を行い、モデルの取得と疎通確認を進める。
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded">
+              <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">Step 01</span>
+              <strong class="text-gray-900 block mb-1">動作確認環境の確認</strong>
+              <p class="text-xs text-gray-600">本手順の検証を行ったPCスペックおよびブラウザ環境の諸元。</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded">
+              <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">Step 02</span>
+              <strong class="text-gray-900 block mb-1">Flags の有効化</strong>
+              <p class="text-xs text-gray-600">Chromeのフラグ設定を開き、Prompt APIを有効化して再起動する。</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded">
+              <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">Step 03</span>
+              <strong class="text-gray-900 block mb-1">モデル取得と検証</strong>
+              <p class="text-xs text-gray-600">Console上でダウンロードを実行し、推論の疎通確認を行う。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 1: 動作確認時の環境（実績値） -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          1. 動作確認時の環境（実績値）
+        </h2>
+        <div class="space-y-5">
+          <p>
+            2026年10月26日時点で動作確認を行った環境の諸元は以下の通りである。専用グラフィックボード（dGPU）を持たない、内蔵GPU構成の一般的なノートPC環境における実績値となる。
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse border border-gray-200 text-sm">
+              <tbody>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                  <th class="py-2.5 px-4 font-semibold text-gray-900 w-1/3">ブラウザ</th>
+                  <td class="py-2.5 px-4 text-gray-700">Google Chrome 155.0.8059.86（Windows 64bit）</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                  <th class="py-2.5 px-4 font-semibold text-gray-900">OS</th>
+                  <td class="py-2.5 px-4 text-gray-700">Windows 11</td>
+                </tr>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                  <th class="py-2.5 px-4 font-semibold text-gray-900">CPU / GPU</th>
+                  <td class="py-2.5 px-4 text-gray-700">AMD Ryzen 7 7730U with Radeon Graphics（内蔵GPU / VRAM 496 MB）</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                  <th class="py-2.5 px-4 font-semibold text-gray-900">メインメモリ（RAM）</th>
+                  <td class="py-2.5 px-4 text-gray-700">16.0 GB</td>
+                </tr>
+                <tr class="border-b border-gray-200 bg-gray-50">
+                  <th class="py-2.5 px-4 font-semibold text-gray-900">ストレージ空き容量</th>
+                  <td class="py-2.5 px-4 text-gray-700">264 GB（検証時の空き容量）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: Chrome Flags の設定（Chrome 155 仕様） -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          2. Chrome Flags の設定（Chrome 155 仕様）
+        </h2>
+        <div class="space-y-5">
+          <p>
+            ブラウザの試験運用機能設定から、内蔵AIのAPI呼び出しを有効化する。
+          </p>
+          <ul class="space-y-4 py-2">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                <strong class="text-gray-900">フラグ画面の呼び出し</strong><br />
+                アドレスバーに <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-800 font-mono">chrome://flags</code> を入力してEnterキーを押す。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                <strong class="text-gray-900">対象フラグの検索</strong><br />
+                最上部の検索欄に <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-800 font-mono">prompt</code> または <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-800 font-mono">prompt-api</code> と入力する。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">3</span>
+              <div>
+                <strong class="text-gray-900">機能の有効化</strong><br />
+                表示された <strong class="text-gray-900">Prompt API</strong>（<code class="text-xs bg-gray-100 px-1 py-0.5 rounded text-gray-800 font-mono">#prompt-api</code>）右側のセレクトボックスを <strong class="text-gray-900">Enabled</strong> に変更する。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">4</span>
+              <div>
+                <strong class="text-gray-900">ブラウザの再起動</strong><br />
+                画面右下に表示される <strong class="text-gray-900">Relaunch</strong> ボタンを押下し、Chromeを再起動して設定を反映させる。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STEP 3: モデルのダウンロードと疎通確認（DevTools） -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          3. モデルのダウンロードと疎通確認（DevTools）
+        </h2>
+        <div class="space-y-5">
+          <p>
+            フラグを有効化した直後は、ローカルストレージ内にAIモデル実体（約1.5GB〜2GB）が存在しない。デベロッパーツール（DevTools）のConsoleからAPIを呼び出し、モデルの初回ダウンロードと推論テストを実行する。
+          </p>
+          
+          <ul class="space-y-3 py-1">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                任意のWebページで <kbd class="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs font-mono text-gray-800">F12</kbd> キー（Macは <kbd class="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs font-mono text-gray-800">Cmd + Option + I</kbd>）を押し、「Console」タブを選択する。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                以下のスクリプトをコピーしてコンソールへ貼り付け、Enterキーで実行する。
+              </div>
+            </li>
+          </ul>
+
+          <!-- コードエリア -->
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code>console.log("モデルの状態を確認中...");
+
+// 1. APIの存在確認
+if (typeof LanguageModel === "undefined") &#123;
+  console.error("LanguageModel APIが見つかりません。chrome://flags を確認してください。");
+&#125; else &#123;
+  // 2. 利用可能性の照会
+  const status = await LanguageModel.availability(&#123;
+    expectedInputs: [&#123; type: "text", languages: ["ja"] &#125;],
+    expectedOutputs: [&#123; type: "text", languages: ["ja"] &#125;]
+  &#125;);
+  console.log("現在のステータス:", status); // 最初は 'downloadable' になる
+
+  // 3. ダウンロードのトリガーと進捗監視
+  console.log("ダウンロードを開始します（約1.5GB〜2GB）...");
+  const session = await LanguageModel.create(&#123;
+    initialPrompts: [
+      &#123; role: "system", content: "あなたは親切なAIアシスタントです。日本語で回答してください。" &#125;
+    ],
+    monitor(m) &#123;
+      m.addEventListener("downloadprogress", (e) => &#123;
+        console.log(`ダウンロード進捗: $&#123;Math.round(e.loaded * 100)&#125;%`);
+      &#125;);
+    &#125;
+  &#125;);
+
+  // 4. テスト推論の実行
+  console.log("ダウンロード完了。推論テストを実行します...");
+  const response = await session.prompt("自己紹介を日本語で1文でしてください。");
+  console.log("AIの返答:\n", response);
+
+  // 5. リソース解放
+  session.destroy();
+&#125;</code></pre>
+          </div>
+          
+          <!-- 技術的解説エリア -->
+          <div class="border-l-4 border-gray-800 pl-5 py-2 mt-8">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">実行結果と技術的挙動</h3>
+            <ul class="space-y-4 text-gray-800">
+              <li>
+                <strong class="text-gray-900">初回ダウンロード処理：</strong><br />
+                初回実行時はコンソールに進捗状況（<code class="text-xs bg-gray-100 px-1 py-0.5 rounded font-mono">ダウンロード進捗: XX%</code>）が出力される。進捗が100%に達すると自動的にテスト推論が行われ、AIからの回答テキストが返却される。
+              </li>
+              <li>
+                <strong class="text-gray-900">完了後のステータス遷移：</strong><br />
+                一度ダウンロードが完了すると、<code class="text-xs bg-gray-100 px-1 py-0.5 rounded font-mono">LanguageModel.availability()</code> は <code class="text-xs bg-gray-100 px-1 py-0.5 rounded font-mono">available</code>（または <code class="text-xs bg-gray-100 px-1 py-0.5 rounded font-mono">readily</code>）を返すようになる。以降はオフライン環境下であっても即座にローカル推論セッションが起動する。
+              </li>
+              <li>
+                <strong class="text-gray-900">メモリ管理の実装要件：</strong><br />
+                ローカルLLMはシステムメモリを占有するため、推論終了時は <code class="text-xs bg-gray-100 px-1 py-0.5 rounded font-mono">session.destroy()</code> を明示的に実行し、不要になったセッションを破棄してメモリリークを防ぐ必要がある。
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
