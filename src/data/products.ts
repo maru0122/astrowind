@@ -8,6 +8,7 @@ import imgAimemo from '~/assets/images/products/aimemo/20250911_4.png';
 import imgFlightMonitor from '~/assets/images/products/flightmonitor/flightmonitor01.png'; 
 import imgflemacheck from '~/assets/images/products/flemacheck/flemacheck_001.png'; 
 import imgmerucalc from '~/assets/images/products/mercaricalc/mercaricalc_001.png'; 
+import imgmnoteclassifier from '~/assets/images/products/noteclassifier/20261103.png'; 
 
 
 export interface Product {
@@ -107,5 +108,17 @@ export const products: Product[] = [
     directUrl: '/mercari-calc',
     image: imgmerucalc,
     tags: ['スプレッドシート', 'WebApp', 'GAS'],
+  },
+  {
+    no: 8,
+    status: '公開',
+    type: 'Chrome拡張',
+    method: 'GitHub',
+    price: '無料',
+    name: 'Note Built-in AI Classifier',
+    siteUrl: '/products/noteclassifier/',
+    directUrl: 'https://github.com/maru0122/note-builtin-ai-classifier',
+    image: imgmnoteclassifier,
+    tags: ['内蔵AI','拡張機能'],
   },
 ];

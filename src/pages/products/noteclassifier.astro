@@ -1,0 +1,163 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { Image } from 'astro:assets';
+
+import heroImg from '~/assets/images/products/noteclassifier/20261103.png';
+import feature1Img from '~/assets/images/products/noteclassifier/20261103_001.jpg';
+
+const metadata = {
+  title: 'Note Built-in AI Classifier - 作例詳細・アーキテクチャ | Chrome拡張機能',
+  description: 'Chrome 内蔵 AI (Gemini Nano) による記事判定と、JavaScript ルールベース集計による著者解析を組み合わせたハイブリッド型 Chrome 拡張機能の作例詳細。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- 1. ヒーローセクション -->
+  <Hero
+    title="Note Built-in AI Classifier"
+    subtitle="Chrome 内蔵 AI (Gemini Nano) によるオンデバイス記事判定と、JavaScript による著者運用の即時集計を組み合わせた、外部サーバー不要の Google Chrome拡張機能です。"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: 'https://github.com/maru0122/note-builtin-ai-classifier',
+        icon: 'tabler:brand-github',
+      },
+    ]}
+    image={{
+      src: heroImg,
+      alt: 'Note Built-in AI Classifier スクリーンショット',
+    }}
+  />
+
+<!-- 2. 開発の背景と狙い（Features columns={2} に変更して左寄りを解消） -->
+  <Features
+    id="background"
+    tagline="Background"
+    title="なぜ作ったのか（開発の動機）"
+    columns={2}
+    items={[
+      {
+        title: '読みやすい長文の末に「一般論だけ」という徒労感から解放されたい',
+        description:
+          'noteで本当に読みたいのは、個人のリアルな試行錯誤や独自の一次情報です。しかし昨今、AIによる整然とした読みやすい文章が増えた一方で、長文を読まされた挙句、中身はどこかで見たような一般論ばかりで「結局具体的に何を言っているのかわからない」という徒労感を味わう機会が増えました。記事を開く前に一次情報の有無や中身の具体性をスクリーニングできないかと考えたことが、開発の原点です。',
+        icon: 'tabler:clock-off',
+      },
+      {
+        title: '個人開発の割り切り：クラウドAPIの課金やサーバー保守から解放される自給自足',
+        description:
+          'OpenAIなどの商用APIを使えば高精度な判定は容易ですが、日常的に使う個人ツールに毎月の従量課金やAPIキー管理、外部サーバーの運用リスクを背負い込むのは合理的ではありません。そこで「維持費ゼロ・個人データ送信ゼロ」を絶対条件とし、文脈判定はブラウザ内蔵のGemini Nano、アカウントの行動判定は軽量なJavaScriptによる統計集計を採用しました。手元のブラウザだけで完結する、道具としての合理性を追求しています。',
+        icon: 'tabler:tool',
+      },
+    ]}
+  />
+
+  <!-- 3. 特徴 -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="特徴"
+    items={[
+      {
+        title: '完全オンデバイス AI 推論',
+        description: 'Chrome 内蔵の Gemini Nano (Prompt API) を活用し、本文冒頭や見出し構造から一次情報の有無を外部通信なしでローカル判定します。',
+        icon: 'tabler:cpu',
+      },
+      {
+        title: 'ルールベースによる著者解析',
+        description: 'RSS と著者ページから投稿間隔・相互フォロー比率・マガジン参加状況を並行取得し、AI の文脈に惑わされず機械的運用を即座にスコアリングします。',
+        icon: 'tabler:chart-bar',
+      },
+      {
+        title: '結果カードの動的インジェクション',
+        description: 'note の SPA ルーティングを検知してボタンと結果カードを動的挿入。 3色のタグと独自パーサーによる Markdown 整形表示を行います。',
+        icon: 'tabler:layout-dashboard',
+      },
+      {
+        title: 'Side Panel でのプロンプト調整',
+        description: 'Chrome Side Panel API を利用し、記事判定用のシステムプロンプトやユーザー指示テンプレートをブラウザ上で直接カスタマイズ可能です。',
+        icon: 'tabler:adjustments-horizontal',
+      },
+    ]}
+  />
+
+  <!-- 4. 構成要素と処理の流れ -->
+  <Content
+    isReversed
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    items={[
+      {
+        title: 'フローA: 記事のAI判定パイプライン',
+        description: 'Content Script が抽出した記事構造を Service Worker 経由で Gemini Nano に渡し、推論結果から判定色・タイトル・本文をパースしてカード描画します。',
+      },
+      {
+        title: 'フローB: 著者の客観ルール判定パイプライン',
+        description: 'note 公式 RSS と HTML を並行フェッチし、投稿頻度・相互フォロー率・共同マガジン参加状況から算出したリスクスコアを元に即時判定を返却します。',
+      },
+      {
+        title: 'サーバーレス & スタンドアロン連携',
+        description: '外部の中継サーバーを一切挟まず、Service Worker、Content Script、Side Panel のブラウザ標準 API 連携のみで完結しています。',
+      },
+    ]}
+    image={{
+      src: feature1Img,
+      alt: 'アーキテクチャ & データフロー図',
+    }}
+  />
+
+  <!-- 5. 必要なもの（画像なしのためFeatures columns={2}を使用） -->
+  <Features
+    id="requirements"
+    columns={2}
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="本拡張機能の動作条件です。Chrome 内蔵 AI の有効化手順は、関連記事のセットアップガイドをご参照ください。"
+    items={[
+      {
+        title: 'Google Chrome (Built-in AI 有効化環境)',
+        description: 'Prompt API (LanguageModel インターフェース) が利用可能なバージョンの Chrome、およびローカルモデルのセットアップが必要です。',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: 'Manifest V3 実行環境',
+        description: 'Service Worker（type: module）および Side Panel API をサポートする標準ブラウザ環境で動作します。',
+        icon: 'tabler:puzzle',
+      },
+      {
+        title: 'note.com へのアクセス権限',
+        description: '記事構造の抽出および RSS・著者トップページのバックグラウンド取得のため、host_permissions の許可が必要です。',
+        icon: 'tabler:world-www',
+      },
+      {
+        title: 'ローカルストレージ (chrome.storage.local)',
+        description: 'サイドパネルで編集した判定プロンプト設定をブラウザローカルに永続化するために使用します。',
+        icon: 'tabler:database',
+      },
+    ]}
+  />
+
+  <!-- 6. CallToAction -->
+  <CallToAction
+    title="📄 関連記事・技術ドキュメント"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHub Repository',
+        href: 'https://github.com/maru0122/note-builtin-ai-classifier',
+        icon: 'tabler:brand-github',
+      },
+      {
+        variant: 'secondary',
+        text: 'Chrome Built-in AI セットアップガイド',
+        href: 'https://e-shikumi-labo.com/method/chrome-builtin-ai-setup/',
+        icon: 'tabler:book',
+      },
+    ]}
+  />
+</PageLayout>
