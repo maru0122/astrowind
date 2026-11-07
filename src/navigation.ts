@@ -7,10 +7,10 @@ export const headerData = {
       links:[
         {
           text: '拡張機能：Note Built-in AI Classifier',
-          href: getPermalink('/products/flemacheck'),
+          href: getPermalink('/products/noteclassifier'),
         },         {
           text: 'WebApp：メルカリ利益・リセール計算機 ＆ 発送・梱包ガイド',
-          href: getPermalink('/products/flemacheck'),
+          href: getPermalink('/products/merucalc'),
         },         {
           text: 'フリマチェック',
           href: getPermalink('/products/flemacheck'),
