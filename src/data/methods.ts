@@ -8,6 +8,13 @@ export interface Method {
 
 export const methods: Method[] = [
   {
+    title: 'Leaflet.jsと国土数値情報で作る鉄道路線・駅マップ',
+    subtitle: '作例・実装手順',
+    description: 'サーバー不要・API費用ゼロで、全国の鉄道路線と駅をダークテーマの地図に描画する手順。国土数値情報のGeoJSONをJS化して読み込むCORS対策も解説。',
+    url: '/method/railway-map',
+    tags: ['地図', 'Leaflet.js'],
+  },
+  {
     title: 'Chrome内蔵AI（Prompt API）の導入と初期セットアップ手順',
     subtitle: '第1ステップ指示書',
     description: 'ブラウザローカル環境で推論を完結させるための実行基盤構築と疎通確認手順。',
