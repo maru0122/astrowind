@@ -8,6 +8,13 @@ export interface Method {
 
 export const methods: Method[] = [
   {
+    title: 'スマホから自宅PCに指示を出す「Discord Bot」の仕組みと導入手順',
+    subtitle: '作例・導入手順',
+    description: 'ポート開放なしで、外出先のスマホから自宅PCのPythonプログラムを呼び出す。Developer PortalでのBot作成、discord.pyによるスラッシュコマンド実装、導入時のつまずきを解説。',
+    url: '/method/discord-bot-setup',
+    tags: ['Discord Bot', 'Python'],
+  },
+  {
     title: 'Leaflet.jsと国土数値情報で作る鉄道路線・駅マップ',
     subtitle: '作例・実装手順',
     description: 'サーバー不要・API費用ゼロで、全国の鉄道路線と駅をダークテーマの地図に描画する手順。国土数値情報のGeoJSONをJS化して読み込むCORS対策も解説。',

@@ -1,0 +1,333 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'スマホから自宅PCに指示を出す「Discord Bot」の仕組みと導入手順 — e-Shikumi-Labo',
+  description:
+    'ポート開放なしで、外出先のスマホから自宅PCのPythonプログラムを呼び出す。Discord Botの仕組み、Developer Portalでの準備、discord.pyによるスラッシュコマンド実装、導入時のつまずきを、バス遅延通知Botの実装をもとに解説する。',
+};
+---
+
+<Layout metadata={metadata}>
+  <main class="max-w-3xl mx-auto px-4 py-12 md:py-20 text-gray-700 leading-relaxed tracking-wide">
+
+    <!-- ヘッダー部分 -->
+    <header class="mb-16 border-b border-gray-200 pb-10 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">
+        スマホから自宅PCに指示を出す「Discord Bot」の仕組みと導入手順
+      </h1>
+      <p class="text-xl text-gray-600 font-medium mb-4">ポート開放不要。チャットアプリを「自宅PCのリモコン兼通知窓口」にする</p>
+      <p class="text-sm text-gray-500">題材：自宅PCで動かしているバス遅延通知Bot（Python / discord.py 2.7.1）。コード一式は <a href="https://github.com/maru0122/20261115_bus_pub" target="_blank" rel="noopener" class="underline">GitHub</a> で公開している。</p>
+    </header>
+
+    <div class="space-y-16">
+
+      <!-- セクション1: 背景・課題 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          背景：自宅PCの処理を、外出先から呼び出したい
+        </h2>
+        <div class="space-y-5">
+          <p>
+            バスの遅延情報を取得するPythonプログラムは、自宅PCで動かしている。クラウド（GAS）から取得しようとするとアクセスを拒否されたため、家庭用回線から取得する構成にした。
+          </p>
+          <p>
+            残る課題は「外出先からどう呼び出し、結果をどう受け取るか」である。自宅PCで小さなWebサーバーを立てる方法は、ルーターのポート開放や固定IPが必要になり、外部に入口を開けることにもなる。
+          </p>
+          <p>
+            外部から操作する方法としては、Discord Bot、GitHub Actions のセルフホストランナー、GAS＋スプレッドシートのフラグ、Tailscale＋Webフレームワーク、スマホ単体（iOSショートカット等）が候補に挙がった。このうち採用したのが Discord Bot である。
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 pt-2">Discord と Discord Bot とは</h3>
+          <p>
+            Discord は、無料で使えるチャットアプリである。「サーバー」と呼ばれるグループを誰でも作れ、その中に話題ごとの「チャンネル」を置ける。自分ひとりだけのサーバーを作り、個人用の通知置き場として使うこともできる。
+          </p>
+          <p>
+            Discord Bot は、プログラムが操作する Discord のアカウントである。人がチャンネルで「/bus」のようなコマンドを打つと、Bot がそれを受け取って処理し、結果をメッセージとして返す。Bot の側から、任意のタイミングでメッセージを送ることもできる。
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 pt-2">Webhook ではなく Bot を選んだ理由</h3>
+          <p>
+            Discord には、決められたURLに送るだけでチャンネルに投稿できる Webhook という仕組みもある。設定は Bot より簡単だが、送ることしかできない。今回は「コマンドを打ったら、遅延の有無にかかわらず今の一覧を返す」「定期監視中は、遅延が10分以上のときだけ通知する」という2つの動きが必要だったため、コマンドを受け取れる Bot を選んだ。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション2: 仕組み -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          仕組み：なぜポート開放が要らないのか
+        </h2>
+        <div class="space-y-5">
+          <p>
+            Bot のプログラムは、自宅PCから Discord のサーバーへ<strong class="text-gray-900">自分から接続しに行き、その接続を保ち続ける</strong>。スマホで打ったコマンドは Discord のサーバーを経由し、この接続を通って自宅PCに届く。
+          </p>
+          <p>
+            通信は常に「自宅PC → Discord」の外向きで始まるため、家庭用ルーターの設定を変える必要がない。外部から自宅PCに直接つながる入口も作らない。
+          </p>
+          <div class="bg-gray-100 rounded-lg p-5 text-sm font-mono text-gray-800 overflow-x-auto">
+<pre>スマホ（Discordアプリ）
+   │ /bus と入力
+   ▼
+Discord のサーバー
+   ▲ 自宅PCから張った接続を通じてコマンドが届く
+   │
+自宅PC（Python の Bot）── 接近情報ページを取得・解析
+   │
+   └─ 結果を Discord へ送信 → スマホに表示・通知</pre>
+          </div>
+          <p>
+            Bot のコマンドで実行されるのは「決められたページを取得して解析する」ことと「監視のON/OFFを切り替える」ことだけである。任意の命令を受け付けて実行する経路は、コード上に持たせていない。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション3: 導入手順（番号付きリスト形式） -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          導入手順
+        </h2>
+        <div class="space-y-5">
+          <ul class="space-y-4 py-2">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                <strong class="text-gray-900">自分用のサーバーを作る</strong><br />
+                Discord アプリでサーバーを新規作成し、通知を受け取るチャンネルを用意する。自分しかいないサーバーでよい。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                <strong class="text-gray-900">Developer Portal で Bot を作り、トークンを控える</strong><br />
+                Discord Developer Portal で新しいアプリケーションを作成し、Bot の設定画面でトークンを発行する。トークンは Bot としてログインするための合言葉で、知られると Bot を乗っ取られる。画面に表示されたら、すぐに手元の設定ファイルへ移す。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">3</span>
+              <div>
+                <strong class="text-gray-900">招待URLを発行し、自分のサーバーに Bot を招く</strong><br />
+                OAuth2 の URL Generator で、スコープに <code class="bg-gray-100 px-1 rounded text-sm">bot</code> と <code class="bg-gray-100 px-1 rounded text-sm">applications.commands</code> を選ぶ。後者は、スラッシュコマンドを登録するために必要である。権限は View Channels（チャンネルの閲覧）と Send Messages（メッセージの送信）があれば足りる。生成されたURLをブラウザで開き、手順1のサーバーを選んで承認する。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">4</span>
+              <div>
+                <strong class="text-gray-900">各種IDを控える（任意）</strong><br />
+                Discord の「設定 → 詳細設定 → 開発者モード」をONにすると、サーバー・チャンネル・ユーザーを右クリックしてIDをコピーできる。サーバーIDはコマンドの即時反映、チャンネルIDは通知先の固定、ユーザーIDは操作できる人の制限に使う。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">5</span>
+              <div>
+                <strong class="text-gray-900">Python の専用環境（venv）を作り、ライブラリを入れる</strong><br />
+                venv はプロジェクト専用のPython環境である。PC全体の環境を汚さずに、必要なライブラリ（requests / discord.py / python-dotenv）だけを入れられる。Python は 3.9 以上を想定している（動作確認は 3.15 のみ）。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">6</span>
+              <div>
+                <strong class="text-gray-900">設定ファイル（.env）を書いて起動する</strong><br />
+                トークンや各種IDは、コードに直接書かず <code class="bg-gray-100 px-1 rounded text-sm">python/.env</code> に書く。起動後、スマホの Discord で <code class="bg-gray-100 px-1 rounded text-sm">/bus</code> を打ち、一覧が返ってくれば接続は成功である。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- セクション4: コマンドと設定ファイル -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          環境構築コマンドと設定ファイル
+        </h2>
+        <div class="space-y-5">
+          <p>プロジェクトのフォルダで、次を順に実行する（Windows の PowerShell の例）。</p>
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code># 専用環境を作って有効化
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# ライブラリを導入（requests / discord.py / python-dotenv）
+pip install -r python\requirements.txt
+
+# 設定ファイルの雛形をコピー（コピー後の .env に値を書く）
+Copy-Item python\.env.example python\.env
+
+# Bot を起動（止めるまで常駐する）
+python python\discord_bot.py</code></pre>
+          </div>
+
+          <p><code class="bg-gray-100 px-1 rounded text-sm">python/.env</code> の書き方は次のとおり。[ ] の部分を自分の値に置き換える。</p>
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code># 必須：Developer Portal で発行したトークン
+DISCORD_BOT_TOKEN=[Botのトークン]
+
+# 必須：監視対象の接近情報ページ（既定のURLはない）
+BUS_URL=https://.../approachings?departure-busstop=[出発ID]&amp;arrival-busstop=[到着ID]
+
+# 任意：指定するとスラッシュコマンドがそのサーバーに即時反映される
+DISCORD_GUILD_ID=[サーバーID]
+
+# 任意：通知先チャンネル。未設定なら /watch を実行したチャンネルに通知
+ALERT_CHANNEL_ID=[チャンネルID]
+
+# 任意：/watch・/stop を実行できるユーザー（カンマ区切り）。未設定なら誰でも可
+ALLOWED_USER_IDS=[自分のユーザーID]
+
+# 任意：通知する遅延の分数と、監視の間隔（分）
+THRESHOLD_MIN=10
+MONITOR_INTERVAL_MIN=5</code></pre>
+          </div>
+          <p class="text-sm text-gray-500">
+            .env は .gitignore に登録し、GitHub 等に公開しない。トークンを誤って公開・共有した場合は、Developer Portal でトークンを再発行（Reset Token）すれば、古いトークンは使えなくなる。
+          </p>
+        </div>
+      </section>
+
+      <!-- セクション5: サンプルコードと技術的解説 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          Bot 本体の骨格（discord.py）
+        </h2>
+        <div class="space-y-5">
+          <p>実際の Bot から、Discord とやり取りする部分だけを抜き出して簡略化したものである。取得・解析と通知文の整形は別のモジュールに分けている。</p>
+          <!-- コード/本文エリア -->
+          <div class="bg-gray-900 text-gray-200 p-5 md:p-6 rounded-lg text-sm overflow-x-auto font-mono leading-relaxed shadow-inner">
+<pre><code>import asyncio
+import os
+
+import discord
+from discord import app_commands
+from discord.ext import tasks
+from dotenv import load_dotenv
+
+import alerts, fetch_bus  # 自作モジュール（通知文の整形 / ページの取得・解析）
+
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))  # python/.env を読む
+TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "").strip()
+GUILD_ID = int(os.environ.get("DISCORD_GUILD_ID") or 0)
+BUS_URL = os.environ.get("BUS_URL", "").strip()
+
+
+class BusBot(discord.Client):
+    def __init__(self):
+        super().__init__(intents=discord.Intents.default())  # 特権インテントは不要
+        self.tree = app_commands.CommandTree(self)
+
+    async def setup_hook(self):
+        if GUILD_ID:
+            guild = discord.Object(id=GUILD_ID)
+            self.tree.copy_global_to(guild=guild)
+            await self.tree.sync(guild=guild)  # 指定サーバーに即時反映
+        else:
+            await self.tree.sync()  # グローバル反映は最大1時間ほどかかる
+        monitor.start()
+
+
+bot = BusBot()
+
+
+@bot.tree.command(name="bus", description="今の接近バスと遅延を表示します")
+async def bus_command(interaction: discord.Interaction):
+    await interaction.response.defer(thinking=True)  # 「考え中」を先に返す
+    result = await asyncio.to_thread(fetch_bus.fetch_result, BUS_URL)  # 取得は別スレッド
+    await interaction.followup.send(alerts.format_result(result))
+
+
+@tasks.loop(minutes=5)
+async def monitor():
+    ...  # 監視ONのときだけ取得し、閾値以上の遅延があればチャンネルへ送信
+
+
+bot.run(TOKEN)</code></pre>
+          </div>
+
+          <!-- 技術的解説エリア -->
+          <div class="border-l-4 border-gray-800 pl-5 py-2 mt-8">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">技術的効果とメカニズム</h3>
+            <ul class="space-y-4 text-gray-800">
+              <li>
+                <strong class="text-gray-900">スラッシュコマンドなら特権インテントが要らない：</strong><br />
+                「!bus」のようにメッセージ本文を読んで反応する方式では、Developer Portal で Message Content Intent（メッセージ本文を読む特権）をONにする必要がある。スラッシュコマンドは Discord 側がコマンドとして Bot に届けるため、<code class="bg-gray-100 px-1 rounded text-sm">Intents.default()</code> のままで動く。Bot に渡す権限を最小限にできる。
+              </li>
+              <li>
+                <strong class="text-gray-900">コマンド登録は起動時に同期する：</strong><br />
+                <code class="bg-gray-100 px-1 rounded text-sm">setup_hook</code> で、コードに定義したコマンドを Discord に登録する。サーバーIDを指定するとそのサーバーにだけ即時に反映され、指定しないと全体への反映に最大1時間ほどかかる。個人用の Bot なら、サーバーIDを指定しておくほうが確認しやすい。
+              </li>
+              <li>
+                <strong class="text-gray-900">時間のかかる処理は「先に受付・後で回答」：</strong><br />
+                スラッシュコマンドには短時間で応答する必要がある。ページの取得には時間がかかることがあるため、<code class="bg-gray-100 px-1 rounded text-sm">defer</code> で先に「考え中」の表示を返し、結果は <code class="bg-gray-100 px-1 rounded text-sm">followup</code> で後から送る。
+              </li>
+              <li>
+                <strong class="text-gray-900">取得処理を別スレッドで動かす：</strong><br />
+                requests による取得は、終わるまでプログラムを止めてしまう。<code class="bg-gray-100 px-1 rounded text-sm">asyncio.to_thread</code> で別スレッドに逃がすことで、取得中も Discord との接続や他のコマンド受付が止まらない。
+              </li>
+              <li>
+                <strong class="text-gray-900">定期監視はタスクループで回す：</strong><br />
+                <code class="bg-gray-100 px-1 rounded text-sm">tasks.loop</code> で一定間隔（既定5分）の処理を Bot の中に持てる。外部のスケジューラは不要である。監視のON/OFFと通知先はファイル（state.json）に保存しており、Bot を再起動しても状態が残る。一時的な取得失敗はログに残すだけで、ループは止めない。
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション6: 導入時のつまずき -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          導入時のつまずきと対処
+        </h2>
+        <div class="space-y-5">
+          <ul class="space-y-4 py-2">
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">1</span>
+              <div>
+                <strong class="text-gray-900">起動すると「DISCORD_BOT_TOKEN が未設定」と出る</strong><br />
+                Bot が読み込むのは <code class="bg-gray-100 px-1 rounded text-sm">python/.env</code> である。雛形の <code class="bg-gray-100 px-1 rounded text-sm">.env.example</code> に値を書いても読まれない。雛形をコピーして .env を作り、そこに値を書く。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">2</span>
+              <div>
+                <strong class="text-gray-900">AIによって手順が違う</strong><br />
+                Gemini は「!bus」形式のコマンドと Message Content Intent のONを案内したが、実装はスラッシュコマンドで、特権インテントは不要だった。手順を聞いたAIと、コードを書いたAIが別の場合は、実際に動かすコードの側に合わせる。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">3</span>
+              <div>
+                <strong class="text-gray-900">コマンドが Discord に出てこない</strong><br />
+                サーバーIDを指定しない場合、コマンドの反映に最大1時間ほどかかることがある。<code class="bg-gray-100 px-1 rounded text-sm">DISCORD_GUILD_ID</code> を指定して再起動すると、そのサーバーに即時に反映される。
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-6 h-6 rounded bg-gray-800 text-white flex items-center justify-center mr-3 mt-0.5 text-xs font-bold flex-shrink-0">4</span>
+              <div>
+                <strong class="text-gray-900">トークンをAIとの会話やメモに貼ってしまう</strong><br />
+                設定内容を相談するときに、トークンやIDを伏せずに貼り付けると、会話ログやメモアプリに平文で残る。貼り付ける前に伏せ字にし、残ってしまった場合はトークンを再発行する。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- セクション7: 運用上の注意 -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b-2 border-gray-100 pb-2">
+          運用上の注意
+        </h2>
+        <div class="space-y-5">
+          <p>
+            Bot は自宅PCで動いているあいだだけ応答する。PCのスリープや再起動、プログラムの停止中は、コマンドにも応答せず、通知も届かない。
+          </p>
+          <p>
+            <code class="bg-gray-100 px-1 rounded text-sm">ALLOWED_USER_IDS</code> を設定すると、監視の開始・停止（/watch・/stop）を指定したユーザーだけに制限できる。一覧の表示（/bus）は制限の対象外である。
+          </p>
+          <p class="text-sm text-gray-500 border-t border-gray-200 pt-5">
+            ※本ページは、Webページの仕組みを個人で検証した記録である。対象サイトのURLや識別番号は伏せている。相手のサーバーの負担にならないよう、取得は5分間隔を基本とし、監視は必要なときだけ動かしている。試す場合も個人の検証の範囲にとどめること。サービス側の仕様変更により動かなくなる可能性がある。
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

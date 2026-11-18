@@ -6,6 +6,10 @@ export const headerData = {
       text: 'プロダクト',
       links:[
         {
+          text: 'Discord Bot：Bus Delay Bot',
+          href: getPermalink('/products/busdelaybot'),
+        },
+        {
           text: '拡張機能：Note Built-in AI Classifier',
           href: getPermalink('/products/noteclassifier'),
         },         {

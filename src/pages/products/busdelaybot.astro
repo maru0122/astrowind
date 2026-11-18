@@ -1,0 +1,195 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+
+import { Image } from 'astro:assets';
+
+// TODO: 仮設定（テスト表示用）。公開時に本画像へ差し替え
+import heroImg from '~/assets/images/products/busdelaybot/eyecatch.png';
+import feature1Img from '~/assets/images/products/busdelaybot/data-flow.png';
+
+const GITHUB_URL = 'https://github.com/maru0122/20261115_bus_pub';
+// TODO: 公開時に差し替え
+const NOTE_URL = 'https://note.com/eshikumilabo/n/[記事ID]';
+
+const metadata = {
+  title: 'Bus Delay Bot - 作例詳細・アーキテクチャ | Discord Bot / Python',
+  description:
+    'バス会社の接近情報ページから遅延を読み取り、Discordに通知する自宅PC常駐型のPython製Discord Bot。クレジットカード登録不要・サーバー代ゼロ・ポート開放不要で動く構成と処理の流れを解説します。',
+};
+---
+
+<PageLayout metadata={metadata}>
+  <!-- ヒーローセクション -->
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHubでコードを見る',
+        href: GITHUB_URL,
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+    ]}
+    image={{ src: heroImg, alt: 'Bus Delay Bot の Discord 通知画面' }}
+  >
+    <Fragment slot="title">Bus Delay Bot</Fragment>
+    <Fragment slot="subtitle">
+      バスの接近情報ページに埋め込まれた運行データを読み取り、遅れが大きいときだけDiscordに通知する、自宅PC常駐型のPython製Discord Botです。有料APIもクラウドサーバーも使わず、ルーターのポート開放もせずに外出先から操作できます。
+    </Fragment>
+  </Hero>
+
+  <!-- 開発の背景と狙い（画像なしの Content は左半分に寄るため、中央寄せの1カラムで配置） -->
+  <WidgetWrapper id="background" containerClass="max-w-3xl mx-auto">
+    <Headline tagline="Background" title="なぜ作ったのか（開発の動機）" />
+    <div>
+      <h3 class="text-xl font-bold mb-2">駅を降りる前に「今日はバスが詰まっている」と知りたい</h3>
+      <p class="mb-4">開発のきっかけは、Noteの記事に書いた日常の困りごとです。</p>
+      <blockquote class="border-l-4 border-primary pl-4 italic text-muted mb-4">
+        <p class="mb-2">会社からの帰宅時、駅からバスで帰ろうとすると、普段なら10分ほどで着くところが30分以上かかることがある。</p>
+        <p class="mb-2">このバスは交通量の多い国道を通る。ひとたび事故があると、収拾がつかなくなる。</p>
+        <p>駅を降りる前に「今日はバスが詰まっている」と分かれば、別の帰り方を選べる。その情報をスマホで受け取れないか。</p>
+      </blockquote>
+      <p class="mb-6">
+        歩く、シェアサイクルを使う、もう一つの最寄り駅から帰る。代わりの手段はあるので、判断材料さえ駅を降りる前に届けばよい、というのが出発点です。（<a href={NOTE_URL} target="_blank" class="underline">Note記事を読む</a>）
+      </p>
+
+      <h3 class="text-xl font-bold mb-2">個人開発の割り切り：クレカ登録が必要なAPIは使わない</h3>
+      <p>
+        渋滞の度合いを所要時間で取れる地図系のAPIは、登録にクレジットカードが必要だったため見送りました。代わりに、バス会社が公開している接近情報ページを使うことを検討しました。「あと何分で来るか」「何分遅れているか」が表示される、利用者向けのページです。
+      </p>
+    </div>
+  </WidgetWrapper>
+
+  <!-- 特徴 -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="特徴"
+    items={[
+      {
+        title: 'HTMLに埋め込まれた運行データを直接解析',
+        description:
+          'バスの接近情報ページは、画面に表示する運行データをページ自体の中に持っています。専用のAPIを探す代わりに、そのデータを読み解いて定刻・到着予測・遅れの分数を取り出します。',
+        icon: 'tabler:code',
+      },
+      {
+        title: '取得もBotも自宅PCで完結',
+        description:
+          'クラウド（GAS）からの取得はアクセス拒否（HTTP 403）されたため、取得役は自宅PCに置きました。外出先からの操作は、自宅PCからDiscordへ外向きに接続するBotにすることで、ポート開放や固定IPを不要にしています。',
+        icon: 'tabler:home',
+      },
+      {
+        title: 'スラッシュコマンドで外出先から操作',
+        description:
+          '/bus で今の接近バス一覧を毎回返信、/watch で定期監視を開始、/stop で停止します。監視のON/OFFはファイルに保存するため、Botを再起動しても状態が残ります。',
+        icon: 'tabler:brand-discord',
+      },
+      {
+        title: '通知しすぎない判定ロジック',
+        description:
+          '定期監視中は遅れが閾値（既定10分）以上の便だけを通知します。同じ便は1回のみ、前回より5分以上悪化したときだけ再通知し、記録は3時間で破棄します。遅れの大きさは🟢🟡🔴で色分けします。',
+        icon: 'tabler:bell-ringing',
+      },
+    ]}
+  />
+
+  <!-- 構成要素と処理の流れ -->
+  <Content
+    isReversed
+    tagline="Architecture & Flow"
+    title="構成要素と処理の流れ"
+    items={[
+      {
+        title: 'フローA: 取得（自宅PCのPython）',
+        description:
+          '自宅の回線から、requests で接近情報ページのHTMLを取得します。',
+      },
+      {
+        title: 'フローB: 復元と抽出',
+        description:
+          '取得したページの中から運行データの部分を切り出し、読める形に戻します。そのうえで「路線名・遅れ・到着予測がそろっている箇所」を探して取り出します。ページの作りが多少変わっても動くよう、データの置き場所は決め打ちしていません。',
+      },
+      {
+        title: 'フローC: Discord連携',
+        description:
+          'discord.py のスラッシュコマンドとタスクループ（既定5分間隔）で動きます。取得処理は別スレッドで実行し、一時的な取得失敗ではループを止めません。',
+      },
+      {
+        title: '状態と権限の管理',
+        description:
+          '監視のON/OFFと通知先チャンネルを state.json に保存します。ALLOWED_USER_IDS を設定すると、/watch と /stop を指定ユーザーだけに制限できます。',
+      },
+    ]}
+  >
+    <Fragment slot="content">
+      <p>
+        Botが外から受け付けるのは「決められたページを取得して解析する」ことと「監視のON/OFFを切り替える」ことだけです。任意の命令を実行する経路は持たせていません。
+      </p>
+    </Fragment>
+    <Fragment slot="image">
+      <Image src={feature1Img} alt="Bus Delay Bot のアーキテクチャとデータフロー図" class="w-full h-auto rounded-lg shadow-lg" />
+    </Fragment>
+  </Content>
+
+  <!-- 必要なもの（画像なしのためFeatures columns=2 を使用） -->
+  <Features
+    id="requirements"
+    columns={2}
+    tagline="Requirements"
+    title="必要なもの"
+    subtitle="動作に必要な環境です。監視対象は https://.../approachings?departure-busstop=[出発ID]&arrival-busstop=[到着ID] の形式の接近情報ページです。既定のURLはないため、各自の利用区間のURLを設定してください。相手サーバーへの負荷を考え、取得は5分間隔を基本とし、個人検証の範囲でご利用ください。"
+    items={[
+      {
+        title: 'Python 3.9 以上と venv',
+        description:
+          'requests / discord.py / python-dotenv を使用します（Python 3.9 以上を想定。動作確認は Python 3.15、discord.py 2.7.1 のみ）。venv でプロジェクト専用の環境を作って動かします。',
+        icon: 'tabler:brand-python',
+      },
+      {
+        title: 'Discord Bot（Developer Portal）',
+        description:
+          'Botを作成し、bot と applications.commands のスコープで自分のサーバーに招待します。スラッシュコマンドのため特権インテントは不要です。トークンは python/.env に置き、公開しないでください。',
+        icon: 'tabler:brand-discord',
+      },
+      {
+        title: '常時起動の自宅PC（家庭用回線）',
+        description:
+          'クラウドからの取得は拒否されるため、自宅の回線から取得します。Botのプロセスが止まっているとコマンドにも応答しません。',
+        icon: 'tabler:device-desktop',
+      },
+      {
+        title: '利用上の注意',
+        description:
+          '本作例はWebページの仕組みを個人で検証した記録です。過度なアクセスは避け、サービス側の仕様変更で動かなくなる可能性がある点をご了承ください。',
+        icon: 'tabler:alert-triangle',
+      },
+    ]}
+  />
+
+  <!-- CallToAction -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GitHub Repository',
+        href: GITHUB_URL,
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+      {
+        variant: 'secondary',
+        text: 'Note記事',
+        href: NOTE_URL,
+        target: '_blank',
+      },
+    ]}
+  >
+    <Fragment slot="title">📄 関連記事・技術ドキュメント</Fragment>
+  </CallToAction>
+</PageLayout>

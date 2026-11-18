@@ -121,4 +121,17 @@ export const products: Product[] = [
     image: imgmnoteclassifier,
     tags: ['内蔵AI','拡張機能'],
   },
+  {
+    no: 9,
+    status: '公開',
+    type: 'Discord Bot',
+    method: 'GitHub',
+    price: '無料',
+    name: 'Bus Delay Bot',
+    siteUrl: '/products/busdelaybot/',
+    directUrl: 'https://github.com/maru0122/20261115_bus_pub',
+    // TODO: 仮設定（テスト表示用）。本画像を用意したら差し替え
+    image: imgmnoteclassifier,
+    tags: ['Python', 'Discord Bot'],
+  },
 ];
